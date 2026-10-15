@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SK매직 인증파트너 - 티앤씨렌탈</title>
+<meta name="description" content="정수기·공기청정기·비데·매트리스 렌탈. 의무사용기간별 월 렌탈료를 한눈에 비교하세요.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header class="hd" id="hd">
+  <!-- 1) utility row (PC) -->
+  <div class="util">
+    <div class="wrap">
+      <div class="promo"><b>10월 가을 가전 특별전</b> 렌탈료 할인 · 면제 · 사은품 증정</div>
+      <nav>
+        <a class="dot" href="event.php">이벤트</a>
+        <a href="card.php">카드혜택</a>
+        <a href="notice.php">공지사항</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 2) main row -->
+  <div class="wrap main">
+    <button class="icon-btn m-only" id="openDrawer" aria-label="메뉴">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
+    <a class="logo" href="/shop/"><img src="https://devadmin.tncrental.co.kr//uploads/company/C00019/xS9fvT0jk5.gif" alt="SK매직 인증파트너"></a>
+
+    <form class="search" onsubmit="return false">
+      <input type="text" id="hSearch" readonly placeholder="어떤 제품을 찾으세요?  예) 얼음정수기, 매트리스" aria-label="검색">
+      <button aria-label="검색"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    </form>
+
+    <div class="right">
+      <div class="tel">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg></span>
+        <div><small>상담문의</small><strong>1670-4113</strong></div>
+      </div>
+      <button class="btn btn-red cta" data-open-consult>간편상담 신청</button>
+      <button class="btn btn-ai" data-ai>
+        <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7z"/></svg>AI 상담<span class="new">NEW</span>
+      </button>
+      <!-- mobile -->
+      <button class="icon-btn m-only" id="mSearch" aria-label="검색">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn call m-only" data-open-consult aria-label="상담 신청">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3) category row -->
+  <div class="cat">
+    <div class="wrap">
+      <button class="allbtn" id="allBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>전체</button>
+      <ul class="cat-list">
+        <li data-mega="water"><a class="t on" href="goods.php?cate1=CA0087&depth=1">정수기</a></li>
+        <li data-mega="air"><a class="t" href="goods.php?cate1=CA0088&depth=1">공기청정기</a></li>
+        <li data-mega="bidet"><a class="t" href="goods.php?cate1=CA0089&depth=1">비데</a></li>
+        <li data-mega="mat"><a class="t" href="goods.php?cate1=CA0092&depth=1">매트리스/프레임</a></li>
+        <li data-mega="namuh"><a class="t" href="goods.php?cate1=CA0357&depth=1">NAMUH<span class="tag">NEW</span></a></li>
+        <li data-mega="biz"><a class="t" href="goods.php?cate1=CA0361&depth=1">사업자전용</a></li>
+      </ul>
+    </div>
+    <!-- mega panels are built from MEGA data in the script below -->
+    <div id="megaRoot"></div>
+  </div>
+
+  <!-- quick consult popover / bottom sheet -->
+  <div class="pop" id="pop" role="dialog" aria-label="간편상담">
+    <h3>1분 만에 상담 신청</h3>
+    <p class="s">이름과 연락처만 남기면 전문 상담사가 연락드려요.</p>
+    <form id="consultForm" novalidate>
+      <input class="field" id="cName" placeholder="이름" autocomplete="name">
+      <input class="field" id="cTel" placeholder="연락처 (010-0000-0000)" inputmode="tel" autocomplete="tel">
+      <label class="agree"><input type="checkbox" id="cAgree"> 개인정보 수집·이용에 동의합니다 <a href="#" data-terms>자세히보기</a></label>
+      <button class="btn btn-red" type="submit">간편상담 신청하기</button>
+    </form>
+    <a class="call" href="tel:16704113">전화로 바로 상담하기 <b>1670-4113</b></a>
+  </div>
+</header>
+<div class="hd-space" id="hdSpace"></div>
+<div class="scrim" id="scrim"></div>
+
+<!-- mobile drawer -->
+<div class="drawer-scrim" id="dScrim"></div>
+<aside class="drawer" id="drawer" aria-label="전체 메뉴">
+  <div class="top"><img src="https://devadmin.tncrental.co.kr//uploads/company/C00019/xS9fvT0jk5.gif" alt="SK매직 인증파트너">
+    <button class="icon-btn" id="closeDrawer" aria-label="닫기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="body">
+    <details open><summary>정수기</summary><a class="lnk" href="#">얼음정수기</a><a class="lnk" href="#">냉온정수기</a><a class="lnk" href="#">냉정수기</a><a class="lnk" href="#">일반정수기</a></details>
+    <a class="plain" href="#">공기청정기</a>
+    <a class="plain" href="#">비데</a>
+    <details><summary>매트리스/프레임</summary><a class="lnk" href="#">SS (슈퍼싱글)</a><a class="lnk" href="#">Q (퀸)</a><a class="lnk" href="#">K (킹)</a></details>
+    <a class="plain" href="#">NAMUH</a>
+    <a class="plain" href="#">사업자전용</a>
+    <div style="height:14px"></div>
+    <a class="lnk" href="event.php">이벤트</a><a class="lnk" href="card.php">카드혜택</a><a class="lnk" href="notice.php">공지사항</a>
+  </div>
+  <div class="foot">
+    <a class="btn btn-ai" href="tel:16704113">전화 1670-4113</a>
+    <button class="btn btn-red" data-open-consult data-from-drawer>간편상담</button>
+  </div>
+</aside>
+
+
+<main>
+
+  <section class="h2" id="hero2" aria-label="메인 배너">
+    <div class="h2-track"></div>
+    <div class="h2-ctrl">
+      <span class="h2-cnt">01 / 24</span>
+      <button class="h2-prev" type="button" aria-label="이전"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="h2-next" type="button" aria-label="다음"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+      <button class="h2-play" type="button" aria-label="일시정지"><svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><svg class="i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+    </div>
+  </section>
+
+  <nav class="qm" aria-label="바로가기">
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0001&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.2 6 10.5A6 6 0 0 1 6 13.5C6 9.2 12 3 12 3z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2.5 2"/></svg></span><b>정수기</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0002&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7a2.5 2.5 0 1 1-2.5 2.5"/></svg></span><b>환경가전</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0003&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M6 10h12M9 6v2M9 13v3"/></svg></span><b>주방가전</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0004&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><circle cx="12" cy="13.5" r="4.5"/><path d="M7.5 6h.01M10.5 6h.01"/></svg></span><b>세탁가전</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0005&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-5h4v5"/></svg></span><b>생활가전</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0006&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></span><b>계절가전</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0007&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8 20h8M12 16.5V20"/></svg></span><b>TV&amp;디지털</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0008&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7.5 4.2 4.2 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></span><b>뷰티&amp;헬스</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0009&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M6 11V8a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v3"/><path d="M4 12a2 2 0 0 1 2 2v2h12v-2a2 2 0 1 1 4 0v4H2v-4a2 2 0 0 1 2-2z"/><path d="M6 20v1.5M18 20v1.5"/></svg></span><b>가구/인테리어</b></a>
+    <a class="qi" href="https://sk.tncrental.co.kr/shop/goods.php?cate1=CA0361&depth=1"><span class="qc"><svg viewBox="0 0 24 24"><path d="M4 9 5.5 4h13L20 9"/><path d="M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9"/><path d="M5.5 11.5V20h13v-8.5"/><path d="M10 20v-5h4v5"/></svg></span><b>사업자전용</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/event.php"><span class="qc dark">EVENT</span><b>이벤트</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/card.php"><span class="qc"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg></span><b>카드혜택</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods_view.php?goods=G050320"><span class="qc ph"><img alt="" loading="lazy" src="https://devadmin.tncrental.co.kr//uploads/goods/G050320/UUquKh9tH4.png"></span><b>TV 추천</b></a>
+    <a class="qi" href="https://all.tncrental.co.kr/shop/goods_view.php?goods=G050215"><span class="qc ph"><img alt="" loading="lazy" src="https://devadmin.tncrental.co.kr//uploads/goods/G050215/Cw4uiKDALH.png"></span><b>세탁기 추천</b></a>
+  </nav>
+
+  <section class="sec reveal" id="md">
+    <div class="sec-hc"><span class="eb">MD PICK</span><h2>MD 추천</h2><p>티앤씨 MD가 고른 이달의 렌탈 제품</p></div>
+    <div class="tabs-c" id="mdTabs"></div>
+    <div class="rail-wrap">
+      <button class="rail-btn prev" id="mdPrev" aria-label="이전" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <div class="rail ac-rail" id="mdRail"></div>
+      <button class="rail-btn next" id="mdNext" aria-label="다음"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="products">
+    <div class="sec-h"><div><span class="eb">BEST RENTAL</span><h2>의무기간별 렌탈료 비교</h2></div><a class="more" href="https://sk.tncrental.co.kr/shop/goods.php?cate1=CA0087&depth=1">전체 제품 →</a></div>
+    <div class="ptabs" id="ptabs"></div>
+    <div class="pfilter">
+      <div class="grp"><span class="lb">의무사용기간</span><div class="chips" id="pchips"></div></div>
+      <div class="grp mode"><span class="lb">가격 기준</span>
+        <div class="seg" id="pmode"><button type="button" class="on" data-m="card">제휴카드 적용</button><button type="button" data-m="rental">월 렌탈료</button></div></div>
+    </div>
+    <div class="pg" id="pg"></div>
+    <p class="pnote">※ 기간 또는 관리방법에 따라 가격이 달라지며, 제휴카드 혜택가는 렌탈사 최대 할인 기준입니다. 프로모션은 기간 한정이며 제품별로 적용 개월 수가 다릅니다. 기간 선택이 없는 제품은 월 렌탈료만 표시됩니다.</p>
+  </section>
+
+  <section class="sec reveal" id="shorts">
+    <div class="sec-h"><div><span class="eb">SHORTS</span><h2>15초로 보는 인기 렌탈</h2></div><a class="more" id="ytMore" href="#" target="_blank" rel="noopener" hidden>YouTube 채널 →</a></div>
+    <div class="rail-wrap">
+      <button class="rail-btn prev" id="railPrev" aria-label="이전" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <div class="rail" id="rail"></div>
+      <button class="rail-btn next" id="railNext" aria-label="다음"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="guide">
+    <div class="sec-hc"><span class="eb">GUIDE</span><h2>선택이 어려운 당신을 위한 가이드</h2><p>고민되는 가전, 이것만 보고 골라보세요</p></div>
+    <div class="mosaic">
+      <a class="mt big c1" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0001&depth=1">
+        <div class="tx"><em>WATER GUIDE</em><h3>정수기, 어떤 걸<br>고를까요?</h3><p>얼음 · 냉온 · 직수까지<br>우리 집 사용 패턴으로 비교</p></div>
+        <span class="lk">정수기 보러가기 →</span>
+        <div class="pi"><img alt="" src="https://devadmin.tncrental.co.kr//uploads/goods/G050354/w8ptXer2uI.gif"></div>
+      </a>
+      <a class="mt c2" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0007&depth=1">
+        <div class="tx"><em>TV GUIDE</em><h3>거실 크기별<br>TV 추천</h3><p>50인치부터 86인치까지</p></div>
+        <span class="lk">TV 보기 →</span>
+        <div class="pi"><img alt="" src="https://devadmin.tncrental.co.kr//uploads/goods/G050320/UUquKh9tH4.png"></div>
+      </a>
+      <a class="mt c3" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0004&depth=1">
+        <div class="tx"><em>LAUNDRY</em><h3>세탁기·건조기<br>한 번에</h3><p>용량별 비교</p></div>
+        <span class="lk">세탁가전 →</span>
+        <div class="pi"><img alt="" src="https://devadmin.tncrental.co.kr//uploads/goods/G050215/Cw4uiKDALH.png"></div>
+      </a>
+      <a class="mt c4" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0002&depth=1">
+        <div class="tx"><em>AIR CARE</em><h3>평형별<br>공기청정기</h3><p>13평부터 25평까지</p></div>
+        <span class="lk">환경가전 →</span>
+        <div class="pi"><img alt="" src="https://devadmin.tncrental.co.kr//uploads/goods/G050202/ucdBaHpxyQ.gif"></div>
+      </a>
+      <a class="mt c1" href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0009&depth=1">
+        <div class="tx"><em>SLEEP &amp; CHAIR</em><h3>매트리스·의자<br>렌탈 시작</h3><p>수면과 업무 환경 업그레이드</p></div>
+        <span class="lk">가구 보기 →</span>
+        <div class="pi"><img alt="" src="https://devadmin.tncrental.co.kr//uploads/goods/G050285/VNx5ewzB3R.png"></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="best">
+    <div class="sec-hc"><span class="eb">BEST</span><h2>티앤씨 인기 렌탈</h2><p>제휴카드 혜택이 큰 순서로 모았어요</p></div>
+    <div class="tabs-c" id="bestTabs"></div>
+    <div class="rail-wrap">
+      <button class="rail-btn prev" id="bestPrev" aria-label="이전" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <div class="rail ac-rail" id="bestRail"></div>
+      <button class="rail-btn next" id="bestNext" aria-label="다음"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="benefit">
+    <div class="sec-hc"><span class="eb">SPECIAL BENEFIT</span><h2>제휴카드로 더 가볍게</h2><p>제휴카드 할인 적용 시 월 렌탈료가 이만큼 내려가요</p></div>
+    <div class="tabs-c" id="bnTabs"></div>
+    <div class="ac-grid" id="bnGrid"></div>
+    <div class="more-c"><a href="https://all.tncrental.co.kr/shop/card.php">제휴카드 혜택 더보기</a></div>
+  </section>
+
+  <section class="sec reveal" id="cur1">
+    <div class="sec-hc"><span class="eb">HOME CARE</span><h2>집안일은 가전에게</h2><p>주방 · 세탁 · 생활가전을 한 번에 둘러보세요</p></div>
+    <div class="tabs-c" id="c1Tabs"></div>
+    <div class="ac-grid" id="c1Grid"></div>
+    <div class="more-c"><a href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0003&depth=1">주방가전 더보기</a></div>
+  </section>
+
+  <section class="sec reveal" id="cur2">
+    <div class="sec-hc"><span class="eb">ALL SEASON</span><h2>사계절 쾌적하게</h2><p>공기청정기부터 에어컨 · 제습기까지</p></div>
+    <div class="tabs-c" id="c2Tabs"></div>
+    <div class="ac-grid" id="c2Grid"></div>
+    <div class="more-c"><a href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0002&depth=1">환경가전 더보기</a></div>
+  </section>
+
+  <section class="sec reveal" id="cur3">
+    <div class="sec-hc"><span class="eb">HEALTH &amp; REST</span><h2>건강과 휴식을 렌탈로</h2><p>안마의자 · 매트리스 · 의자</p></div>
+    <div class="tabs-c" id="c3Tabs"></div>
+    <div class="ac-grid" id="c3Grid"></div>
+    <div class="more-c"><a href="https://all.tncrental.co.kr/shop/goods.php?cate1=CA0008&depth=1">뷰티&amp;헬스 더보기</a></div>
+  </section>
+
+</main>
+
+<footer class="ft">
+  <div class="mw">
+    <b>SK매직 인증파트너 · 티앤씨렌탈</b>
+    <div class="row"><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="https://sk.tncrental.co.kr/shop/notice.php">공지사항</a></div>
+    <div>대표전화 1670-4113 · 사업자 정보와 통신판매업 신고 정보는 실제 사이트 푸터 내용으로 교체해 주세요.</div>
+    <div>© TNC Rental. Sample layout.</div>
+  </div>
+</footer>
+
+
+<div class="srch-dim" id="sDim"></div>
+<div class="srch" id="srch" role="dialog" aria-label="검색">
+  <div class="mw">
+    <div class="srch-bar">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="sInput" type="search" placeholder="어떤 제품을 찾으세요?" autocomplete="off" enterkeyhint="search">
+      <button class="x" id="sClose" aria-label="닫기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+    </div>
+    <div class="srch-body">
+      <div><h6 id="sLT">인기 검색어 <span class="aitag">AI</span></h6><ol class="s-list" id="sList"></ol></div>
+      <div><h6 id="sRT">추천</h6><div class="srch-prods" id="sProds"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="js/data.js"></script>
+<script src="js/data-all.js"></script>
+<script src="js/hero-slides.js"></script>
+<script src="js/header.js"></script>
+<script src="js/main.js"></script>
+<script src="js/hero.js"></script>
+</body>
+</html>
