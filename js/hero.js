@@ -1,18 +1,18 @@
-/* Main slide: looping carousel, ~2.7 slides visible, 2px gap, autoplay, drag/swipe, arrows, counter. No library needed. */
+/* Main slide: full-width looping carousel (one banner at a time), autoplay, drag/swipe, arrows, counter. No library needed. */
 (function () {
   'use strict';
   var S = window.TNC_HERO || [], root = document.getElementById('hero2');
   if (!root || !S.length) return;
   var track = root.querySelector('.h2-track'), cnt = root.querySelector('.h2-cnt'),
       prev = root.querySelector('.h2-prev'), next = root.querySelector('.h2-next'), play = root.querySelector('.h2-play');
-  var N = S.length, K = Math.min(N, 6), GAP = 2, idx = 0, w = 0, auto = true, hover = false, dragging = false, timer = null, endT = null;
+  var N = S.length, K = Math.min(N, 2), GAP = 0, idx = 0, w = 0, auto = N > 1, hover = false, dragging = false, timer = null, endT = null;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) auto = false;
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
   function slide(s, i) {
-    return '<a class="h2-slide" href="' + esc(s.href || '#') + '" draggable="false"><span class="h2-img"><img draggable="false" alt="" ' + (i < 4 ? '' : 'loading="lazy" ') + 'src="' + esc(s.img) + '"></span>' +
-      '<div class="h2-txt"><strong>' + esc(s.title) + '</strong>' + (s.desc || []).map(function (d) { return '<span>' + esc(d) + '</span>'; }).join('') + '</div></a>';
+    return '<a class="h2-slide" href="' + esc(s.href || '#') + '" draggable="false"><span class="h2-img"><img draggable="false" alt="' + esc(s.alt || s.title || '') + '" ' + (i < 2 ? '' : 'loading="lazy" ') + 'src="' + esc(s.img) + '"></span>' +
+      (s.title ? '<div class="h2-txt"><strong>' + esc(s.title) + '</strong>' + (s.desc || []).map(function (d) { return '<span>' + esc(d) + '</span>'; }).join('') + '</div>' : '') + '</a>';
   }
   var list = S.slice(N - K).concat(S, S.slice(0, K));       /* clones on both ends -> seamless loop */
   track.innerHTML = list.map(slide).join('');
@@ -33,7 +33,7 @@
   track.addEventListener('transitionend', function (e) { if (e.target === track && e.propertyName === 'transform') settle(); });
 
   function tick() { if (auto && !hover && !dragging && !document.hidden) go(idx + 1); }
-  function restart() { clearInterval(timer); timer = setInterval(tick, 4500); }
+  function restart() { clearInterval(timer); timer = setInterval(tick, 5000); }
   prev.addEventListener('click', function () { go(idx - 1); restart(); });
   next.addEventListener('click', function () { go(idx + 1); restart(); });
   play.addEventListener('click', function () {
@@ -56,7 +56,7 @@
   function endDrag() {
     if (!dragging) return; dragging = false; track.classList.remove('drag');
     if (!moved) return;
-    var steps = Math.abs(dx) > w * 0.18 ? Math.max(1, Math.round(Math.abs(dx) / w)) : 0;
+    var steps = Math.abs(dx) > w * 0.15 ? Math.max(1, Math.round(Math.abs(dx) / w)) : 0;
     go(steps ? idx + (dx < 0 ? steps : -steps) : idx); restart();
   }
   window.addEventListener('pointerup', endDrag);
