@@ -1,5 +1,5 @@
 /* Main slide: looping card strip (several cards visible), autoplay, drag/swipe, arrows, counter. No library needed.
-   Slides with a product number (g) show the product name and a rental price that follows the floating "렌탈 조건" panel. */
+   Each card shows a centered promo headline (title, may contain <br>) and the product name (sub) on a dark overlay. */
 (function () {
   'use strict';
   var S = window.TNC_HERO || [], root = document.getElementById('hero2');
@@ -11,42 +11,17 @@
   if (reduced) auto = false;
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  function plain(s) { return String(s).replace(/<br\s*\/?>/gi, ' '); }
   function slide(s, i) {
     var cap = '';
-    if (s.g) {
-      cap = '<div class="h2-cap"><span class="h2-s">' + esc(s.sub || '') + '</span><span class="h2-n">' + esc(s.title) + '</span>' +
-        '<span class="h2-p">월 <b data-hg>0</b>원~</span><span class="h2-m" data-hm></span></div>';
-    } else if (s.title) {
-      cap = '<div class="h2-txt"><strong>' + esc(s.title) + '</strong>' + (s.desc || []).map(function (d) { return '<span>' + esc(d) + '</span>'; }).join('') + '</div>';
+    if (s.title) {
+      var head = esc(s.title).replace(/&lt;br\s*\/?&gt;/gi, '<br>');      /* allow <br> only */
+      cap = '<div class="h2-cap"><span class="h2-n">' + head + '</span>' + (s.sub ? '<span class="h2-s">' + esc(s.sub) + '</span>' : '') + '</div>';
     }
-    return '<a class="h2-slide"' + (s.g ? ' data-g="' + esc(s.g) + '"' : '') + ' href="' + esc(s.href || '#') + '" draggable="false"><span class="h2-img"><img draggable="false" alt="' + esc(s.alt || s.title || '') + '" ' + (i < 6 ? '' : 'loading="lazy" ') + 'src="' + esc(s.img) + '"></span>' + cap + '</a>';
+    return '<a class="h2-slide" href="' + esc(s.href || '#') + '" draggable="false"><span class="h2-img"><img draggable="false" alt="' + esc(s.alt || plain(s.title || '') ) + '" ' + (i < 6 ? '' : 'loading="lazy" ') + 'src="' + esc(s.img) + '"></span>' + cap + '</a>';
   }
   var list = S.slice(N - K).concat(S, S.slice(0, K));       /* clones on both ends -> seamless loop */
   track.innerHTML = list.map(slide).join('');
-
-  /* ---- price on the cards (follows period + price basis) ---- */
-  function findItem(g) {
-    var SK = window.TNC_SK || {};
-    for (var k in SK) { var a = SK[k].items; for (var i = 0; i < a.length; i++) if (a[i].g === g) return a[i]; }
-    return null;
-  }
-  function priceFor(g) {
-    var it = findItem(g), st = window.TNC_STATE || { period: 60, mode: 'card' };
-    if (!it) return null;
-    var kinds = it.kinds || {}, names = Object.keys(kinds).filter(function (n) { return Object.keys(kinds[n].by || {}).length; });
-    if (!names.length || !window.TNC_pick) return { v: it.c || it.p, m: '제휴카드 적용 시' };
-    var name = names.filter(function (n) { return /^셀프/.test(n); })[0] || names[0];
-    var pk = window.TNC_pick(kinds[name].by, st.period), row = pk.row;
-    return { v: st.mode === 'card' ? row[2] : row[1], m: (st.mode === 'card' ? '제휴카드 적용' : '월 렌탈료') + ' · 의무 ' + pk.k + '개월' };
-  }
-  function paintPrices() {
-    Array.prototype.forEach.call(track.querySelectorAll('.h2-slide[data-g]'), function (el) {
-      var r = priceFor(el.getAttribute('data-g')); if (!r) return;
-      el.querySelector('[data-hg]').textContent = Number(r.v).toLocaleString('ko-KR');
-      el.querySelector('[data-hm]').textContent = r.m;
-    });
-  }
-  document.addEventListener('tnc-filter', paintPrices); paintPrices();
 
   function measure() { GAP = parseFloat(getComputedStyle(track).columnGap) || 0; w = track.children[0].offsetWidth + GAP; }
   function setX(px, anim) { track.style.transition = anim ? 'transform .7s cubic-bezier(.22,.8,.24,1)' : 'none'; track.style.transform = 'translate3d(' + px + 'px,0,0)'; }
