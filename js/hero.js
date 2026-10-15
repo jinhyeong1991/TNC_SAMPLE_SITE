@@ -5,7 +5,7 @@
   if (!root || !S.length) return;
   var track = root.querySelector('.h2-track'), cnt = root.querySelector('.h2-cnt'),
       prev = root.querySelector('.h2-prev'), next = root.querySelector('.h2-next'), play = root.querySelector('.h2-play');
-  var N = S.length, K = Math.min(N, 2), GAP = 0, idx = 0, w = 0, auto = N > 1, hover = false, dragging = false, timer = null, endT = null;
+  var N = S.length, K = Math.min(N, 6), GAP = 0, idx = 0, w = 0, auto = N > 1, hover = false, dragging = false, timer = null, endT = null;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) auto = false;
 
@@ -17,7 +17,7 @@
   var list = S.slice(N - K).concat(S, S.slice(0, K));       /* clones on both ends -> seamless loop */
   track.innerHTML = list.map(slide).join('');
 
-  function measure() { w = track.children[0].offsetWidth + GAP; }
+  function measure() { GAP = parseFloat(getComputedStyle(track).columnGap) || 0; w = track.children[0].offsetWidth + GAP; }
   function setX(px, anim) { track.style.transition = anim ? 'transform .7s cubic-bezier(.22,.8,.24,1)' : 'none'; track.style.transform = 'translate3d(' + px + 'px,0,0)'; }
   function pos(i, anim) { setX(-(i + K) * w, anim); }
   function norm(i) { return ((i % N) + N) % N; }
@@ -33,7 +33,7 @@
   track.addEventListener('transitionend', function (e) { if (e.target === track && e.propertyName === 'transform') settle(); });
 
   function tick() { if (auto && !hover && !dragging && !document.hidden) go(idx + 1); }
-  function restart() { clearInterval(timer); timer = setInterval(tick, 5000); }
+  function restart() { clearInterval(timer); timer = setInterval(tick, 4500); }
   prev.addEventListener('click', function () { go(idx - 1); restart(); });
   next.addEventListener('click', function () { go(idx + 1); restart(); });
   play.addEventListener('click', function () {
