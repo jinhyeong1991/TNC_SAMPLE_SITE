@@ -1,14 +1,14 @@
-/* Main slide data (card-style strip). Banner images live in images/banners/ (temporary banners made for TNC, free to publish).
-   Replace img / title / desc / href with the real campaign banners whenever they are ready.
-   Recommended banner size: 956 x 1120 px (2x of 478 x 560).
-   The SK magic full-width banners (1920 x 640) are kept in images/main/ in case you want the wide hero again. */
+/* Main slide data (card-style strip). Images live in images/slides/ (900 x 1054, AI-generated lifestyle shots).
+   g = product number on the SK partner site -> the card shows that product's rental price and follows the floating
+   "렌탈 조건" panel (contract period + price basis). Edit title / sub / g / href here.
+   Older banners are kept in images/banners/ (temporary banners) and images/main/ (SK magic full-width banners). */
 window.TNC_HERO = [
-  { img: 'images/banners/banner-01.svg', title: '의무 5·6·7년 반값 할인', desc: ['SK매직 가을 가전 특별전', '10/29까지 주문·설치 완료 시'], href: 'https://sk.tncrental.co.kr/shop/event.php' },
-  { img: 'images/banners/banner-02.svg', title: '제휴카드로 월 최대 -23,000원', desc: ['제휴카드 적용 시 월 렌탈료가 훨씬 가벼워져요'], href: 'https://sk.tncrental.co.kr/shop/card.php' },
-  { img: 'images/banners/banner-03.svg', title: '정수기 렌탈 한눈에 비교', desc: ['얼음 · 냉온 · 직수 정수기'], href: 'list.html?c=water' },
-  { img: 'images/banners/banner-04.svg', title: '평형별 공기청정기 추천', desc: ['13평부터 25평까지'], href: 'list.html?c=air' },
-  { img: 'images/banners/banner-05.svg', title: '매트리스 · 비데 렌탈 시작', desc: ['수면과 위생을 가볍게 시작하세요'], href: 'list.html?c=mat' },
-  { img: 'images/banners/banner-06.svg', title: 'TV · 세탁기 가전 종합관', desc: ['LG전자 · 대우 인기 모델'], href: 'https://all.tncrental.co.kr/shop/goods.php?cate1=CA0007&depth=1' },
-  { img: 'images/banners/banner-07.svg', title: '사업자 전용 렌탈 견적', desc: ['매장 · 사무실 · 학원 · 병원'], href: 'list.html?c=biz' },
-  { img: 'images/banners/banner-08.svg', title: '고민되면 바로 상담하세요', desc: ['대표전화 1670-4113'], href: 'tel:16704113' }
+  { img: 'images/slides/slide-01.jpg', g: 'G050262', title: 'MEGA ICE 얼음정수기 mini', sub: 'SK매직 · 얼음정수기', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G050262' },
+  { img: 'images/slides/slide-02.jpg', g: 'G050261', title: 'MEGA ICE 얼음정수기', sub: 'SK매직 · 얼음정수기', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G050261' },
+  { img: 'images/slides/slide-03.jpg', g: 'G050303', title: '위글위글 초소형 직수 냉온정수기', sub: 'SK매직 × wiggle wiggle', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G050303' },
+  { img: 'images/slides/slide-04.jpg', g: 'G050263', title: '투워터 냉온정수기', sub: 'SK매직 · 냉온정수기', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G050263' },
+  { img: 'images/slides/slide-05.jpg', g: 'G036226', title: '올클린 디아트 22평형 공기청정기', sub: 'SK매직 · 공기청정기 (베이지)', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G036226' },
+  { img: 'images/slides/slide-06.jpg', g: 'G036224', title: '올클린 디아트 22평형 공기청정기', sub: 'SK매직 · 공기청정기 (그린)', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G036224' },
+  { img: 'images/slides/slide-07.jpg', g: 'G049786', title: '풀스텐 케어 비데', sub: 'SK매직 · 비데', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G049786' },
+  { img: 'images/slides/slide-08.jpg', g: 'G041469', title: '위글위글 풀스텐 스파 비데', sub: 'SK매직 × wiggle wiggle', href: 'https://sk.tncrental.co.kr/shop/goods_view.php?goods=G041469' }
 ];
