@@ -41,29 +41,63 @@
     })(t0);
   }
 
-  /* ---------- 가전종합몰 sections: MD rail / BEST rail (rank) / benefit grid / 3 curation grids ---------- */
+  var S = window.TNC_STATE;   /* defined in js/fx.js */
+
+  /* ---------- 가전종합몰 sections: MD rail / BEST rail (rank) / benefit grid / 3 curation grids.
+     Prices follow the floating filter (period + price basis) with count animation. ---------- */
   (function () {
     var A = window.TNC_ALL; if (!A) return;
     var IMGB = T.IMG, DET = A.SHOP + 'goods_view.php?goods=';
-    var KEYS = Object.keys(A.CATS);
+    var KEYS = Object.keys(A.CATS), BYID = {};
+    KEYS.forEach(function (k) { A.CATS[k].items.forEach(function (it) { BYID[it.g] = it; }); });
     function all(keys) { var o = []; keys.forEach(function (k) { A.CATS[k].items.forEach(function (it) { o.push(it); }); }); return o; }
     function mix(keys, n) {                       /* round-robin across categories so "전체" looks varied */
       var lists = keys.map(function (k) { return A.CATS[k].items.slice(); }), out = [], i = 0;
       while (out.length < n && lists.some(function (l) { return l.length; })) { var l = lists[i % lists.length]; if (l.length) out.push(l.shift()); i++; }
       return out;
     }
-    function disc(it) { return it.p > 0 ? Math.round((it.p - it.c) / it.p * 100) : 0; }
-    function card(it, rank) {
-      var d = disc(it), nodc = d <= 0;
-      return '<a class="ac' + (nodc ? ' nodc' : '') + '" href="' + DET + it.g + '">' +
-        '<div class="im">' + (rank ? '<span class="rk' + (rank <= 3 ? ' top' : '') + '">' + rank + '</span>' : '') +
-        '<img loading="lazy" alt="" src="' + IMGB + it.i + '">' + (it.c === 0 ? '<span class="dc">카드할인 시 0원</span>' : '') + '</div>' +
-        '<p class="br">' + esc(it.b) + '</p><p class="nm">' + esc(it.n) + '</p>' +
-        '<s class="st">월 렌탈료 ' + won(it.p) + '원</s>' +
-        '<div class="pl"><b class="pct">' + d + '%</b><strong class="mp">월 ' + won(it.c) + '<small>원</small></strong></div>' +
-        '<span class="cdn">제휴카드 적용 시</span>' +
-        (it.pm ? '<span class="pm">' + esc(it.pm) + '</span>' : '') + '</a>';
+    function promoText(s) { return String(s || '').replace('개월반값', '개월 반값').replace(/개월간(?=\S)/, '개월간 '); }
+
+    /* price rules: card mode -> headline = card price, struck = 월 렌탈료
+                    rental mode -> headline = 월 렌탈료, struck = 정상가 (when there is one) */
+    function calc(it) {
+      var by = (window.TNC_PERIODS || {})[it.g], r = { st: 0, mp: 0, pct: 0, pm: '', cdn: '', stl: '월 렌탈료', near: false };
+      var month, card, normal;
+      if (by) {
+        var pk = window.TNC_pick(by, S.period), row = pk.row;
+        normal = row[0]; month = row[1]; card = row[2]; r.pm = promoText(row[3]); r.near = pk.k !== S.period;
+        r.cdn = '의무 ' + pk.k + '개월' + (S.mode === 'card' ? ' · 제휴카드 적용' : ' · 월 렌탈료');
+      } else { normal = 0; month = it.p; card = it.c; r.pm = it.pm; r.cdn = S.mode === 'card' ? '제휴카드 적용 시' : ''; }
+      if (S.mode === 'card') { r.mp = card; r.st = month; r.stl = '월 렌탈료'; }
+      else { r.mp = month; r.st = normal > month ? normal : 0; r.stl = '정상가'; }
+      r.pct = r.st > r.mp ? Math.round((r.st - r.mp) / r.st * 100) : 0;
+      return r;
     }
+    function card(it, rank) {
+      return '<a class="ac" data-g="' + it.g + '" href="' + DET + it.g + '">' +
+        '<div class="im">' + (rank ? '<span class="rk' + (rank <= 3 ? ' top' : '') + '">' + rank + '</span>' : '') +
+        '<img loading="lazy" alt="" src="' + IMGB + it.i + '"><span class="dc" hidden>카드할인 시 0원</span></div>' +
+        '<p class="br">' + esc(it.b) + '</p><p class="nm">' + esc(it.n) + '</p>' +
+        '<s class="st"><span data-r="stl">월 렌탈료</span> <span data-r="st">0</span>원</s>' +
+        '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div>' +
+        '<span class="cdn"></span><span class="pm" hidden></span></a>';
+    }
+    function applyAll(animate) {
+      $$('.ac[data-g]').forEach(function (el) {
+        var it = BYID[el.getAttribute('data-g')]; if (!it) return;
+        var r = calc(it);
+        setNum($('[data-r=mp]', el), r.mp, animate);
+        setNum($('[data-r=st]', el), r.st, animate);
+        setNum($('[data-r=pct]', el), r.pct, animate);
+        $('[data-r=stl]', el).textContent = r.stl;
+        el.classList.toggle('nodc', !(r.st > 0 && r.pct > 0));
+        $('.cdn', el).textContent = r.cdn; el.classList.toggle('near', r.near);
+        $('.dc', el).hidden = !(S.mode === 'card' && r.mp === 0);
+        var pm = $('.pm', el); pm.textContent = r.pm; pm.hidden = !r.pm;
+      });
+    }
+    document.addEventListener('tnc-filter', function () { applyAll(true); });
+
     function tabs(el, spec, onPick) {
       el.innerHTML = spec.map(function (s, i) { return '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on"' : '') + '>' + s.t + '</button>'; }).join('');
       el.addEventListener('click', function (e) {
@@ -84,34 +118,34 @@
     function railSection(prefix, spec, rank) {
       var rail = $('#' + prefix + 'Rail'), edge = bindRail(rail, $('#' + prefix + 'Prev'), $('#' + prefix + 'Next'));
       tabs($('#' + prefix + 'Tabs'), spec, function (s) {
-        var list = s.fn();
-        rail.innerHTML = list.map(function (it, i) { return card(it, rank ? i + 1 : 0); }).join('');
-        rail.scrollLeft = 0; edge();
+        rail.innerHTML = s.fn().map(function (it, i) { return card(it, rank ? i + 1 : 0); }).join('');
+        applyAll(false); rail.scrollLeft = 0; edge();
       });
     }
     function gridSection(prefix, spec) {
       var g = $('#' + prefix + 'Grid');
       tabs($('#' + prefix + 'Tabs'), spec, function (s) {
         g.innerHTML = s.fn().slice(0, 8).map(function (it) { return card(it, 0); }).join('');
+        applyAll(false);
       });
     }
-    function byBenefit(list) { return list.slice().sort(function (a, b) { return (b.p - b.c) - (a.p - a.c); }); }
+    function listingBenefit(list) { return list.slice().sort(function (a, b) { return (b.p - b.c) - (a.p - a.c); }); }
     function catTab(k, n) { return { t: A.CATS[k].t, fn: function () { return A.CATS[k].items.slice(0, n || 10); } }; }
 
     /* MD 추천 */
     railSection('md', [{ t: '전체', fn: function () { return mix(KEYS, 10); } }]
       .concat(['water', 'env', 'kitchen', 'laundry', 'tv', 'beauty', 'furn'].map(function (k) { return catTab(k); })), false);
-    /* BEST : biggest card discount first */
+    /* BEST : biggest card discount first (ranking order is fixed) */
     railSection('best', [
-      { t: '전체', fn: function () { return byBenefit(all(KEYS)).slice(0, 10); } },
-      { t: '정수기', fn: function () { return byBenefit(A.CATS.water.items).slice(0, 10); } },
-      { t: '환경가전', fn: function () { return byBenefit(A.CATS.env.items).slice(0, 10); } },
-      { t: 'TV&디지털', fn: function () { return byBenefit(A.CATS.tv.items).slice(0, 10); } },
-      { t: '세탁가전', fn: function () { return byBenefit(A.CATS.laundry.items).slice(0, 10); } }
+      { t: '전체', fn: function () { return listingBenefit(all(KEYS)).slice(0, 10); } },
+      { t: '정수기', fn: function () { return listingBenefit(A.CATS.water.items).slice(0, 10); } },
+      { t: '환경가전', fn: function () { return listingBenefit(A.CATS.env.items).slice(0, 10); } },
+      { t: 'TV&디지털', fn: function () { return listingBenefit(A.CATS.tv.items).slice(0, 10); } },
+      { t: '세탁가전', fn: function () { return listingBenefit(A.CATS.laundry.items).slice(0, 10); } }
     ], true);
     /* SPECIAL BENEFIT */
     gridSection('bn', [
-      { t: '전체', fn: function () { return byBenefit(all(KEYS)).slice(0, 8); } },
+      { t: '전체', fn: function () { return listingBenefit(all(KEYS)).slice(0, 8); } },
       { t: '카드할인 시 0원', fn: function () { return all(KEYS).filter(function (i) { return i.c === 0; }); } },
       { t: '프로모션 진행중', fn: function () { return all(KEYS).filter(function (i) { return i.pm; }); } },
       { t: 'TV', fn: function () { return A.CATS.tv.items; } }
@@ -159,7 +193,7 @@
       var pal = PAL[i % PAL.length], p = it.p;
       var cap = '<div class="cap"><em>' + esc(CATN[p.cat] || '') + (p.bd ? ' · ' + p.bd : '') + '</em><b>' + esc(it.title) + '</b><span>월 <strong>' + won(priceOf(p)) + '</strong>원~</span></div>';
       var thumb = it.thumb || (it.yt ? 'https://i.ytimg.com/vi/' + it.yt + '/maxresdefault.jpg' : '');
-      if (thumb) return '<a class="sc ps dk" data-i="' + i + '" href="' + it.href + '" draggable="false"><img alt="" draggable="false" loading="lazy" src="' + thumb + '"><div class="top"><span class="sh">SHORTS</span>' + PLAY + '</div>' + cap + '</a>';
+      if (thumb) return '<a class="sc ps dk" data-i="' + i + '" href="' + it.href + '" draggable="false"><img alt="" draggable="false" loading="lazy" src="' + thumb + '"' + (it.yt && !it.thumb ? ' onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/' + it.yt + '/hqdefault.jpg\'"' : '') + '><div class="top"><span class="sh">SHORTS</span>' + PLAY + '</div>' + cap + '</a>';
       return '<a class="sc' + (pal.dk ? ' dk' : '') + '" data-i="' + i + '" draggable="false" style="--c:' + pal.c + '" href="' + it.href + '"><div class="top"><span class="sh">SHORTS</span>' + PLAY + '</div>' +
         '<div class="disc"><img alt="" draggable="false" loading="lazy" src="' + IMG + p.img + '"></div>' + cap + '</a>';
     }).join('');
@@ -217,31 +251,33 @@
       if (!yt.classList.contains('on')) return;
       if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(cur - 1); else if (e.key === 'ArrowRight') show(cur + 1);
     });
+    /* follow the floating filter (period + price basis) */
+    document.addEventListener('tnc-filter', function () {
+      $$('.sc', rail).forEach(function (c) {
+        var it = items[+c.getAttribute('data-i')], p = it.p, v;
+        if (!p.by) v = p.fixed; else { var row = window.TNC_pick(p.by, window.TNC_STATE.period).row; v = window.TNC_STATE.mode === 'card' ? row[2] : row[1]; }
+        $('.cap strong', c).textContent = won(v);
+      });
+    });
     /* optional: channel link */
     var more = $('#ytMore'); if (more && T.YT_CHANNEL) { more.href = T.YT_CHANNEL; more.hidden = false; }
   })();
 
-  /* ---------- product list ---------- */
+  /* ---------- product list (SK compare): category tabs here, period + price basis come from the floating filter ---------- */
   var grid = $('#pg'); if (!grid) return;
-  var state = { cat: 'all', period: 60, mode: 'card' };
-  var started = false;
+  var cat = 'all', started = false;
 
-  function visible() {
-    var list = T.PRODUCTS.filter(function (p) { return state.cat === 'all' ? p.f : p.cat === state.cat; });
-    return list;
-  }
+  function visible() { return T.PRODUCTS.filter(function (p) { return cat === 'all' ? p.f : p.cat === cat; }); }
   function cardHtml(p, i) {
     return '<a class="pcard" style="animation-delay:' + (i * 45) + 'ms" href="' + SHOP + 'goods_view.php?goods=' + p.id + '" data-id="' + p.id + '">' +
       '<div class="im">' + (p.bd ? '<span class="bd">' + p.bd + '</span>' : '') + '<img loading="lazy" alt="" src="' + IMG + p.img + '"></div>' +
       '<p class="nm"><em>[렌탈]</em>' + esc(p.name) + '</p>' +
       '<div class="pbox"><s class="st">월 <span data-r="st">0</span>원</s>' +
       '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div></div>' +
-      '<div class="pna">이 기간은 상담 후 안내드려요</div>' +
       '<div class="tg"><span data-r="per"></span><span class="pm" data-r="pm" hidden></span>' + (p.kind ? '<span>' + p.kind + '</span>' : '') + '</div></a>';
   }
   function render() {
-    var list = visible();
-    grid.innerHTML = list.map(cardHtml).join('');
+    grid.innerHTML = visible().map(cardHtml).join('');
     apply(false);
   }
 
@@ -249,13 +285,11 @@
      card mode   : headline = 제휴카드 적용가, struck = 월 렌탈료, % = 월 렌탈료 대비 할인율
      rental mode : headline = 월 렌탈료,      struck = 정상가(있을 때),  % = 정상가 대비 할인율 */
   function calc(p) {
-    var r = { na: false, st: 0, mp: 0, pct: 0, per: '', pm: '' };
-    if (!p.by) { r.mp = p.fixed; r.per = '기간 상담'; r.noSt = true; return r; }
-    var row = p.by[state.period];
-    if (!row) { r.na = true; return r; }
-    var normal = row[0], month = row[1], card = row[2];
-    r.per = '의무 ' + state.period + '개월'; r.pm = row[3];
-    if (state.mode === 'card') { r.mp = card; r.st = month; r.pct = month ? Math.round((month - card) / month * 100) : 0; }
+    var r = { st: 0, mp: 0, pct: 0, per: '', pm: '' };
+    if (!p.by) { r.mp = p.fixed; r.per = '기간 상담'; r.noSt = true; r.noPct = true; return r; }
+    var pk = window.TNC_pick(p.by, S.period), row = pk.row, normal = row[0], month = row[1], card = row[2];
+    r.per = '의무 ' + pk.k + '개월'; r.pm = row[3];
+    if (S.mode === 'card') { r.mp = card; r.st = month; r.pct = month ? Math.round((month - card) / month * 100) : 0; }
     else { r.mp = month; r.st = normal; r.pct = normal ? Math.round((normal - month) / normal * 100) : 0; }
     r.noSt = !r.st || r.st <= r.mp; r.noPct = r.noSt || r.pct <= 0;
     return r;
@@ -263,10 +297,8 @@
   function apply(animate) {
     $$('.pcard', grid).forEach(function (el) {
       var p = T.PRODUCTS.filter(function (x) { return x.id === el.getAttribute('data-id'); })[0], r = calc(p);
-      el.classList.toggle('na', r.na);
       el.classList.toggle('nost', !!r.noSt);
       el.classList.toggle('nopct', !!r.noPct);
-      if (r.na) return;
       setNum($('[data-r=mp]', el), r.mp, animate);
       setNum($('[data-r=st]', el), r.st, animate);
       setNum($('[data-r=pct]', el), r.pct, animate);
@@ -274,6 +306,7 @@
       var pm = $('[data-r=pm]', el); pm.textContent = r.pm; pm.hidden = !r.pm;
     });
   }
+  document.addEventListener('tnc-filter', function () { apply(true); });
 
   /* tabs */
   var tabs = $('#ptabs');
@@ -281,24 +314,9 @@
   tabs.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     $$('button', tabs).forEach(function (x) { x.classList.toggle('on', x === b); });
-    state.cat = b.getAttribute('data-c'); render();
+    cat = b.getAttribute('data-c'); render();
     $$('[data-v]', grid).forEach(function (n) { n.setAttribute('data-v', 0); });   /* new cards count up from 0 */
     apply(true);
-  });
-  /* period chips */
-  var chips = $('#pchips');
-  chips.innerHTML = T.PERIODS.map(function (n) { return '<button type="button" data-p="' + n + '"' + (n === state.period ? ' class="on"' : '') + '>' + n + '개월</button>'; }).join('');
-  chips.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    $$('button', chips).forEach(function (x) { x.classList.toggle('on', x === b); });
-    state.period = +b.getAttribute('data-p'); apply(true);
-  });
-  /* price mode */
-  var seg = $('#pmode');
-  seg.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    $$('button', seg).forEach(function (x) { x.classList.toggle('on', x === b); });
-    state.mode = b.getAttribute('data-m'); apply(true);
   });
 
   render();

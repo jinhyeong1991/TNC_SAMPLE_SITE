@@ -19,11 +19,23 @@ window.TNC = {
   /* SHORTS (YouTube popup). yt = YouTube Shorts URL (or 11-char id). Leave '' until the video is uploaded.
      g = product id used for the card design / "제품 보러가기" link. title = optional card title override.
      YT_CHANNEL = your channel URL (shows a "YouTube 채널 →" link above the rail when filled). */
-  YT_CHANNEL: '',
+  YT_CHANNEL: 'https://www.youtube.com/@SKmagic_',
   SHORTS: [
-    { yt: '', g: 'G050305' }, { yt: '', g: 'G050303' }, { yt: '', g: 'G050307' }, { yt: '', g: 'G050306' }, { yt: '', g: 'G050310' },
-    { yt: '', g: 'G050309' }, { yt: '', g: 'G050308' }, { yt: '', g: 'G043352' }, { yt: '', g: 'G049786' }, { yt: '', g: 'G046609' },
-    { yt: '', g: 'G042682' }, { yt: '', g: 'G045673' }, { yt: '', g: 'G045672' }, { yt: '', g: 'G045671' }, { yt: '', g: 'G047716' }
+    { yt: 'UopFLzx-lY4', g: 'G050305', title: 'MEGA ICE & mini 얼음정수기 × 변우석 메이킹필름' },
+    { yt: 'up_D8IwjrzU', g: 'G050305', title: '원코크 플러스, 가장 건강한 얼음은 누구?' },
+    { yt: 'ByFo9NSE-TU', g: 'G050305', title: '원코크 플러스, 얼음 공장의 비밀 30s' },
+    { yt: '9PeKGk4YijI', g: 'G050305', title: '원코크 얼음물 정수기 · 겨울에도 얼음은 필수니까 (혼술편)' },
+    { yt: 'BBMfQ86RdI4', g: 'G050305', title: '원코크 얼음물 정수기 · 겨울에도 얼음은 필수니까 (아아편)' },
+    { yt: 'v27oGxrjFNA', g: 'G050307', title: '세상에 없던 혁신의 탄생, 초소형 직수 정수기' },
+    { yt: 'hVdX5vmOsAY', g: 'G050307', title: '초소형 직수 정수기 출시' },
+    { yt: '7gzNuhJjLb0', g: 'G050307', title: '세상이 인정한 사이즈의 혁신, 초소형 직수 정수기' },
+    { yt: '2cJYn0mBD4g', g: 'G050307', title: '하나의 정수기, 두 개의 물 · 투워터 정수기' },
+    { yt: 'PcxdBm7vjhw', g: 'G050303', title: '이렇게 작은 정수기 봤어? 초소형 직수정수기 탄생!' },
+    { yt: '8l8WCbrg2-k', g: 'G050303', title: '10ml 원터치의 혁신, 초소형 직수 정수기' },
+    { yt: 'FB6mOtZ2ajk', g: 'G050303', title: 'SK매직 × 위글위글 · 종로에 나타난 정수기?' },
+    { yt: '2GrVz39xhNw', g: 'G050306', title: '실속 있는 혁신의 완성, 뉴미니 정수기' },
+    { yt: 'OSFgz34wLgI', g: 'G050306', title: '실속 있는 위생의 완성, 뉴미니 정수기' },
+    { yt: 'noYDORDldIQ', g: 'G050305', title: 'SK매직 × PSG · 그 순간 정수기 EP.6' }
   ],
   PRODUCTS: [
     { id: 'G050305', cat: 'water', f: 1, name: 'SK매직 원코크 플러스 얼음물 정수기', kind: '셀프관리', bd: '추천', img: 'G050305/Kfa9Zuk79g.gif',

@@ -163,7 +163,6 @@ main{display:block}
 .ac .mp{font-size:19px;font-weight:800;letter-spacing:-.4px}
 .ac .mp small{font-size:14px;font-weight:700}
 .ac .cdn{display:block;margin-top:3px;font-size:11.5px;color:var(--ink3)}
-.ac.nodc .cdn{visibility:hidden}
 .ac .pm{display:inline-block;margin-top:8px;font-size:11.5px;color:var(--red);border:1px solid var(--red);border-radius:5px;padding:3px 7px;font-weight:700;line-height:1.2}
 .ac.nodc .st{visibility:hidden}
 .ac.nodc .pct{display:none}
@@ -286,4 +285,63 @@ main{display:block}
   .yt-cap{flex-direction:column;align-items:stretch;text-align:center}
   .yt-cap b{max-width:none}
   .yt-cap .btn{justify-content:center}
+}
+
+/* ---------- floating rental filter ---------- */
+.phint{font-size:13px;color:var(--ink3);margin:-10px 0 20px}
+.ac .cdn.near,.ac.near .cdn{color:#C26A00}
+.fx{position:fixed;z-index:85;right:14px;bottom:18px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s}
+.fx.on{opacity:1;visibility:visible;transform:none}
+.fx-toggle{display:flex;align-items:center;gap:8px;height:46px;padding:0 18px 0 14px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;box-shadow:0 10px 28px rgba(17,19,24,.3)}
+.fx-lbl{white-space:nowrap}
+.fx-body{display:none;position:absolute;right:0;bottom:calc(100% + 10px);width:264px;background:#fff;border-radius:20px;padding:18px;box-shadow:0 20px 50px rgba(17,19,24,.22);border:1px solid var(--line)}
+.fx.open .fx-body{display:block}
+.fx-t{font-size:15px;font-weight:800;margin-bottom:4px}
+.fx-s{font-size:12px;font-weight:700;color:var(--ink3);margin:12px 0 7px}
+.fx-chips{display:flex;flex-wrap:wrap;gap:6px}
+.fx-chips button{height:36px;padding:0 13px;border-radius:999px;background:var(--bg);font-weight:700;font-size:13.5px;color:var(--ink2);transition:.15s}
+.fx-chips button:hover{background:#ECEEF2}
+.fx-chips button.on{background:var(--red);color:#fff;box-shadow:0 6px 14px rgba(225,0,42,.25)}
+.fx-seg{display:flex;background:var(--bg);border-radius:999px;padding:4px}
+.fx-seg button{flex:1;height:34px;border-radius:999px;font-weight:700;font-size:12.5px;color:var(--ink2);white-space:nowrap;transition:.15s}
+.fx-seg button.on{background:var(--ink);color:#fff}
+.fx-n{margin-top:12px;font-size:11.5px;color:var(--ink3);line-height:1.5}
+@media (min-width:1500px){
+  .fx{top:50%;bottom:auto;right:20px;transform:translateY(calc(-50% + 10px))}
+  .fx.on{transform:translateY(-50%)}
+  .fx-toggle{display:none}
+  .fx-body{display:block;position:static;width:150px;padding:16px}
+  .fx-chips{flex-direction:column}
+  .fx-chips button{width:100%}
+  .fx-seg{flex-direction:column;border-radius:16px}
+  .fx-seg button{width:100%;height:36px}
+}
+
+/* ---------- footer (company info) ---------- */
+.ft2{margin-top:84px;background:#2D2D2D;color:#B5B5B5;padding:44px 0 52px;font-size:13.5px}
+.ft2-grid{display:grid;grid-template-columns:1fr 520px;gap:48px;align-items:start}
+.ft2-links{display:flex;list-style:none;margin-bottom:28px}
+.ft2-links li{padding:0 18px;border-left:1px solid #555;line-height:1}
+.ft2-links li:first-child{padding-left:0;border-left:0}
+.ft2-links a{color:#fff;font-weight:700;font-size:14px}
+.ft2-info{display:flex;flex-direction:column;gap:7px}
+.ft2-info > div{display:flex;flex-wrap:wrap;gap:4px 0;line-height:1.6}
+.ft2-info dt{color:#7C7C7C;margin-right:8px}
+.ft2-info dd{color:#D8D8D8;margin-right:30px}
+.ft2-copy{margin-top:26px;color:#9A9A9A}
+.ft2-name{margin-top:26px;font-size:24px;font-weight:400;color:#CFCFCF;letter-spacing:-.4px}
+.ft2-cert{display:block;width:100%;height:auto;border-radius:2px}
+.ft2-call{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:22px;color:#BDBDBD}
+.ft2-call span{font-size:26px}
+.ft2-call b{font-size:30px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.ft2-btn{display:inline-flex;align-items:center;gap:14px;height:46px;padding:0 20px;border:1px solid #BDBDBD;border-radius:999px;color:#fff;font-size:14.5px;transition:.2s}
+.ft2-btn:hover{background:#fff;color:#2D2D2D}
+@media (max-width:900px){
+  .ft2{margin-top:56px;padding:34px 0 44px}
+  .ft2-grid{grid-template-columns:1fr;gap:28px}
+  .ft2-links{flex-wrap:wrap;margin-bottom:20px;row-gap:8px}
+  .ft2-info dd{margin-right:18px}
+  .ft2-name{font-size:19px;margin-top:20px}
+  .ft2-call{flex-wrap:wrap;gap:10px}
+  .ft2-call span{font-size:20px}.ft2-call b{font-size:24px}
 }

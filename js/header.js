@@ -233,4 +233,35 @@
       closePop(); f.reset(); toast('상담 신청이 접수되었습니다 (샘플)');
     });
   });
+
+  /* ---------- category links -> the local list page (list.html?c=...&sub=...) ---------- */
+  var CATK = { CA0087: 'water', CA0088: 'air', CA0089: 'bidet', CA0092: 'mat', CA0357: 'namuh', CA0361: 'biz' };
+  var SUBK = { CA0095: 'ice', CA0094: 'hotcold', CA0096: 'cold', CA0097: 'basic', CA0333: 'ss', CA0334: 'q', CA0335: 'k' };
+  function localHref(h) {
+    var m = String(h || '').match(/cate1=(CA\d+)/); if (!m || !CATK[m[1]]) return null;
+    var s = String(h).match(/cate2=(CA\d+)/);
+    return 'list.html?c=' + CATK[m[1]] + (s && SUBK[s[1]] ? '&sub=' + SUBK[s[1]] : '');
+  }
+  function localize(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('a[href*="cate1="]'), function (a) {
+      var l = localHref(a.getAttribute('href')); if (l) { a.setAttribute('href', l); a.removeAttribute('target'); a.removeAttribute('rel'); }
+    });
+  }
+  localize(document);
+  /* links created later (hero slides, tabs ...) are fixed right before the click */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="cate1="]');
+    if (a) { var l = localHref(a.getAttribute('href')); if (l) { a.setAttribute('href', l); a.removeAttribute('target'); } }
+  }, true);
+  /* mobile drawer links (they only have a label) */
+  var DRAWER = {
+    '얼음정수기': 'list.html?c=water&sub=ice', '냉온정수기': 'list.html?c=water&sub=hotcold', '냉정수기': 'list.html?c=water&sub=cold', '일반정수기': 'list.html?c=water&sub=basic',
+    '공기청정기': 'list.html?c=air', '비데': 'list.html?c=bidet',
+    'SS (슈퍼싱글)': 'list.html?c=mat&sub=ss', 'Q (퀸)': 'list.html?c=mat&sub=q', 'K (킹)': 'list.html?c=mat&sub=k',
+    'NAMUH': 'list.html?c=namuh', '사업자전용': 'list.html?c=biz'
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('.drawer a'), function (a) {
+    var t = a.textContent.trim();
+    if (DRAWER[t] && a.getAttribute('href') === '#') a.setAttribute('href', DRAWER[t]);
+  });
 })();

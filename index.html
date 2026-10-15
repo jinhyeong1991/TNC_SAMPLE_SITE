@@ -136,11 +136,7 @@
   <section class="sec reveal" id="products">
     <div class="sec-h"><div><span class="eb">BEST RENTAL</span><h2>의무기간별 렌탈료 비교</h2></div><a class="more" href="https://sk.tncrental.co.kr/shop/goods.php?cate1=CA0087&depth=1">전체 제품 →</a></div>
     <div class="ptabs" id="ptabs"></div>
-    <div class="pfilter">
-      <div class="grp"><span class="lb">의무사용기간</span><div class="chips" id="pchips"></div></div>
-      <div class="grp mode"><span class="lb">가격 기준</span>
-        <div class="seg" id="pmode"><button type="button" class="on" data-m="card">제휴카드 적용</button><button type="button" data-m="rental">월 렌탈료</button></div></div>
-    </div>
+    <p class="phint">의무사용기간과 가격 기준은 오른쪽 아래(큰 화면은 오른쪽 가운데)의 "렌탈 조건"에서 바꿀 수 있어요. 바꾸면 페이지의 모든 가격이 바로 바뀝니다.</p>
     <div class="pg" id="pg"></div>
     <p class="pnote">※ 기간 또는 관리방법에 따라 가격이 달라지며, 제휴카드 혜택가는 렌탈사 최대 할인 기준입니다. 프로모션은 기간 한정이며 제품별로 적용 개월 수가 다릅니다. 기간 선택이 없는 제품은 월 렌탈료만 표시됩니다.</p>
   </section>
@@ -225,12 +221,24 @@
 
 </main>
 
-<footer class="ft">
+<footer class="ft2">
   <div class="mw">
-    <b>SK매직 인증파트너 · 티앤씨렌탈</b>
-    <div class="row"><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="https://sk.tncrental.co.kr/shop/notice.php">공지사항</a></div>
-    <div>대표전화 1670-4113 · 사업자 정보와 통신판매업 신고 정보는 실제 사이트 푸터 내용으로 교체해 주세요.</div>
-    <div>© TNC Rental. Sample layout.</div>
+    <div class="ft2-grid">
+      <div class="ft2-l">
+        <ul class="ft2-links"><li><a href="#">이용약관</a></li><li><a href="#">개인정보처리방침</a></li><li><a href="#" data-open-consult>빠른 상담 신청</a></li></ul>
+        <dl class="ft2-info">
+          <div><dt>업체명</dt><dd>송파 본점 인증파트너 (주)티앤씨매직</dd><dt>대표자</dt><dd>오은경, 김판수</dd><dt>E-mail</dt><dd>tncmagic@naver.com</dd></div>
+          <div><dt>상담문의</dt><dd>1670-4113</dd><dt>팩스</dt><dd>02-416-0328</dd><dt>주소</dt><dd>(05836) 서울 송파구 법원로 127 문정대명밸리온 713호, 714호 (문정동)</dd></div>
+          <div><dt>사업자등록번호</dt><dd>645-88-00946</dd><dt>통신판매신고번호</dt><dd>2018-서울송파-1068호</dd></div>
+        </dl>
+        <p class="ft2-copy">Copyright by 2022 https://sk.tncrental.co.kr. All Rights Reserved.</p>
+        <p class="ft2-name">SK매직 송파 본점 인증파트너 (주)티앤씨매직</p>
+      </div>
+      <div class="ft2-r">
+        <img class="ft2-cert" alt="SK매직 인증파트너 인증서" loading="lazy" src="https://devadmin.tncrental.co.kr/uploads/company/C00019/eKOWVMtUYB.gif">
+        <div class="ft2-call"><span>상담문의</span><b>1670-4113</b><a class="ft2-btn" href="https://devadmin.tncrental.co.kr//manager" target="_blank" rel="noopener">파트너점 관리<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -255,7 +263,9 @@
 
 <script src="js/data.js"></script>
 <script src="js/data-all.js"></script>
+<script src="js/data-periods.js"></script>
 <script src="js/hero-slides.js"></script>
+<script src="js/fx.js"></script>
 <script src="js/header.js"></script>
 <script src="js/main.js"></script>
 <script src="js/hero.js"></script>
