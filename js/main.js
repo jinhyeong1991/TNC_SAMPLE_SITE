@@ -313,6 +313,7 @@
   tabs.innerHTML = T.CATS.map(function (c) { return '<button type="button" data-c="' + c.k + '"' + (c.k === 'all' ? ' class="on"' : '') + '>' + c.t + '</button>'; }).join('');
   tabs.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
+    if (b.getAttribute('data-c') !== 'all') { location.href = 'list.html?c=' + b.getAttribute('data-c'); return; }   /* category tab -> its list page */
     $$('button', tabs).forEach(function (x) { x.classList.toggle('on', x === b); });
     cat = b.getAttribute('data-c'); render();
     $$('[data-v]', grid).forEach(function (n) { n.setAttribute('data-v', 0); });   /* new cards count up from 0 */
