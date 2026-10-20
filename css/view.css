@@ -3,6 +3,13 @@ html, body { background: #fff; }
 /* 실제 사이트는 450px 이하에서 .inner 좌우 여백이 0 → 렌탈신청 제목·경로가 화면 끝에 붙지 않게 (주문 영역과 같은 14px) */
 @media (max-width: 450px) { .pg-order .sub_top { padding-left: 14px; padding-right: 14px; } }
 
+/* PC 오른쪽 리모컨(#cmp-rail-slot): 실제 사이트는 얇은 상단 메뉴(약 60px) 아래에 붙도록 top 60~68px 이다.
+   샘플 헤더는 스크롤 시 119px 라 그대로 두면 리모컨 윗부분(상품명)이 헤더 밑에 가려진 채 따라온다 → 헤더 아래 16px 에 붙인다.
+   높이는 아래 AI 상담 버튼(.tnc-ai-dfab)과 겹치지 않게 남긴다 (하단 전화번호 바는 없앴음) */
+@media (min-width: 801px) {
+  .pg-view #cmp-rail-slot { top: 135px; max-height: calc(100vh - 265px); }
+}
+
 /* 렌탈신청 완료 안내 (샘플: 실제 접수는 하지 않음) */
 .oc-done { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; padding: 20px; background: rgba(17, 19, 24, .5); }
 .oc-done[hidden] { display: none; }
