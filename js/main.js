@@ -269,7 +269,7 @@
 
   function visible() { return T.PRODUCTS.filter(function (p) { return cat === 'all' ? p.f : p.cat === cat; }); }
   function cardHtml(p, i) {
-    return '<a class="pcard" style="animation-delay:' + (i * 45) + 'ms" href="' + SHOP + 'goods_view.php?goods=' + p.id + '" data-id="' + p.id + '">' +
+    return '<a class="pcard" style="animation-delay:' + (i * 45) + 'ms" href="' + (p.id === 'G050304' ? 'view.html?goods=' : SHOP + 'goods_view.php?goods=') + p.id + '" data-id="' + p.id + '">' +
       '<div class="im">' + (p.bd ? '<span class="bd">' + p.bd + '</span>' : '') + '<img loading="lazy" alt="" src="' + IMG + p.img + '"></div>' +
       '<p class="nm"><em>[렌탈]</em>' + esc(p.name) + '</p>' +
       '<div class="pbox"><s class="st">월 <span data-r="st">0</span>원</s>' +

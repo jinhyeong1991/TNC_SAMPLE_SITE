@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#E1002A">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon.png">
+<title>렌탈신청 | 티앤씨렌탈</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<!-- ===== 실제 렌탈신청 페이지(sk.tncrental.co.kr order.php)의 CSS·스크립트 ===== -->
+<link rel="stylesheet" href="https://type3.tncrental.co.kr/common/common.css?20261020174514">
+
+	<link rel="stylesheet" href="https://type3.tncrental.co.kr/css/slick.css?20261020174514">
+    <link rel="stylesheet" href="https://type3.tncrental.co.kr/css/reset.css?20261020174514">
+    <link rel="stylesheet" href="https://type3.tncrental.co.kr/css/common.css?20261020174514">
+    <link rel="stylesheet" href="https://type3.tncrental.co.kr/css/layout.css?20261020174514">
+
+	<link rel="stylesheet" href="https://type3.tncrental.co.kr/css/sub.css?20261020174514">
+
+    <script src="https://type3.tncrental.co.kr/common/common.js?1"></script>
+
+    <script src="https://type3.tncrental.co.kr/js/jquery-1.11.2.min.js?1"></script>
+    <script src="https://type3.tncrental.co.kr/js/jquery-ui.min.js?1"></script>
+    <script src="https://type3.tncrental.co.kr/js/slick.js?1"></script>
+    <script src="https://type3.tncrental.co.kr/js/common.js?1"></script>
+
+<script type="text/javascript">
+
+	//	### https 로 이동 #####
+	
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){changeIMG();});    
+    function changeIMG(){
+    	 $(".sitemap img").attr("src", "https://startup.tncrental.co.kr/Home/menu_sk.png");}
+	
+	function findLowestPrice() {
+    const reSection = document.getElementById('re');
+    if (!reSection) return;
+    const tableWrap = reSection.querySelector('.table_wrap');
+    const isMobileView = tableWrap && getComputedStyle(tableWrap).display !== 'none';
+    // 기존 lowest-price, lowest-price-wrapper 클래스 다 제거
+    reSection.querySelectorAll('.lowest-price').forEach(el => el.classList.remove('lowest-price'));
+    reSection.querySelectorAll('.lowest-price-wrapper').forEach(el => el.classList.remove('lowest-price-wrapper'));
+    if (isMobileView) {
+        // ===== 모바일 구조 (table 구조) =====
+        const rows = tableWrap.querySelectorAll('tbody tr');
+        let minPrice = Infinity;
+        let targetSpan = null;
+        rows.forEach(function(row) {
+            const firstTd = row.querySelector('td.color_gray');
+            if (!firstTd) return;
+
+            if (firstTd.textContent.includes('월 렌탈료')) {
+                const priceTds = row.querySelectorAll('td:not(.color_gray)');
+                priceTds.forEach(function(td) {
+                    const em = td.querySelector('em');
+                    if (!em) return;
+                    const priceText = em.textContent.replace(/,/g, '').replace('원', '').trim();
+                    const price = parseInt(priceText, 10);
+
+                    if (!isNaN(price) && price < minPrice) {
+                        minPrice = price;
+                        targetSpan = td.querySelector('span') || td; // span이 있으면 span에, 없으면 td에
+                    }
+                });
+            }
+        });
+        if (targetSpan) {
+            targetSpan.classList.add('lowest-price-wrapper');
+        }
+    } else {
+        // ===== PC 구조 (top > div 구조) =====
+        const topDivs = reSection.querySelectorAll('.top > div');
+        let minPrice = Infinity;
+        let minH1 = null;
+
+        topDivs.forEach(function(topDiv) {
+            const rentalFeeTitle = Array.from(topDiv.querySelectorAll('p')).find(p => p.textContent.includes('월 렌탈료'));
+            if (!rentalFeeTitle) return;
+
+            const rentalFeeSpan = rentalFeeTitle.nextElementSibling; // p 다음 span
+            if (!rentalFeeSpan) return;
+
+            const rentalFeeEm = rentalFeeSpan.querySelector('em');
+            if (!rentalFeeEm) return;
+
+            const priceText = rentalFeeEm.textContent.replace(/,/g, '').replace('원', '').trim();
+            const price = parseInt(priceText, 10);
+
+            if (!isNaN(price) && price < minPrice) {
+                minPrice = price;
+                minH1 = topDiv.querySelector('h1');
+            }
+        });
+        if (minH1) {
+            minH1.classList.add('lowest-price');
+        }
+    }
+}
+// 최초 실행 + 창 리사이즈할 때마다 다시 체크
+document.addEventListener('DOMContentLoaded', findLowestPrice);
+window.addEventListener('resize', findLowestPrice);
+window.addEventListener('load', findLowestPrice);
+		
+</script>
+
+<!-- <script type="text/javascript">
+ (function () {
+  const url = new URL(window.location.href);
+
+  if (url.pathname === '/shop/goods_view.php' && url.searchParams.has('goods')) {
+    window.addEventListener('DOMContentLoaded', function () {
+      const main = document.querySelector('main');
+      const thirdChild = main.children[2];
+
+      if (main && thirdChild) {
+        const jin = document.createElement('div');
+        jin.className = 'jin';
+        jin.style.width = '100%';
+        jin.style.height = '200px';
+        jin.style.position = 'relative';
+        jin.style.overflow = 'hidden';
+        jin.style.margin = '10px 0';
+
+        main.removeChild(thirdChild);
+        main.appendChild(jin);
+        main.appendChild(thirdChild);
+
+        setTimeout(() => {
+          jin.innerHTML = `
+            <div class="slider-track">
+              <div class="slide" style="background-color: yellow;"></div>  복제본-3 
+              <div class="slide" style="background-color: red;"></div>
+              <div class="slide" style="background-color: blue;"></div>
+              <div class="slide" style="background-color: yellow;"></div>
+              <div class="slide" style="background-color: red;"></div>  복제본-1 
+            </div>
+            <button class="slider-btn prev">&#10094;</button>
+            <button class="slider-btn next">&#10095;</button>
+          `;
+
+          const style = document.createElement('style');
+          style.innerHTML = `
+            .slider-track {
+              display: flex;
+              width: 500%;
+              height: 100%;
+              transition: transform 0.5s ease;
+            }
+            .slide {
+              width: 100%;
+              height: 100%;
+              flex-shrink: 0;
+            }
+            .slider-btn {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              background-color: rgba(0, 0, 0, 0.5);
+              color: white;
+              border: none;
+              font-size: 24px;
+              padding: 8px 12px;
+              cursor: pointer;
+              z-index: 10;
+            }
+            .slider-btn.prev { left: 10px; }
+            .slider-btn.next { right: 10px; }
+          `;
+          document.head.appendChild(style);
+
+          const track = jin.querySelector('.slider-track');
+          const prevBtn = jin.querySelector('.prev');
+          const nextBtn = jin.querySelector('.next');
+
+          let index = 1; // 첫 번째 슬라이드는 1번 (진짜 red)
+          const totalSlides = 3;
+
+          function updateSlide(withTransition = true) {
+            if (!withTransition) track.style.transition = 'none';
+            else track.style.transition = 'transform 0.5s ease';
+
+            track.style.transform = `translateX(-${index * 100}%)`;
+          }
+
+          function nextSlide() {
+            index++;
+            updateSlide();
+            if (index > totalSlides) {
+              setTimeout(() => {
+                index = 1;
+                updateSlide(false); // transition 없이 순간 이동
+              }, 500);
+            }
+          }
+
+          function prevSlide() {
+            index--;
+            updateSlide();
+            if (index === 0) {
+              setTimeout(() => {
+                index = totalSlides;
+                updateSlide(false);
+              }, 500);
+            }
+          }
+
+          let autoSlide = setInterval(nextSlide, 5000);
+
+          nextBtn.addEventListener('click', () => {
+            clearInterval(autoSlide);
+            nextSlide();
+            autoSlide = setInterval(nextSlide, 5000);
+          });
+
+          prevBtn.addEventListener('click', () => {
+            clearInterval(autoSlide);
+            prevSlide();
+            autoSlide = setInterval(nextSlide, 5000);
+          });
+
+          // 초기 위치 세팅
+          updateSlide(false);
+        }, 3000);
+      }
+    });
+  }
+})();
+</script> -->
+
+<style type="text/css">
+.top_menu .search button { background: #e1002a; }
+.top_menu .search { border: 1px solid #e1002a;  }
+.top_menu .call p{ color: #e1002a; }
+.top_menu .call{background: url(https://startup.tncrental.co.kr/Home/call_sk.png) no-repeat;}
+.bot_menu .category_open { background: #e1002a; }
+.bot_menu .menu li>a:before { background: #ee7601; }
+.bot_menu .menu li:hover>a{color: #ee7601;}
+.item a div.evt .orange { color: #e1002a; border: 1px solid #e1002a; }
+.item a:hover:before { border: 2px solid #e1002a; }
+.color_orange { color: #e1002a !important;}
+.kategorie .item a:hover:before {border: 3px solid #e1002a;}
+.kategorie .item a div.evt .orange { color: #e1002a; border: 1px solid #e1002a; }
+.goods_meta>.orange {color: #e1002a; border: 1px solid #e1002a;}
+.product .list .tac a { background: #e1002a; }
+.sub_top h1 {border-bottom: 3px solid #e1002a; }
+.product .detail .right .navi li > a.on {color: #e1002a;  border: 2px solid #e1002a;}
+.card .list1 li.active a:before { border: 3px solid #e1002a;}    
+.tab3>div div button.active {background:#e1002a;}    
+.tab3 {border-top: 2px solid #e1002a;}
+.tab1 button.active:before { border: 1px solid #e1002a; }        
+.kategorie .item a>span.navy{background: #e1002a;}
+.kategorie .item a>span.orange {border: 1px solid #e7580a;}
+.kategorie_con .pc_select a.active { color: #e1002a; }
+.kategorie_con .pc_select a.active:before { background: #e1002a;}
+.com_btn.dark {background: #e1002a;     border-color: #e1002a;}
+.kategorie_con p em { color: #e1002a; }
+.com_tab li.active { background: #e1002a; }
+.com_btn.dark {background: #e1002a;}
+.pop.counsel>a { background: #e1002a; }
+.pop.counsel ul li textarea::placeholder { color: #e1002a; }
+.product .detail .right .navi li > a.yo.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_1_sk.png) no-repeat center/cover;}
+.product .detail .right .navi li > a.re.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_1_sk.png) no-repeat center/cover;}
+.product .detail .right .navi li > a.be.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_2_cesco.png) no-repeat center/cover;}
+.product .detail .right .navi li > a.vw.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_3_cesco.png) no-repeat center/cover;}
+.product .detail .right .navi li > a.gf.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_4_cesco.png) no-repeat center/cover;}
+.product .detail .right .navi li > a.rv.on::after{background:url(https://startup.tncrental.co.kr/Home/fo_icon_01_5_cesco.png) no-repeat center/cover;}
+.quick .counsel .top em  { color: #e1002a; }
+.quick .counsel { background: #e1002a; }
+.quick .card p { color: #e1002a; }
+.blink{ animation: none !important;}
+/*.bot_fixed {background: #e1002a; padding: 21px 0;}*/
+.bot_fixed .right button { background: #e1002a;}
+.product .list .con .top {grid-template-columns: repeat(auto-fill, minmax(200px, auto)) !important;}
+.event .list .img img {    min-height: fit-content;}
+	.event .list .img{padding-top: 60% !important;}
+/* 최저가 표시 PC 버전 */
+h1.lowest-price {
+    position: relative;
+    display: inline-block;
+}
+h1.lowest-price::after {
+    content: "최저가";
+    background: #e1002a;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+/* 최저가 표시 모바일 버전 */
+span.lowest-price-wrapper {
+    position: relative;
+    display: inline-block;
+}
+span.lowest-price-wrapper::after {
+    content: "최저가";
+    background: #e1002a;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 10px;
+    vertical-align: middle;
+	display: block;
+}		
+@media(max-width: 1200px){
+    .bot_fixed_m .counsel_open { background: #e1002a; }
+    .bot_fixed_m p{color: #e1002a; }
+}    
+@media (max-width: 768px) {
+ .kategorie .item a h1 { font-size: 14px !important; height: 50px;}
+ .kategorie .item a div.evt .orange{font-size: 13px !important;}
+ .top_pop2 {display: none !important;}
+ .top_pop3 {display: block !important;}
+  .kategorie ul.item {display: grid;    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));    gap: 10px;    padding: 30px 0;}
+}    
+@media (max-width: 390px) {
+.kategorie .item a div h3 { font-size: 8px !important;}
+.color_orange h3 { margin-left: -20px; }
+}
+.jin {
+    width: 100%;
+    height: 30px;
+    background-color: #ccc;
+}
+
+:root {
+  --cmp-ac-grad: linear-gradient(135deg, #ec3b57 0%, #e1002a 100%);
+}
+
+.cmp-q,
+.cmp-btn.on, .cmp-slot.on,
+.cmp-right .cmp-apply, #cmp-rail-body .cmp-apply,
+.cmp-badge,
+.pop.cmp-cards h1,
+.cmp-pmtag {
+  background: var(--cmp-ac-grad) !important;
+}
+
+:root {
+  --ai-b1: #ec3b57;   /* 밝은 레드 */
+  --ai-b2: #e1002a;   /* SK매직 기준 */
+  --ai-bd: #b90022;   /* 진한 텍스트용 */
+  --ai-bd2: #8f001a;  /* 더 진한 텍스트(표 헤더 글자 등) */
+  --ai-l: #fce6ea;    /* 연한 배경 */
+  --ai-l2: #fdf0f2;
+  --ai-line: #f8bfca; /* 연한 테두리 */
+  --ai-grad: linear-gradient(135deg, var(--ai-b1), var(--ai-b2));
+  --ai-glow: rgba(225,0,42,.22);
+}
+
+/* ── AI 요약 박스 ── */
+.ai-briefing-badge { background: var(--ai-grad) !important; }
+.ai-briefing-text strong { color: var(--ai-bd) !important; }
+.ai-briefing-text .em-price { color: var(--ai-b2) !important; }
+.ai-briefing-text.cmp-typing::after { color: var(--ai-b2) !important; }
+
+/* 핵심 기능 보기 (접기 영역) */
+.ai-vision-summary {
+  color: var(--ai-bd) !important;
+  background: var(--ai-l2) !important;
+  border-color: var(--ai-line) !important;
+}
+.ai-vision-hint { color: #a06a74 !important; }
+
+/* 표 */
+.ai-briefing-table-wrap { border-color: var(--ai-line) !important; }
+.ai-briefing-table thead th { background: var(--ai-l) !important; color: var(--ai-bd2) !important; }
+
+/* ── 하단 푸터 (더 궁금한 점...) ── */
+.ai-briefing-ask { border-top-color: var(--ai-line) !important; }
+.ai-briefing-ask-t { color: var(--ai-bd2) !important; }
+
+.ai-briefing-ask-b {
+  background: var(--ai-l) !important;
+  color: var(--ai-bd) !important;
+  border-color: var(--ai-line) !important;
+  box-shadow: 0 4px 12px rgba(225,0,42,.28) !important;
+}
+.ai-briefing-ask-b:hover { box-shadow: 0 8px 20px rgba(225,0,42,.45) !important; }
+
+/* AI 상담 / 전체 보기 버튼 (그라디언트 테두리) */
+.ai-briefing-ask-chat,
+.cmp-ai-more {
+  background: linear-gradient(#fff,#fff) padding-box, var(--ai-grad) border-box !important;
+  box-shadow: 0 4px 14px rgba(225,0,42,.16) !important;
+}
+.cmp-ai-more { color: var(--ai-bd) !important; }
+.cmp-ai-more:hover { box-shadow: 0 8px 20px rgba(225,0,42,.35) !important; }
+.cmp-ai-more.cmp-ai-more-m { border-color: var(--ai-line) !important; background: #fff !important; }
+
+/* 반짝이는 shine 효과 */
+.ai-briefing-ask-chat .asc-in::after,
+.cmp-ai-more .cmp-more-in::after {
+  background: linear-gradient(120deg, transparent, var(--ai-glow), transparent) !important;
+}
+
+/* AI 상담 아이콘 원 */
+.ai-briefing-ask-chat .asc-ic { background: var(--ai-grad) !important; }
+
+/* NEW 뱃지 */
+.ai-briefing-ask-chat .asc-nb { background: #b90022 !important; }
+
+.com_btn.dark,
+.cmp-right .cmp-apply,
+#cmp-rail-body .cmp-apply {
+  border: 0 !important;
+}
+
+/* ── 하단 바 / 플로팅 AI 상담 버튼 ── */
+.tnc-ai-dfab {
+  background: linear-gradient(#fff,#fff) padding-box, var(--ai-grad) border-box !important;
+  box-shadow: 0 5px 16px rgba(225,0,42,.25) !important;
+}
+.tnc-ai-dfab .dfab-in { color: var(--ai-bd) !important; }
+.tnc-ai-dfab .dfab-in::after { background: linear-gradient(120deg, transparent, var(--ai-glow), transparent) !important; }
+.tnc-ai-dfab .dfab-ic { background: var(--ai-grad) !important; }
+.tnc-ai-dfab .dfab-nb { background: #b90022 !important; }
+.tnc-ai-mfab { border-color: var(--ai-b2) !important; box-shadow: 0 6px 18px rgba(225,0,42,.45) !important; }
+
+</style>
+
+
+
+
+<script>
+
+function shareTwitter(section, code, title) {
+    var sendText = title; // 전달할 텍스트
+    var sendUrl = "https://sk.tncrental.co.kr/shop/order.php"; // 전달할 URL
+    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+}
+
+
+function shareFacebook(section, code, title) {
+    var sendUrl = "https://sk.tncrental.co.kr/shop/order.php"; // 전달할 URL
+    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+}
+
+function CopyUrlToClipboard(url)
+{
+	var obShareUrl = document.getElementById("ShareUrl");
+//	obShareUrl.value = window.document.location.href;  // 현재 URL 을 세팅해 줍니다.
+	obShareUrl.value = url;
+
+	obShareUrl.select();  // 해당 값이 선택되도록 select() 합니다
+	document.execCommand("copy"); // 클립보드에 복사합니다.
+
+	obShareUrl.blur(); // 선택된 것을 다시 선택안된것으로 바꿈니다.
+
+	alert("URL이 클립보드에 복사되었습니다");
+}
+
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/header-view.css">
+<link rel="stylesheet" href="css/view.css">
+</head>
+<body class="pg-order">
+
+<div class="hd" id="hd" role="banner">
+  <!-- 1) utility row (PC) -->
+  <div class="util">
+    <div class="wrap">
+      <div class="promo"><b>10월 가을 가전 특별전</b> 렌탈료 할인 · 면제 · 사은품 증정</div>
+      <nav>
+        <a class="dot" href="https://sk.tncrental.co.kr/shop/event.php" target="_blank" rel="noopener">이벤트</a>
+        <a href="https://sk.tncrental.co.kr/shop/card.php" target="_blank" rel="noopener">카드혜택</a>
+        <a href="https://sk.tncrental.co.kr/shop/notice.php" target="_blank" rel="noopener">공지사항</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 2) main row -->
+  <div class="wrap main">
+    <button class="icon-btn m-only" id="openDrawer" aria-label="메뉴">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
+    <a class="logo" href="index.html"><img src="https://devadmin.tncrental.co.kr//uploads/company/C00019/xS9fvT0jk5.gif" alt="SK매직 인증파트너"></a>
+
+    <form class="search" onsubmit="return false">
+      <input type="text" id="hSearch" readonly placeholder="어떤 제품을 찾으세요?  예) 얼음정수기, 매트리스" aria-label="검색">
+      <button aria-label="검색"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    </form>
+
+    <div class="right">
+      <div class="tel">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg></span>
+        <div><small>상담문의</small><strong>1670-4113</strong></div>
+      </div>
+      <button class="btn btn-red cta" data-open-consult>간편상담 신청</button>
+      <button class="btn btn-ai" data-ai>
+        <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7z"/></svg>AI 상담<span class="new">NEW</span>
+      </button>
+      <!-- mobile -->
+      <button class="icon-btn m-only" id="mSearch" aria-label="검색">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn call m-only" data-open-consult aria-label="상담 신청">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3) category row -->
+  <div class="cat">
+    <div class="wrap">
+      <button class="allbtn" id="allBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>전체</button>
+      <ul class="cat-list">
+        <li data-mega="water"><a class="t on" href="goods.php?cate1=CA0087&depth=1">정수기</a></li>
+        <li data-mega="air"><a class="t" href="goods.php?cate1=CA0088&depth=1">공기청정기</a></li>
+        <li data-mega="bidet"><a class="t" href="goods.php?cate1=CA0089&depth=1">비데</a></li>
+        <li data-mega="mat"><a class="t" href="goods.php?cate1=CA0092&depth=1">매트리스/프레임</a></li>
+        <li data-mega="namuh"><a class="t" href="goods.php?cate1=CA0357&depth=1">NAMUH<span class="tag">NEW</span></a></li>
+        <li data-mega="biz"><a class="t" href="goods.php?cate1=CA0361&depth=1">사업자전용</a></li>
+      </ul>
+    </div>
+    <!-- mega panels are built from MEGA data in the script below -->
+    <div id="megaRoot"></div>
+  </div>
+
+  <!-- quick consult popover / bottom sheet -->
+  <div class="pop" id="pop" role="dialog" aria-label="간편상담">
+    <h3>1분 만에 상담 신청</h3>
+    <p class="s">이름과 연락처만 남기면 전문 상담사가 연락드려요.</p>
+    <form id="consultForm" novalidate>
+      <input class="field" id="cName" placeholder="이름" autocomplete="name">
+      <input class="field" id="cTel" placeholder="연락처 (010-0000-0000)" inputmode="tel" autocomplete="tel">
+      <label class="agree"><input type="checkbox" id="cAgree"> 개인정보 수집·이용에 동의합니다 <a href="#" data-terms>자세히보기</a></label>
+      <button class="btn btn-red" type="submit">간편상담 신청하기</button>
+    </form>
+    <a class="call" href="tel:16704113">전화로 바로 상담하기 <b>1670-4113</b></a>
+  </div>
+</div>
+<div class="hd-space" id="hdSpace"></div>
+<div class="scrim" id="scrim"></div>
+
+<!-- mobile drawer -->
+<div class="drawer-scrim" id="dScrim"></div>
+<aside class="drawer" id="drawer" aria-label="전체 메뉴">
+  <div class="top"><a href="index.html"><img src="https://devadmin.tncrental.co.kr//uploads/company/C00019/xS9fvT0jk5.gif" alt="SK매직 인증파트너"></a>
+    <button class="icon-btn" id="closeDrawer" aria-label="닫기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="body">
+    <details open><summary>정수기</summary><a class="lnk" href="#">얼음정수기</a><a class="lnk" href="#">냉온정수기</a><a class="lnk" href="#">냉정수기</a><a class="lnk" href="#">일반정수기</a></details>
+    <a class="plain" href="#">공기청정기</a>
+    <a class="plain" href="#">비데</a>
+    <details><summary>매트리스/프레임</summary><a class="lnk" href="#">SS (슈퍼싱글)</a><a class="lnk" href="#">Q (퀸)</a><a class="lnk" href="#">K (킹)</a></details>
+    <a class="plain" href="#">NAMUH</a>
+    <a class="plain" href="#">사업자전용</a>
+    <div style="height:14px"></div>
+    <a class="lnk" href="https://sk.tncrental.co.kr/shop/event.php" target="_blank" rel="noopener">이벤트</a><a class="lnk" href="https://sk.tncrental.co.kr/shop/card.php" target="_blank" rel="noopener">카드혜택</a><a class="lnk" href="https://sk.tncrental.co.kr/shop/notice.php" target="_blank" rel="noopener">공지사항</a>
+  </div>
+  <div class="foot">
+    <a class="btn btn-ai" href="tel:16704113">전화 1670-4113</a>
+    <button class="btn btn-red" data-open-consult data-from-drawer>간편상담</button>
+  </div>
+</aside>
+
+
+
+<!-- ===== 렌탈신청 본문 (실제 order.php 구성 · 하단 푸터/전화번호 바 제외) ===== -->
+
+<main>
+        <div class="inner">
+            <div class="sub_top">
+                <div class="sub_menu">
+                    <a href="index.html"><img src="https://sk.tncrental.co.kr/images/sub/home.png" alt=""> HOME</a>
+                    <a href="javascript:history.back()">상품상세</a>
+                    <a href="#">렌탈신청</a>
+                </div>
+                <h1>렌탈신청</h1>
+            </div>
+
+            <form name="inputForm" class="cform" id="inputForm" method="post" onsubmit="return ActionCheck()">
+            <input type="hidden" name="company_code" value="C00019"/>
+            <input type="hidden" name="company_name" value="sk매직인증파트너"/>
+            <input type="hidden" name="goods_code" value=""/>
+            <input type="hidden" name="goods_name" value=""/>
+            <input type="hidden" name="goods_thum" value=""/>
+            <input type="hidden" name="goods_period" value=""/>
+            <input type="hidden" name="goods_price" value=""/>
+            <input type="hidden" name="goods_option" value=""/>
+            <input type="hidden" name="order_sn2" id="order_sn2" value=""/>
+            <input type="hidden" name="goods_brand" id="goods_brand" value=""/>
+
+            <div class="rental">
+                <div class="left">
+                    <h1>고객정보<span><em class="color_orange">*</em>필수입력</span></h1>
+                    <ul>
+                        <li>
+                            <p>신청자명<em class="color_orange">*</em></p>
+                            <div><input type="text" name="order_name" id="order_name" maxlength="10" placeholder="신청자 이름 입력" autocomplete="name"></div>
+                        </li>
+                        <li>
+                            <p>연락처<em class="color_orange">*</em></p>
+                            <div><input type="text" name="order_tel" id="order_tel" maxlength="13" placeholder="‘-’없이 숫자만 입력" inputmode="tel" autocomplete="tel"></div>
+                        </li>
+                        <li>
+                            <p>생년월일</p>
+                            <div class="ymd">
+                                <input type="text" name="order_sn1" id="order_sn1" maxlength="6" placeholder="생년월일6자리" inputmode="numeric" style="width:35%;">
+                                <div class="select" style="width:55%;">
+                                    <button type="button" class="label">주민번호 뒷자리 첫글자</button>
+                                    <ul class="option">
+                                      <li class="item">1</li>
+                                      <li class="item">2</li>
+                                      <li class="item">3</li>
+                                      <li class="item">4</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p>우편번호<em class="color_orange">*</em></p>
+                            <div class="post">
+                                <input type="text" name="order_zip" id="zipcode" maxlength="6" placeholder="우편번호" readonly>
+                                <button type="button" onclick="searchZip();">우편번호 검색</button>
+                            </div>
+                        </li>
+                        <li>
+                            <p>설치주소<em class="color_orange">*</em></p>
+                            <div class="address">
+                                <input type="text" name="order_address1" id="road_address" maxlength="40" placeholder="기본주소" readonly>
+                                <input type="text" name="order_address2" id="order_address2" maxlength="40" placeholder="상세주소">
+                            </div>
+                        </li>
+                        <li>
+                            <p>요청사항</p>
+                            <div class="freebie">
+                                <textarea name="order_contents" id="order_contents" placeholder="배송, 설치 등 기타  요청사항이 있을 경우 적어주세요."></textarea>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <h1>주문확인</h1>
+                    <style>
+						.cmp-oc { width: 100%; }
+						.cmp-oc-head { display: flex; gap: 14px; align-items: flex-start; }
+						.cmp-oc-head img { width: 96px; height: 96px; object-fit: contain; border: 1px solid #eee; border-radius: 10px; background: #fff; flex: 0 0 96px; }
+						.cmp-oc-head .cmp-oc-model { margin: 0; font-size: 13px; color: #888; line-height: 1.3; }
+						.cmp-oc-head h2 { margin: 3px 0 8px !important; font-size: 18px !important; line-height: 1.35 !important; font-weight: 700 !important; color: #222; }
+						/* 색상 : ● 씨엘 블루 — 사이트 CSS(.item_r span{display:block}) 보다 우선하도록 선택자를 길게. 디자인팀 피드백(2026-09-22): 팔레트 정렬·"색상 :" 표기 */
+						.rental .right .item_wrap .cmp-oc .cmp-oc-color { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #555; line-height: 1; margin-top: 2px; }
+						.rental .right .item_wrap .cmp-oc .cmp-oc-color i { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.18); flex: 0 0 14px; }
+						.rental .right .item_wrap .cmp-oc .cmp-oc-color b { color: #222; font-weight: 500; }	/* 디자인팀: 색상명은 굵기 500 으로 연하게 */
+						.cmp-oc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+						.cmp-oc-grid div { background: #f7f7f7; border-radius: 10px; padding: 9px 12px; }
+						.cmp-oc-grid p { margin: 0; font-size: 12px; color: #888; line-height: 1.3; }
+						.cmp-oc-grid b { display: block; margin-top: 3px; font-size: 15px; color: #222; font-weight: 700; line-height: 1.3; }
+						.cmp-oc-grid b small { font-size: 12px; color: #888; font-weight: 400; margin-left: 3px; }
+						.cmp-oc-price { border-top: 1px solid #e5e5e5; margin-top: 14px; padding-top: 10px; }
+						.cmp-oc-price div { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; font-size: 14px; color: #555; }
+						.cmp-oc-price div span:last-child { color: #333; }
+						.cmp-oc-price div.cmp-oc-est { padding-top: 8px; }
+						.cmp-oc-price div.cmp-oc-est span:first-child { font-weight: 700; color: #333; font-size: 15px; }
+						.cmp-oc-price div.cmp-oc-est span:last-child { color: #e7580a; font-weight: 700; font-size: 24px; font-family: 'Pretendard', sans-serif; }
+						.cmp-oc-price div.cmp-oc-est span:last-child small { font-size: 14px; font-weight: 400; margin-left: 1px; }
+						.cmp-oc-note { margin: 10px 0 0; font-size: 12px; color: #999; line-height: 1.5; }
+						.rental .right .item_wrap .cmp-oc span { display: inline; line-height: normal; }
+						@media (max-width: 600px) { .cmp-oc-head img { width: 80px; height: 80px; flex-basis: 80px; } .cmp-oc-head h2 { font-size: 16px !important; } }
+						/* 공용 common.css 가 450px 이하에서 .inner 패딩을 0으로 둬 주문확인 박스 테두리가 화면 끝에 붙는다 → 주문 영역(고객정보·주문확인)에 좌우 14px 여백 (상품비교 화면과 같은 값) */
+						@media (max-width: 450px) { .cform > .rental, form > .rental { padding-left: 14px; padding-right: 14px; box-sizing: border-box; } }
+					</style>
+                    <div class="item_wrap">
+                        <div class="cmp-oc">
+                            <div class="cmp-oc-head">
+                                <img id="ocImg" src="" alt="">
+                                <div>
+                                    <p class="cmp-oc-model" id="ocModel"></p>
+                                    <h2 id="ocName"></h2>
+                                    <span class="cmp-oc-color" id="ocColor">색상 : <i id="ocColorDot"></i> <b id="ocColorName"></b></span>
+                                </div>
+                            </div>
+                            <div class="cmp-oc-grid">
+                                <div><p>관리방법</p><b id="ocMtype"></b></div>
+                                <div><p>관리주기</p><b id="ocMcycle"></b></div>
+                                <div><p>의무사용</p><b><span id="ocLabel"></span><small id="ocSub"></small></b></div>
+                                <div><p>계약기간</p><b id="ocContract"></b></div>
+                            </div>
+                            <div class="cmp-oc-price">
+                                <div><span>월 렌탈료</span><span id="ocPrice"></span></div>
+                                <div id="ocDiscRow"><span>제휴카드 할인</span><span id="ocDisc"></span></div>
+                                <div class="cmp-oc-est" id="ocEstRow"><span>카드 적용 시 월 납부</span><span><span id="ocEst"></span><small>원</small></span></div>
+                            </div>
+                            <p class="cmp-oc-note">* 계약 기간이 끝나면 소유권이 고객님께 이전됩니다. (일부 품목 제외)</p>
+                        </div>
+                    </div>
+                    <div class="text">
+                        ※ 개인정보수집 · 이용 · 제공 동의<br>
+                         귀중<br><br>
+
+                        1. 개인정보의 수집 및 이용목적 :<br>
+                        
+													원활한 렌탈 상담 및 주문을 위하여 아래와 같은 개인정보를 수집 · 이용 하고 있습니다.<br><br>
+											
+
+                        2. 수집하려는 개인정보 항목 :<br>
+                        - 필수 수집항목 : 이름, 연락처, 생년월일, 성별,주소(우편번호, 상세주소)<br>
+                        - 선택 수집항목 : 계좌정보(은행명, 계좌번호, 예금주), 요청사항<br><br>
+
+                        3. 개인정보의 보유 및 이용기간 :<br>
+                        수집된 개인정보는 이용 목적이 달성된 후 해당 정보를 지체 없이 파기합니다.<br>
+                        -보유 및 이용기간: 단순 상담고객 3개월 / 계약 고객 12개월<br><br>
+
+                        4. 개인정보를 제공받는 자: <br><br>
+
+                        5. 개인정보 수집 ·이용 동의거부 사항 :<br>
+                        개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으며, 동의하지 않을 경우 상담 및 주문이 제한됩니다.<br><br>
+
+							                        * 위 개인정보는 렌탈 상담 및 접수를 위해 수집되며, 이외 목적으로 사용되지 않습니다.
+													
+                    </div>
+                    <div class="checkbox1">
+                        <input type="checkbox" name="order_agree_1" id="agree1_1">
+                        <label for="agree1_1">주문할 제품의 제품명, 제품가격, 배송정보를 확인하였습니다.(전자상거래법 제8조 2항)</label>
+                    </div>
+                    <div class="checkbox1">
+                        <input type="checkbox" name="order_agree_2" id="agree1_2">
+                        <label for="agree1_2">계약 기간이 끝나면 소유권이 고객님께 이전됩니다. (일부 품목 제외)</label>
+                    </div>
+                    <button type="button" onclick="ActionCheck();">주문하기</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </main>
+
+    <div class="oc-done" id="ocDone" hidden>
+        <div class="oc-done-box" role="dialog" aria-modal="true" aria-labelledby="ocDoneTitle">
+            <div class="oc-done-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3 id="ocDoneTitle">렌탈신청이 완료되었습니다</h3>
+            <p><b id="ocDoneName"></b>님, 전문 상담사가 곧 연락드려 설치 일정을 안내해 드립니다.</p>
+            <p class="oc-done-s">샘플 페이지라 실제 주문은 접수되지 않았습니다.</p>
+            <div class="oc-done-btns"><a href="index.html" class="oc-done-home">홈으로</a><button type="button" id="ocDoneClose">닫기</button></div>
+        </div>
+    </div>
+    <div class="quick"><div class="mo"><div class="quick_list"></div></div><div class="pc"><div class="quick_list"></div></div><button type="button" class="btn-gototop"><img src="https://sk.tncrental.co.kr/images/top_m.png" alt="TOP"></button></div>
+
+<div class="srch-dim" id="sDim"></div>
+<div class="srch" id="srch" role="dialog" aria-label="검색">
+  <div class="mw">
+    <div class="srch-bar">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="sInput" type="search" placeholder="어떤 제품을 찾으세요?" autocomplete="off" enterkeyhint="search">
+      <button class="x" id="sClose" aria-label="닫기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+    </div>
+    <div class="srch-body">
+      <div><h6 id="sLT">인기 검색어 <span class="aitag">AI</span></h6><ol class="s-list" id="sList"></ol></div>
+      <div><h6 id="sRT">추천</h6><div class="srch-prods" id="sProds"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="js/data-sk.js"></script>
+<script src="js/header.js"></script>
+<script>(function(){var d=document.querySelector('body > .dim');if(d)d.id='hdDim'})();</script>
+<script src="js/order.js"></script>
+</body>
+</html>

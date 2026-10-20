@@ -106,7 +106,7 @@
   function cardHtml(o, i) {
     var it = o.it, r = o.r;
     var badge = it.isNew ? '신규' : it.isBest ? '추천' : '';
-    return '<a class="ac" style="animation-delay:' + Math.min(i, 11) * 40 + 'ms" data-g="' + it.g + '" href="' + SHOP + 'goods_view.php?goods=' + it.g + '">' +
+    return '<a class="ac" style="animation-delay:' + Math.min(i, 11) * 40 + 'ms" data-g="' + it.g + '" href="' + (it.g === 'G050304' ? 'view.html?goods=' : SHOP + 'goods_view.php?goods=') + it.g + '">' +
       '<div class="im">' + (badge ? '<span class="rk top" style="background:var(--red)">' + badge + '</span>' : '') +
       '<img loading="lazy" alt="" src="' + IMG + it.i + '"><span class="dc" hidden>카드할인 시 0원</span></div>' +
       '<p class="br">SK매직</p><p class="nm">' + esc(it.name) + '</p>' +
