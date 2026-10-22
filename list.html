@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/list.css">
+<link rel="stylesheet" href="css/layout-switch.css">
 </head>
 <body data-fx-always>
 
@@ -145,7 +146,10 @@
       <div class="lp-bar">
         <button class="lp-fbtn" id="lpFbtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>필터</button>
         <p class="lp-count">총 <b id="lpCount">0</b>개의 상품</p>
-        <label class="lp-sort"><select id="lpSort" aria-label="정렬"><option value="rec">추천순</option><option value="low">낮은 가격순</option><option value="high">높은 가격순</option><option value="disc">할인율순</option></select></label>
+        <div class="lp-tools">
+          <div class="lsw" data-target="#lpGrid" data-key="list" data-pc="4" data-m="2"></div>
+          <label class="lp-sort"><select id="lpSort" aria-label="정렬"><option value="rec">추천순</option><option value="low">낮은 가격순</option><option value="high">높은 가격순</option><option value="disc">할인율순</option></select></label>
+        </div>
       </div>
       <div class="lp-grid" id="lpGrid"></div>
       <div class="lp-empty" id="lpEmpty" hidden>조건에 맞는 상품이 없어요.<br>필터를 바꿔서 다시 찾아보세요.</div>
@@ -197,6 +201,7 @@
 <script src="js/data-sk.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/header.js"></script>
+<script src="js/layout-switch.js"></script>
 <script src="js/list.js"></script>
 </body>
 </html>

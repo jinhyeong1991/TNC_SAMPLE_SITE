@@ -30,11 +30,13 @@
 .lp-fbtn{display:none;height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--ink);font-weight:700;font-size:13.5px;align-items:center;gap:6px}
 .lp-bar .lp-count{font-size:14px}
 .lp-sort select{height:40px;padding:0 34px 0 14px;border-radius:12px;border:1.5px solid var(--line);font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;cursor:pointer}
+.lp-tools{display:flex;align-items:center;gap:10px}
 .lp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 18px}
 .lp-grid .ac .tg{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .lp-grid .ac .tg span{font-size:11.5px;border-radius:5px;padding:3px 7px;line-height:1.2}
 .lp-grid .ac .tg .pm{display:inline-block;margin:0;border:1px solid var(--red);color:var(--red);font-weight:700}
 .lp-grid .ac .tg .kd{border:1px solid #D9DCE2;color:var(--ink2)}
+.lp-grid .ac .tg [hidden]{display:none}
 .lp-grid .ac .ask{margin-top:10px;font-size:14px;color:var(--ink2)}
 .lp-grid .ac .ask b{font-size:18px;font-weight:800;color:var(--ink);margin-left:4px}
 .lp-empty{padding:90px 0;text-align:center;color:var(--ink3);font-size:15px;line-height:1.8}
@@ -51,6 +53,10 @@
   .lp-subs button{flex:0 0 auto;height:38px;padding:0 16px;font-size:13.5px}
   .lp-body{grid-template-columns:1fr;gap:0;padding-top:18px}
   .lp-fbtn{display:inline-flex}
+  .lp-bar{flex-wrap:wrap;row-gap:12px}
+  .lp-bar .lp-count{order:-1;flex-basis:100%}
+  .lp-tools{gap:8px}
+  .lp-sort select{height:38px;font-size:13.5px}
   .lp-grid{grid-template-columns:repeat(2,1fr);gap:26px 10px}
   .lp-side{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:210;max-height:82vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:0 20px 20px;transform:translateY(105%);transition:transform .3s;gap:0}
   .lp-sheet.open .lp-side{transform:none}

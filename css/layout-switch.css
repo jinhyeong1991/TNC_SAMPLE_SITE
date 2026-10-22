@@ -1,0 +1,128 @@
+/* =========================================================
+   레이아웃 전환 (상품 그리드 2단 / 4단 / 6단, 모바일 1단 / 2단 / 3단)
+   - 버튼: <div class="lsw" data-target="#그리드id" data-key="저장키"></div>
+   - 그리드에 data-cols(PC) / data-mcols(모바일) 속성이 붙고, 그 값에 맞춰 카드 모양이 바뀐다.
+   - 적용 카드: .ac (리스트·메인 큐레이션), .pcard (메인 렌탈료 비교)
+   ========================================================= */
+
+/* ---------- 전환 버튼 ---------- */
+.lsw{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:12px;background:#fff;border:1.5px solid var(--line);flex:none}
+.lsw button{
+  width:36px;height:34px;border-radius:9px;display:grid;place-items:center;color:#B3B8C2;
+  transition:background .2s,color .2s
+}
+.lsw button:hover{color:var(--ink2);background:var(--bg)}
+.lsw button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.lsw button:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.lsw svg{display:block}
+.lsw .m{display:none}
+@media (max-width:900px){
+  .lsw .pc{display:none}
+  .lsw .m{display:grid}
+  .lsw button{width:32px;height:30px}
+}
+
+/* 메인 섹션 제목 옆에 버튼을 두는 머리 영역 */
+.lsw-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 16px;flex-wrap:wrap}
+.lsw-head > div:first-child{min-width:0}
+.sec-h .lsw-r{display:flex;align-items:center;gap:16px}
+
+/* 내용이 없어 숨긴 태그(hidden)가 빈 테두리로 보이지 않게 */
+.ac [hidden],.pcard [hidden]{display:none !important}
+
+/* =========================================================
+   PC (901px 이상)
+   ========================================================= */
+@media (min-width:901px){
+  /* --- 6단: 촘촘하게, 핵심 정보만 --- */
+  .lsw-grid[data-cols="6"]{grid-template-columns:repeat(6,minmax(0,1fr)) !important;gap:28px 12px !important}
+  .lsw-grid[data-cols="6"] .im{border-radius:12px}
+  .lsw-grid[data-cols="6"] .rk{left:7px;top:7px;min-width:24px;height:24px;font-size:12px;border-radius:7px;padding:0 6px}
+  .lsw-grid[data-cols="6"] .bd{left:7px;top:7px;font-size:10px;padding:2px 7px}
+  .lsw-grid[data-cols="6"] .dc{right:6px;bottom:6px;font-size:10px;padding:3px 7px}
+  .lsw-grid[data-cols="6"] .br{margin-top:10px;font-size:11.5px}
+  .lsw-grid[data-cols="6"] .nm{font-size:13px;line-height:1.4;min-height:36px}
+  .lsw-grid[data-cols="6"] .pcard .nm{margin-top:10px}
+  .lsw-grid[data-cols="6"] .st{margin-top:6px;font-size:11.5px;height:16px}
+  .lsw-grid[data-cols="6"] .pct{font-size:14.5px}
+  .lsw-grid[data-cols="6"] .mp{font-size:15.5px}
+  .lsw-grid[data-cols="6"] .mp small{font-size:12px}
+  .lsw-grid[data-cols="6"] .cdn{font-size:10.5px}
+  .lsw-grid[data-cols="6"] .ask{font-size:12.5px}
+  .lsw-grid[data-cols="6"] .ask b{font-size:15px}
+  .lsw-grid[data-cols="6"] .tg,
+  .lsw-grid[data-cols="6"] .ac > .pm{display:none !important}
+
+  /* --- 4단: 기본 모양 그대로 --- */
+  .lsw-grid[data-cols="4"]{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
+
+  /* --- 2단: 가로형 큰 카드 (사진 왼쪽, 정보 오른쪽) --- */
+  .lsw-grid[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:18px !important}
+  .lsw-grid[data-cols="2"] > .ac,
+  .lsw-grid[data-cols="2"] > .pcard{
+    display:grid;grid-template-columns:minmax(150px,42%) minmax(0,1fr);grid-auto-rows:min-content;column-gap:24px;align-content:center;
+    padding:16px;border-radius:20px;background:#fff;border:1px solid var(--line);
+    transition:border-color .2s,box-shadow .2s
+  }
+  .lsw-grid[data-cols="2"] > .ac:hover,
+  .lsw-grid[data-cols="2"] > .pcard:hover{border-color:#D6D9E0;box-shadow:0 14px 30px -20px rgba(17,19,24,.35)}
+  .lsw-grid[data-cols="2"] > * > .im{grid-column:1;grid-row:1 / span 9;align-self:center}
+  .lsw-grid[data-cols="2"] > * > :not(.im){grid-column:2;justify-self:start;max-width:100%}
+  .lsw-grid[data-cols="2"] .br{margin-top:0;font-size:13px}
+  .lsw-grid[data-cols="2"] .nm{font-size:17px;font-weight:600;line-height:1.45;min-height:0;-webkit-line-clamp:3}
+  .lsw-grid[data-cols="2"] .pcard .nm{margin-top:0}
+  .lsw-grid[data-cols="2"] .st{margin-top:12px}
+  .lsw-grid[data-cols="2"] .pct{font-size:21px}
+  .lsw-grid[data-cols="2"] .mp{font-size:24px}
+  .lsw-grid[data-cols="2"] .mp small{font-size:16px}
+  .lsw-grid[data-cols="2"] .cdn{font-size:12.5px}
+}
+
+/* =========================================================
+   모바일 (900px 이하)
+   ========================================================= */
+@media (max-width:900px){
+  /* --- 1단: 리스트형 (사진 왼쪽 작게, 정보 오른쪽) --- */
+  .lsw-grid[data-mcols="1"]{grid-template-columns:minmax(0,1fr) !important;gap:10px !important}
+  .lsw-grid[data-mcols="1"] > .ac,
+  .lsw-grid[data-mcols="1"] > .pcard{
+    display:grid;grid-template-columns:112px minmax(0,1fr);grid-auto-rows:min-content;column-gap:14px;align-content:center;
+    padding:10px;border-radius:16px;background:#fff;border:1px solid var(--line)
+  }
+  .lsw-grid[data-mcols="1"] > * > .im{grid-column:1;grid-row:1 / span 9;align-self:center;border-radius:12px}
+  .lsw-grid[data-mcols="1"] > * > :not(.im){grid-column:2;justify-self:start;max-width:100%}
+  .lsw-grid[data-mcols="1"] .br{margin-top:0;font-size:11.5px}
+  .lsw-grid[data-mcols="1"] .nm{font-size:14px;min-height:0}
+  .lsw-grid[data-mcols="1"] .pcard .nm{margin-top:0}
+  .lsw-grid[data-mcols="1"] .st{margin-top:4px}
+  .lsw-grid[data-mcols="1"] .rk{left:6px;top:6px;min-width:22px;height:22px;font-size:11px;border-radius:6px;padding:0 5px}
+  .lsw-grid[data-mcols="1"] .bd{left:6px;top:6px;font-size:10px;padding:2px 6px}
+  .lsw-grid[data-mcols="1"] .dc{display:none !important}
+  .lsw-grid[data-mcols="1"] .tg{margin-top:6px}
+
+  /* --- 2단: 기본 모양 그대로 --- */
+  .lsw-grid[data-mcols="2"]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+
+  /* --- 3단: 사진 위주로 촘촘하게 --- */
+  .lsw-grid[data-mcols="3"]{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:20px 8px !important}
+  .lsw-grid[data-mcols="3"] .im{border-radius:10px}
+  .lsw-grid[data-mcols="3"] .rk{left:5px;top:5px;min-width:20px;height:20px;font-size:10.5px;border-radius:6px;padding:0 4px}
+  .lsw-grid[data-mcols="3"] .bd{left:5px;top:5px;font-size:9.5px;padding:2px 5px}
+  .lsw-grid[data-mcols="3"] .br,
+  .lsw-grid[data-mcols="3"] .cdn,
+  .lsw-grid[data-mcols="3"] .tg,
+  .lsw-grid[data-mcols="3"] .dc,
+  .lsw-grid[data-mcols="3"] .ac > .pm{display:none !important}
+  .lsw-grid[data-mcols="3"] .nm{margin-top:8px;font-size:12px;line-height:1.38;min-height:33px}
+  .lsw-grid[data-mcols="3"] .st{margin-top:4px;font-size:10.5px;height:14px}
+  .lsw-grid[data-mcols="3"] .pl{gap:3px;flex-wrap:wrap}
+  .lsw-grid[data-mcols="3"] .pct{font-size:12px}
+  .lsw-grid[data-mcols="3"] .mp{font-size:13px;letter-spacing:-.3px}
+  .lsw-grid[data-mcols="3"] .mp small{font-size:11px}
+  .lsw-grid[data-mcols="3"] .ask{font-size:11.5px}
+  .lsw-grid[data-mcols="3"] .ask b{display:block;margin-left:0;font-size:13px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lsw button{transition:none}
+}

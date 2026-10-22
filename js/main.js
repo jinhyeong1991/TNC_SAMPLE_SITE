@@ -122,11 +122,29 @@
         applyAll(false); rail.scrollLeft = 0; edge();
       });
     }
+    /* 레이아웃(단 수)에 맞춰 마지막 줄이 비지 않도록 보여 줄 개수를 정한다
+       2·4단 → 8개, 6단 → 12개(모자라면 6개), 모바일 1·2단 → 8개, 3단 → 9개(모자라면 6개) */
+    function fitCount(g, avail) {
+      var cols = window.TNC_LSW ? window.TNC_LSW.cols(g) : 4;
+      var want = cols === 6 ? 12 : cols === 3 ? 9 : 8;
+      var n = Math.min(want, avail);
+      if (cols > 1) n -= n % cols;
+      return Math.max(n, Math.min(avail, cols));
+    }
     function gridSection(prefix, spec) {
-      var g = $('#' + prefix + 'Grid');
-      tabs($('#' + prefix + 'Tabs'), spec, function (s) {
-        g.innerHTML = s.fn().slice(0, 8).map(function (it) { return card(it, 0); }).join('');
+      var g = $('#' + prefix + 'Grid'), cur = null;
+      function draw() {
+        var list = cur.fn();
+        g.innerHTML = list.slice(0, fitCount(g, list.length)).map(function (it) { return card(it, 0); }).join('');
         applyAll(false);
+      }
+      tabs($('#' + prefix + 'Tabs'), spec, function (s) { cur = s; draw(); });
+      /* 단 수를 바꿨을 때 개수가 달라지면 다시 그린다 (같으면 카드 이동 애니메이션만) */
+      g.addEventListener('lsw-change', function () {
+        if (cur && fitCount(g, cur.fn().length) !== $$('.ac', g).length) setTimeout(draw, 520);
+      });
+      window.addEventListener('resize', function () {
+        if (cur && fitCount(g, cur.fn().length) !== $$('.ac', g).length) draw();
       });
     }
     function listingBenefit(list) { return list.slice().sort(function (a, b) { return (b.p - b.c) - (a.p - a.c); }); }
@@ -145,23 +163,23 @@
     ], true);
     /* SPECIAL BENEFIT */
     gridSection('bn', [
-      { t: '전체', fn: function () { return listingBenefit(all(KEYS)).slice(0, 8); } },
+      { t: '전체', fn: function () { return listingBenefit(all(KEYS)).slice(0, 12); } },
       { t: '카드할인 시 0원', fn: function () { return all(KEYS).filter(function (i) { return i.c === 0; }); } },
       { t: '프로모션 진행중', fn: function () { return all(KEYS).filter(function (i) { return i.pm; }); } },
       { t: 'TV', fn: function () { return A.CATS.tv.items; } }
     ]);
     /* curations */
     gridSection('c1', [
-      { t: '전체', fn: function () { return mix(['kitchen', 'laundry', 'living'], 8); } },
-      catTab('kitchen'), catTab('laundry'), catTab('living')
+      { t: '전체', fn: function () { return mix(['kitchen', 'laundry', 'living'], 12); } },
+      catTab('kitchen', 12), catTab('laundry', 12), catTab('living', 12)
     ]);
     gridSection('c2', [
-      { t: '전체', fn: function () { return mix(['env', 'season'], 8); } },
-      catTab('env'), catTab('season')
+      { t: '전체', fn: function () { return mix(['env', 'season'], 12); } },
+      catTab('env', 12), catTab('season', 12)
     ]);
     gridSection('c3', [
-      { t: '전체', fn: function () { return mix(['beauty', 'furn'], 8); } },
-      catTab('beauty'), catTab('furn')
+      { t: '전체', fn: function () { return mix(['beauty', 'furn'], 12); } },
+      catTab('beauty', 12), catTab('furn', 12)
     ]);
   })();
 
