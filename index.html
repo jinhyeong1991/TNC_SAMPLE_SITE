@@ -24,6 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/video-banner.css">
 </head>
 <body>
 
@@ -136,6 +137,46 @@
       <button class="h2-prev" type="button" aria-label="이전"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
       <button class="h2-next" type="button" aria-label="다음"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
       <button class="h2-play" type="button" aria-label="일시정지"><svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><svg class="i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+    </div>
+  </section>
+
+  <!-- 영상 띠배너: 오버/탭하면 커지며 영상 + 라이브 리뷰 패널이 펼쳐짐 (css/video-banner.css, js/video-banner.js) -->
+  <section class="vb" id="vbanner" data-video="V8wzkhI5WnU" aria-label="SK매직 MEGA ICE 얼음정수기 영상">
+    <div class="vb-in">
+      <button class="vb-bar" type="button" aria-expanded="false" aria-controls="vbStage">
+        <span class="vb-glow" aria-hidden="true"></span>
+        <span class="vb-ice" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb-copy">
+          <em class="vb-eb"><i class="vb-live"></i><b>SK magic</b> · LIVE VIDEO</em>
+          <strong class="vb-tt">25g, <b>크고 단단한 얼음</b></strong>
+          <span class="vb-st">MEGA ICE 얼음정수기 · 월 <span class="vb-price">42,500원</span> <span class="vb-hide-m">· 제휴카드 할인 시 </span><span class="vb-card vb-hide-m">월 19,500원</span></span>
+        </span>
+        <span class="vb-prod"><img src="https://static.skmagic.com/image/goods/G000069846/G000069846_2.png" alt="SK매직 MEGA ICE 얼음정수기"></span>
+        <span class="vb-play"><span class="vb-play-ic"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><span class="vb-play-tx">영상 보기</span></span>
+      </button>
+      <div class="vb-stage" id="vbStage" role="region" aria-label="MEGA ICE 얼음정수기 영상과 실시간 리뷰">
+        <div class="vb-stage-in">
+          <div class="vb-panel">
+            <div class="vb-video">
+              <img class="vb-poster" src="https://i.ytimg.com/vi/V8wzkhI5WnU/hqdefault.jpg" alt="">
+              <div id="vbPlayer"></div>
+              <button class="vb-unmute" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>소리 켜기</button>
+            </div>
+            <div class="vb-chat">
+              <div class="vb-chat-h">
+                <span class="ttl"><span class="vb-badge">LIVE</span>실시간 리뷰 <span class="vb-sample">예시</span></span>
+                <span class="vb-viewers">시청 중 0명</span>
+              </div>
+              <div class="vb-msgs" aria-live="off"></div>
+              <div class="vb-chat-f">
+                <a class="vb-cta" href="https://sk.tncrental.co.kr/shop/goods_view.php?goods=G050261" target="_blank" rel="noopener">렌탈 신청하기</a>
+                <button class="vb-like" type="button" aria-label="좋아요">❤️</button>
+              </div>
+            </div>
+            <button class="vb-close" type="button" aria-label="영상 닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -285,5 +326,6 @@
 <script src="js/header.js"></script>
 <script src="js/main.js"></script>
 <script src="js/hero.js"></script>
+<script src="js/video-banner.js"></script>
 </body>
 </html>

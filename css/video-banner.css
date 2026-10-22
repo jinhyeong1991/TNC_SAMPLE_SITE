@@ -1,0 +1,219 @@
+/* =========================================================
+   영상 띠배너 (SK매직 MEGA ICE 얼음정수기)
+   - 연한 회색 바탕, 펼쳐질 때 SK매직 브랜드 색(레드→오렌지)이 나타남
+   - 로딩: 천천히 열리는 등장 애니메이션
+   - 오버(PC) / 탭(모바일): 배너가 커지며 영상 + 라이브 리뷰 채팅 패널이 펼쳐짐
+   ========================================================= */
+.vb{
+  --sk-red:#EA002C; --sk-orange:#F47725; --sk-grad:linear-gradient(90deg,#EA002C 0%,#F2452A 45%,#F47725 100%);
+  --vb-bg:#F3F4F6; --vb-bg2:#ECEEF1; --vb-line:#E2E5EA; --vb-ink:#16181D; --vb-ink2:#5B616E; --vb-ink3:#9399A5;
+  --vb-ease:cubic-bezier(.22,.8,.24,1);
+  max-width:1280px;margin:0 auto;padding:40px 24px 0;position:relative;z-index:1
+}
+.vb-in{position:relative}
+
+/* ---------- 띠배너 ---------- */
+.vb-bar{
+  position:relative;display:flex;align-items:center;gap:28px;width:100%;height:136px;
+  padding:0 36px;border:1px solid var(--vb-line);border-radius:24px;overflow:hidden;cursor:pointer;text-align:left;
+  font:inherit;color:var(--vb-ink);background:linear-gradient(110deg,#fff 0%,var(--vb-bg) 55%,var(--vb-bg2) 100%);
+  box-shadow:0 6px 24px -14px rgba(22,24,29,.25);
+  transition:height .9s var(--vb-ease),box-shadow .9s var(--vb-ease),border-color .9s
+}
+.vb-bar:focus-visible{outline:3px solid var(--sk-orange);outline-offset:3px}
+/* 브랜드 색 띠: 펼쳐질 때 왼쪽에서 채워짐 */
+.vb-bar::before{
+  content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--sk-grad);
+  transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--vb-ease)
+}
+/* 은은한 브랜드 색 번짐 */
+.vb-glow{
+  position:absolute;right:-80px;top:-120px;width:420px;height:420px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(244,119,37,.22) 0%,rgba(234,0,44,.10) 40%,transparent 70%);
+  opacity:0;transform:scale(.6);transition:opacity 1.1s var(--vb-ease),transform 1.1s var(--vb-ease)
+}
+/* 반짝이는 빛 */
+.vb-bar::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.85) 48%,transparent 60%);
+  transform:translateX(-120%)
+}
+
+/* 떠다니는 얼음 */
+.vb-ice{position:absolute;inset:0;pointer-events:none}
+.vb-ice i{
+  position:absolute;width:16px;height:16px;border-radius:5px;
+  background:linear-gradient(135deg,#fff,#dbe9f5);border:1px solid #cfdeea;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.7);opacity:.9;
+  animation:vbFloat 9s ease-in-out infinite
+}
+.vb-ice i:nth-child(1){left:44%;top:16%;animation-delay:0s}
+.vb-ice i:nth-child(2){left:53%;top:64%;width:11px;height:11px;animation-delay:1.6s}
+.vb-ice i:nth-child(3){left:62%;top:24%;width:20px;height:20px;animation-delay:3s}
+.vb-ice i:nth-child(4){left:37%;top:70%;width:10px;height:10px;animation-delay:4.2s}
+.vb-ice i:nth-child(5){left:70%;top:62%;width:13px;height:13px;animation-delay:5.4s}
+
+/* 문구 */
+.vb-copy{position:relative;display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
+.vb-eb{display:inline-flex;align-items:center;gap:8px;font-style:normal;font-size:12.5px;font-weight:800;letter-spacing:.6px;color:var(--vb-ink2)}
+.vb-eb b{font-weight:800;background:var(--sk-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vb-live{width:8px;height:8px;border-radius:50%;background:var(--sk-red);animation:vbLive 2.2s infinite}
+.vb-tt{font-size:27px;font-weight:800;letter-spacing:-.9px;line-height:1.25;color:var(--vb-ink)}
+.vb-tt b{font-weight:800;background:var(--sk-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vb-st{font-size:13.5px;color:var(--vb-ink2)}
+.vb-st .vb-price{font-weight:800;color:var(--vb-ink);white-space:nowrap}
+.vb-st .vb-card{font-weight:800;color:var(--sk-red)}
+
+/* 제품 이미지 */
+.vb-prod{position:relative;flex:none;width:128px;height:128px;align-self:flex-end;margin-bottom:-8px;transition:transform 1s var(--vb-ease)}
+.vb-prod img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 14px 16px rgba(22,24,29,.18))}
+
+/* 재생 버튼 */
+.vb-play{
+  position:relative;flex:none;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 22px 0 8px;
+  border-radius:999px;background:var(--vb-ink);color:#fff;font-size:15px;font-weight:700;
+  box-shadow:0 10px 22px -10px rgba(22,24,29,.5);transition:transform .9s var(--vb-ease),background .9s
+}
+.vb-play-ic{position:relative;width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.vb-play-ic svg{margin-left:3px;fill:var(--vb-ink)}
+.vb-play-ic::before,.vb-play-ic::after{
+  content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #fff;opacity:0;animation:vbRing 3s ease-out infinite
+}
+.vb-play-ic::after{animation-delay:1.5s}
+
+/* ---------- 오버 / 열림: 커지면서 브랜드 색 등장 ---------- */
+.vb.is-hover .vb-bar,.vb.is-open .vb-bar{height:156px;border-color:transparent;box-shadow:0 26px 60px -24px rgba(234,0,44,.35)}
+.vb.is-hover .vb-bar::before,.vb.is-open .vb-bar::before{transform:scaleX(1)}
+.vb.is-hover .vb-glow,.vb.is-open .vb-glow{opacity:1;transform:scale(1)}
+.vb.is-hover .vb-prod,.vb.is-open .vb-prod{transform:scale(1.2) translateY(-12px) rotate(-3deg)}
+.vb.is-hover .vb-play,.vb.is-open .vb-play{transform:scale(1.08);background:var(--sk-red)}
+.vb.is-hover .vb-bar::after{animation:vbShine 1.6s .2s ease forwards}
+
+/* ---------- 펼쳐지는 패널 ---------- */
+.vb-stage{display:grid;grid-template-rows:0fr;transition:grid-template-rows 1s var(--vb-ease)}
+.vb.is-open .vb-stage{grid-template-rows:1fr}
+.vb-stage-in{min-height:0;overflow:hidden}
+.vb-panel{
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;
+  margin-top:14px;padding:18px;border-radius:24px;background:#fff;border:1px solid var(--vb-line);
+  box-shadow:0 20px 50px -30px rgba(22,24,29,.35);
+  opacity:0;transform:translateY(-18px);transition:opacity .8s .2s,transform 1s .2s var(--vb-ease)
+}
+.vb-panel::before{content:"";position:absolute;left:24px;right:24px;top:0;height:3px;border-radius:0 0 3px 3px;background:var(--sk-grad)}
+.vb.is-open .vb-panel{opacity:1;transform:none}
+
+/* 영상 */
+.vb-video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#111}
+.vb-video #vbPlayer,.vb-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vb-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s}
+.vb.is-playing .vb-poster{opacity:0;pointer-events:none}
+.vb-unmute{
+  position:absolute;left:14px;bottom:14px;z-index:2;display:none;align-items:center;gap:8px;height:40px;padding:0 16px;
+  border:0;border-radius:999px;background:rgba(255,255,255,.95);color:var(--vb-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+  box-shadow:0 8px 20px -8px rgba(0,0,0,.45);animation:vbNudge 2.4s ease-in-out infinite
+}
+.vb.is-muted .vb-unmute{display:inline-flex}
+.vb-unmute:hover{background:#fff}
+
+/* 라이브 리뷰 채팅 */
+.vb-chat{display:flex;flex-direction:column;min-width:0;border-radius:16px;background:var(--vb-bg);border:1px solid var(--vb-line);overflow:hidden}
+.vb-chat-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--vb-line)}
+.vb-chat-h .ttl{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800}
+.vb-badge{font-size:11px;font-weight:800;color:#fff;background:var(--sk-red);padding:2px 7px;border-radius:5px;letter-spacing:.5px}
+.vb-viewers{font-size:12px;color:var(--vb-ink3);font-variant-numeric:tabular-nums}
+.vb-sample{font-size:10.5px;font-weight:700;color:var(--vb-ink3);border:1px solid var(--vb-line);padding:1px 6px;border-radius:5px}
+/* 메시지 영역: 높이는 고정(contain:size로 내용이 높이에 영향을 주지 않음), 새 메시지는 아래에서 들어오고 위로 밀려 사라짐 */
+.vb-msgs{
+  position:relative;flex:1 1 0;min-height:0;contain:size;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%)
+}
+.vb-track{display:flex;flex-direction:column;gap:8px;will-change:transform}
+.vb-msg{display:flex;gap:9px;align-items:flex-start;animation:vbMsg .6s ease both}
+.vb-av{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.vb-bub{min-width:0;background:#fff;border:1px solid var(--vb-line);border-radius:4px 14px 14px 14px;padding:7px 11px}
+.vb-bub .nm{display:flex;gap:6px;align-items:center;font-size:11.5px;color:var(--vb-ink3);margin-bottom:2px}
+.vb-bub .nm .st{color:#F5A623;letter-spacing:-1px}
+.vb-bub p{margin:0;font-size:13.5px;line-height:1.45;color:var(--vb-ink);word-break:keep-all}
+.vb-msg.hot .vb-bub{border-color:rgba(234,0,44,.35);background:#FFF6F7}
+.vb-chat-f{display:flex;gap:8px;padding:10px 12px;background:#fff;border-top:1px solid var(--vb-line)}
+.vb-cta{
+  flex:1;display:flex;align-items:center;justify-content:center;height:46px;border-radius:12px;
+  background:var(--sk-grad);color:#fff;font-weight:800;font-size:15px;text-decoration:none;
+  box-shadow:0 10px 20px -12px rgba(234,0,44,.7);transition:transform .3s var(--vb-ease),box-shadow .3s
+}
+.vb-cta:hover{transform:translateY(-2px);box-shadow:0 14px 24px -12px rgba(234,0,44,.8)}
+.vb-like{
+  position:relative;flex:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--vb-line);background:#fff;cursor:pointer;
+  display:grid;place-items:center;font-size:20px;transition:transform .2s
+}
+.vb-like:active{transform:scale(.9)}
+.vb-heart{position:absolute;bottom:40px;left:50%;pointer-events:none;font-size:18px;animation:vbHeart 1.8s ease-out forwards}
+.vb-links{display:flex;justify-content:space-between;align-items:center;padding:0 2px;font-size:12px}
+.vb-links a{color:var(--vb-ink3);text-decoration:none}
+.vb-links a:hover{color:var(--sk-red)}
+
+.vb-close{
+  position:absolute;top:28px;right:372px;z-index:3;width:38px;height:38px;border-radius:50%;
+  border:0;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center
+}
+.vb-close:hover{background:rgba(0,0,0,.75)}
+.vb-cta:focus-visible,.vb-like:focus-visible,.vb-close:focus-visible,.vb-unmute:focus-visible{outline:3px solid var(--sk-orange);outline-offset:2px}
+
+/* ---------- 로딩 등장 애니메이션 (천천히) ---------- */
+.vb.vb-anim .vb-bar{clip-path:inset(0 100% 0 0 round 24px)}
+.vb.vb-anim .vb-copy>*,.vb.vb-anim .vb-play{opacity:0;transform:translateY(16px)}
+.vb.vb-anim .vb-prod{opacity:0;transform:translateY(30px) scale(.8)}
+.vb.vb-anim .vb-ice{opacity:0}
+.vb.vb-ready .vb-bar{animation:vbReveal 1.4s cubic-bezier(.65,0,.25,1) forwards}
+.vb.vb-ready .vb-bar::after{animation:vbShine 1.8s 1.3s ease forwards}
+.vb.vb-ready .vb-copy>*{animation:vbUp .9s var(--vb-ease) forwards}
+.vb.vb-ready .vb-copy>*:nth-child(1){animation-delay:.7s}
+.vb.vb-ready .vb-copy>*:nth-child(2){animation-delay:.95s}
+.vb.vb-ready .vb-copy>*:nth-child(3){animation-delay:1.2s}
+.vb.vb-ready .vb-prod{animation:vbUp 1.1s 1s var(--vb-ease) forwards}
+.vb.vb-ready .vb-play{animation:vbUp .9s 1.4s var(--vb-ease) forwards}
+.vb.vb-ready .vb-ice{animation:vbFade 1.2s 1.2s forwards}
+
+@keyframes vbReveal{to{clip-path:inset(0 0 0 0 round 24px)}}
+@keyframes vbUp{to{opacity:1;transform:none}}
+@keyframes vbFade{to{opacity:1}}
+@keyframes vbShine{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+@keyframes vbFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(20deg)}}
+@keyframes vbLive{0%{box-shadow:0 0 0 0 rgba(234,0,44,.5)}70%{box-shadow:0 0 0 8px rgba(234,0,44,0)}100%{box-shadow:0 0 0 0 rgba(234,0,44,0)}}
+@keyframes vbRing{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.9);opacity:0}}
+@keyframes vbMsg{from{opacity:0}to{opacity:1}}
+@keyframes vbHeart{0%{opacity:0;transform:translate(-50%,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-120px) scale(1.2)}}
+@keyframes vbNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+/* ---------- 태블릿 · 모바일 ---------- */
+@media (max-width:1024px){
+  .vb-panel{grid-template-columns:1fr}
+  .vb-chat{height:300px}
+  .vb-close{right:28px}
+}
+@media (max-width:900px){
+  .vb{padding:24px 16px 0}
+  .vb-bar{height:116px;padding:0 16px;gap:10px;border-radius:20px}
+  .vb.is-hover .vb-bar,.vb.is-open .vb-bar{height:124px}
+  .vb-tt{font-size:17.5px;letter-spacing:-.5px}
+  .vb-eb{font-size:11px}
+  .vb-st{font-size:12px}
+  .vb-st .vb-hide-m{display:none}
+  .vb-prod{width:78px;height:78px;margin-bottom:-4px}
+  .vb.is-hover .vb-prod,.vb.is-open .vb-prod{transform:scale(1.12) translateY(-6px) rotate(-3deg)}
+  .vb-play{height:42px;width:42px;padding:0;justify-content:center}
+  .vb-play-tx{display:none}
+  .vb-play-ic{width:42px;height:42px;background:transparent}
+  .vb-play-ic svg{fill:#fff}
+  .vb-ice i:nth-child(n+4){display:none}
+  .vb-panel{padding:10px;gap:10px;border-radius:20px;margin-top:10px}
+  .vb-video{border-radius:12px}
+  .vb-chat{height:280px;border-radius:12px}
+  .vb-close{top:18px;right:18px;width:34px;height:34px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .vb *,.vb *::before,.vb *::after{animation:none !important;transition:none !important}
+  .vb.vb-anim .vb-bar{clip-path:none}
+  .vb.vb-anim .vb-copy>*,.vb.vb-anim .vb-play,.vb.vb-anim .vb-prod,.vb.vb-anim .vb-ice{opacity:1;transform:none}
+}
