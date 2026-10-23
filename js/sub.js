@@ -52,7 +52,7 @@
         '<div class="cb-tiers">' + k.t.map(function (r) {
           return '<div class="cb-tier"><span>전월 ' + r[0] + '만원↑</span><i><span style="--w:' + (r[1] / top).toFixed(3) + '"></span></i><b>' + won(r[1]) + '원</b></div>';
         }).join('') + '</div>' +
-        '<div class="cb-btns"><a href="' + SHOP + 'card_view.php?code=' + k.c + '">상세보기</a><a class="ap" href="' + esc(k.apply) + '" target="_blank" rel="noopener">온라인신청</a></div></article>';
+        '<div class="cb-btns"><a href="card_view.html?code=' + k.c + '">상세보기</a><a class="ap" href="' + esc(k.apply) + '" target="_blank" rel="noopener">온라인신청</a></div></article>';
     }).join('');
     stagger($$('.cb-card', grid)); onSeen($$('.cb-card', grid));
 
@@ -224,5 +224,61 @@
     if (it) { toggle(it, true); setTimeout(function () { it.scrollIntoView({ block: 'center' }); }, 60); }
   }
 
-  if (page === 'card') cardPage(); else if (page === 'event') eventPage(); else if (page === 'notice') noticePage();
+  /* ================= 카드 상세 (card_view.html?code=…) ================= */
+  /* one guide/notice line -> HTML: [라벨] = chip, * = 계산 줄, ①②③ = 조건, ※ = 참고 */
+  function guideLine(s) {
+    var t = s.replace(/^ㆍ\s*/, ''), m;
+    if ((m = /^\[([^\]]+)\]\s*(.*)$/.exec(t))) return '<p class="cv-l lb"><em>' + esc(m[1]) + '</em>' + esc(m[2]) + '</p>';
+    if (/^\*\s/.test(t)) return '<p class="cv-l calc">' + esc(t.replace(/^\*\s*/, '')) + '</p>';
+    if (/^[①-⑨]/.test(t)) return '<p class="cv-l cond">' + esc(t) + '</p>';
+    if (/^※/.test(t)) return '<p class="cv-l note">' + esc(t) + '</p>';
+    return '<p class="cv-l">' + esc(t) + '</p>';
+  }
+  function cardViewPage() {
+    var code = +new URLSearchParams(location.search).get('code'), D = window.TNC_CARD_DETAIL || {};
+    var k = CARDS.filter(function (x) { return x.c === code; })[0], d = D[code], hero = $('#cvHero');
+    if (!k || !d) {
+      hero.innerHTML = '<div class="cv-none"><b>카드 정보를 찾을 수 없어요.</b><a href="card.html">제휴카드 목록으로 →</a></div>';
+      $$('.cv-only').forEach(function (e) { e.hidden = true; }); return;
+    }
+    document.title = 'SK인텔릭스 ' + k.n + ' | 티앤씨렌탈';
+    $('#cvCrumb').textContent = k.n;
+    var all = [].concat.apply([], d.sections.map(function (s) { return s.l; }));
+    function info(re) { for (var i = 0; i < all.length; i++) { var m = re.exec(all[i].replace(/^ㆍ\s*/, '')); if (m) return m[1].trim(); } return ''; }
+    var ars = info(/^ARS\s*:\s*(.+)$/), fee = info(/^연회비\s*:\s*(.+)$/);
+    var pre = (d.pre[0] || '').replace(/^ㆍ\s*/, ''), promo = k.t.some(function (r) { return r[2]; });
+
+    hero.innerHTML = '<div class="cv-visual"><img alt="SK인텔릭스 ' + esc(k.n) + '" src="' + UP + 'card/1007/' + d.img + '"></div>' +
+      '<div class="cv-info"><p class="cv-br">SK인텔릭스 제휴카드</p><h1>' + esc(k.n) + '</h1>' +
+      '<p class="cv-max">월 최대 청구할인<b>' + won(maxOf(k)) + '<small>원</small></b></p>' +
+      (pre ? '<p class="cv-pm"><i></i>' + esc(pre) + '</p>' : (promo ? '<p class="cv-pm"><i></i>10월 추가 프로모션 포함</p>' : '')) +
+      ((ars || fee) ? '<dl class="cv-kv">' + (fee ? '<div><dt>연회비</dt><dd>' + esc(fee) + '</dd></div>' : '') + (ars ? '<div><dt>카드사 ARS</dt><dd>' + esc(ars) + '</dd></div>' : '') + '</dl>' : '') +
+      '<div class="cv-btns"><a class="ap" href="' + esc(k.apply) + '" target="_blank" rel="noopener">온라인신청<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '<button type="button" class="ct" data-open-consult>카드 상담 신청</button></div></div>';
+
+    /* tiers: total = base + promo, bars scaled to the card's top tier */
+    var top = maxOf(k);
+    $('#cvTiers').innerHTML = k.t.map(function (r, i) {
+      var base = r[2] || r[1], add = r[2] ? r[1] - r[2] : 0;
+      return '<div class="cv-tier"><span class="st">' + (i + 1) + '구간</span><p class="th">전월 실적 <b>' + r[0] + '만원</b> 이상</p>' +
+        '<p class="tv">월 <b>' + won(r[1]) + '</b>원 할인</p>' +
+        '<div class="cv-bar" style="--w:' + (r[1] / top).toFixed(3) + '"><i class="b" style="flex:' + base + '"></i>' + (add ? '<i class="p" style="flex:' + add + '"></i>' : '') + '</div>' +
+        '<p class="tb">' + (add ? '<span class="k1">기본 ' + won(base) + '원</span><span class="k2">추가 프로모션 ' + won(add) + '원</span>' : '<span class="k1">기본 할인 ' + won(base) + '원</span>') + '</p></div>';
+    }).join('');
+    onSeen([$('#cvTiers')]);
+
+    var g = $('#cvGuideSec');
+    if (d.guide.length) $('#cvGuide').innerHTML = d.guide.map(guideLine).join(''); else g.hidden = true;
+
+    $('#cvNotice').innerHTML = d.sections.map(function (s) {
+      return '<details class="cv-acc"' + '><summary><b>' + esc(s.t) + '</b><span>' + s.l.length + '개 항목 · 눌러서 펼치기</span><i></i></summary><div class="cv-acc-b">' + s.l.map(guideLine).join('') + '</div></details>';
+    }).join('');
+
+    $('#cvOthers').innerHTML = CARDS.filter(function (x) { return x.c !== code; }).map(function (x) {
+      return '<a class="cv-oc" href="card_view.html?code=' + x.c + '"><img loading="lazy" alt="" src="' + cardImg(x) + '"><span><b>' + esc(x.n) + '</b><em>월 최대 ' + won(maxOf(x)) + '원</em></span></a>';
+    }).join('');
+    stagger($$('.cv-oc'));
+  }
+
+  if (page === 'card') cardPage(); else if (page === 'cardview') cardViewPage(); else if (page === 'event') eventPage(); else if (page === 'notice') noticePage();
 })();
