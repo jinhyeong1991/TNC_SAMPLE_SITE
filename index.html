@@ -24,6 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/main-banner.css">
 <link rel="stylesheet" href="css/video-banner.css">
 <link rel="stylesheet" href="css/layout-switch.css">
 <link rel="stylesheet" href="css/guide-blog.css">
@@ -132,13 +133,14 @@
 
 <main>
 
-  <section class="h2" id="hero2" aria-label="메인 배너">
-    <div class="h2-track"></div>
-    <div class="h2-ctrl">
-      <span class="h2-cnt">01 / 24</span>
-      <button class="h2-prev" type="button" aria-label="이전"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
-      <button class="h2-next" type="button" aria-label="다음"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
-      <button class="h2-play" type="button" aria-label="일시정지"><svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><svg class="i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+  <!-- 메인 배너 (코웨이형): css/main-banner.css, js/main-banner.js, 데이터 js/main-banner-data.js -->
+  <section class="mb" id="mbanner" aria-label="메인 배너" aria-roledescription="carousel">
+    <div class="mb-track"></div>
+    <button class="mb-arr mb-prev" type="button" aria-label="이전 배너"><svg width="19" height="35" viewBox="0 0 19 35" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2 2 17.5 17 33"/></svg></button>
+    <button class="mb-arr mb-next" type="button" aria-label="다음 배너"><svg width="19" height="35" viewBox="0 0 19 35" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m2 2 15 15.5L2 33"/></svg></button>
+    <div class="mb-ctrl">
+      <span class="mb-bar"><span class="mb-fill"></span></span>
+      <button class="mb-play" type="button" aria-label="일시정지"><svg class="i-pause" width="8" height="12" viewBox="0 0 8 12" fill="currentColor"><rect width="2" height="12"/><rect x="6" width="2" height="12"/></svg><svg class="i-play" width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><path d="M0 0v12l10-6z"/></svg></button>
     </div>
   </section>
 
@@ -240,6 +242,17 @@
     </div>
   </section>
 
+  <!-- 카드형 슬라이드 (기존 메인 슬라이드를 인기 렌탈 위로 이동): js/hero.js, 데이터 js/hero-slides.js -->
+  <section class="h2" id="hero2" aria-label="추천 제품 슬라이드">
+    <div class="h2-track"></div>
+    <div class="h2-ctrl">
+      <span class="h2-cnt">01 / 24</span>
+      <button class="h2-prev" type="button" aria-label="이전"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="h2-next" type="button" aria-label="다음"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+      <button class="h2-play" type="button" aria-label="일시정지"><svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><svg class="i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+    </div>
+  </section>
+
   <section class="sec reveal" id="best">
     <div class="sec-hc"><span class="eb">BEST</span><h2>티앤씨 인기 렌탈</h2><p>제휴카드 혜택이 큰 순서로 모았어요</p></div>
     <div class="tabs-c" id="bestTabs"></div>
@@ -329,6 +342,8 @@
 <script src="js/layout-switch.js"></script>
 <script src="js/main.js"></script>
 <script src="js/hero.js"></script>
+<script src="js/main-banner-data.js"></script>
+<script src="js/main-banner.js"></script>
 <script src="js/video-banner.js"></script>
 <script src="js/guide-blog.js"></script>
 </body>

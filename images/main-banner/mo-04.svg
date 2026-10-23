@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="670" height="864" viewBox="0 0 670 864">
+<rect width="670" height="864" fill="#F6E6EA"/>
+<rect x="70" y="60" width="530" height="200" rx="12" fill="none" stroke="#1B2529" stroke-opacity=".25" stroke-width="2" stroke-dasharray="8 8"/>
+<text x="335" y="168" font-family="sans-serif" font-size="22" fill="#1B2529" fill-opacity=".45" text-anchor="middle">문구 영역 (HTML 텍스트 · 비워두세요)</text>
+<rect x="95" y="330" width="480" height="380" rx="28" fill="#fff" fill-opacity=".55"/>
+<text x="335" y="510" font-family="sans-serif" font-size="40" font-weight="700" fill="#1B2529" fill-opacity=".55" text-anchor="middle">모바일 배너 04</text>
+<text x="335" y="560" font-family="sans-serif" font-size="24" fill="#1B2529" fill-opacity=".45" text-anchor="middle">670 × 864 (제품/연출 이미지 자리)</text>
+<rect x="50" y="760" width="250" height="40" rx="8" fill="none" stroke="#1B2529" stroke-opacity=".2" stroke-width="2" stroke-dasharray="6 6"/>
+<text x="175" y="786" font-family="sans-serif" font-size="16" fill="#1B2529" fill-opacity=".4" text-anchor="middle">진행바 자리</text>
+</svg>

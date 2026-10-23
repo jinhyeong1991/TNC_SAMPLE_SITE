@@ -1,0 +1,68 @@
+/* =========================================================
+   Main banner (Coway-style) - js/main-banner.js, data in js/main-banner-data.js
+   PC   : slide 1320 x 462 (narrower screens: 100% - 120px, image cropped from the center), gap 10px, neighbours peek
+   Mobile: slide 100% - 40px, ratio 670 : 864, gap 8px, next slide peeks on the right
+   ========================================================= */
+.mb{--mb-ink:#1B2529;--mb-w:min(1320px, calc(100% - 120px));position:relative;overflow:hidden;margin-top:20px;font-family:'Pretendard','Noto Sans KR',sans-serif}
+.mb-track{display:flex;gap:10px;will-change:transform;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.mb-track.drag{cursor:grabbing}
+.mb-slide{position:relative;flex:0 0 var(--mb-w);height:462px;border-radius:8px;overflow:hidden;background:#EFF0F0;color:var(--mb-ink);-webkit-user-drag:none}
+.mb-media,.mb-media picture,.mb-media img,.mb-media video{display:block;width:100%;height:100%}
+.mb-media img,.mb-media video{object-fit:cover;object-position:center;-webkit-user-drag:none}
+
+/* copy: left 120px, vertically centered */
+.mb-copy{position:absolute;left:120px;top:0;bottom:0;width:420px;max-width:calc(100% - 160px);display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+.mb-sub{font-size:18px;line-height:1.4;letter-spacing:-.7px;word-break:keep-all}
+.mb-tit{margin-top:16px;font-size:36px;font-weight:700;line-height:1.4;letter-spacing:-.7px;word-break:keep-all}
+.mb-btn{margin-top:25px;font-size:12px;font-weight:700;line-height:1;letter-spacing:-.4px}
+.mb-btn span{position:relative;padding-right:14px}
+.mb-btn span::after{content:'';position:absolute;right:0;top:50%;width:6px;height:6px;margin-top:-4px;border:solid currentColor;border-width:1.5px 1.5px 0 0;transform:rotate(45deg)}
+.mb-slide.white{color:#fff}
+
+/* copy fades in on the active slide (sub -> title -> button) */
+.mb-fade{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.mb-slide.on .mb-fade{opacity:1;transform:none}
+.mb-slide.on .mb-sub{transition-delay:.3s}
+.mb-slide.on .mb-tit{transition-delay:.45s}
+.mb-slide.on .mb-btn{transition-delay:.6s}
+.mb-track.jump .mb-fade{transition:none !important}
+
+/* arrows: 40px inside the active slide edges */
+.mb-arr{position:absolute;top:50%;z-index:2;width:19px;height:35px;margin-top:-17.5px;color:var(--mb-ink);display:grid;place-items:center;transition:opacity .2s}
+.mb-arr:hover{opacity:.6}
+.mb-prev{left:calc(50% - var(--mb-w) / 2 + 40px)}
+.mb-next{right:calc(50% - var(--mb-w) / 2 + 40px)}
+
+/* progress bar + pause: bottom center of the active slide */
+.mb-ctrl{position:absolute;left:50%;bottom:37px;z-index:2;transform:translateX(-50%);display:flex;align-items:center;gap:13px;color:var(--mb-ink)}
+.mb-bar{position:relative;display:block;width:420px;height:2px;background:rgba(27,37,41,.15);overflow:hidden}
+.mb-fill{position:absolute;inset:0;background:currentColor;transform-origin:0 50%;transform:scaleX(0);transition:transform 1s}
+.mb-play{width:12px;height:14px;display:grid;place-items:center;color:inherit}
+.mb-play .i-play{display:none}
+.mb-play.off .i-pause{display:none}
+.mb-play.off .i-play{display:block}
+.mb.mb-white .mb-arr,.mb.mb-white .mb-ctrl{color:#fff}
+.mb.mb-white .mb-bar{background:rgba(255,255,255,.3)}
+.mb.single .mb-arr,.mb.single .mb-ctrl{display:none}
+
+@media (max-width:1200px){
+  .mb-slide{height:420px}
+  .mb-copy{left:80px}
+  .mb-tit{font-size:32px}
+}
+
+/* ---------- mobile ---------- */
+@media (max-width:900px){
+  .mb{--mb-w:calc(100% - 40px);margin-top:12px}
+  .mb-track{gap:8px}
+  .mb-slide{height:auto;aspect-ratio:670/864}
+  .mb-copy{left:35px;right:35px;top:30px;bottom:auto;width:auto;max-width:none;display:block}
+  .mb-sub{font-size:14px}
+  .mb-tit{margin-top:4px;font-size:25px}
+  .mb-btn,.mb-arr{display:none}
+  .mb-ctrl{left:45px;bottom:37px;transform:none;gap:12px}
+  .mb-bar{width:108px}
+}
+@media (prefers-reduced-motion:reduce){
+  .mb-fade{transition:none}
+}

@@ -14,7 +14,7 @@ main{display:block}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 /* ---------- 1. main slide (looping carousel, ~2.7 slides visible) ---------- */
-.h2{position:relative;overflow:hidden;background:#fff;--sw:min(calc((100vw - 4px) / 4.6), 360px);--sh:calc(var(--sw) * 560 / 478)}
+.h2{position:relative;overflow:hidden;background:#fff;margin-top:72px;--sw:min(calc((100vw - 4px) / 4.6), 360px);--sh:calc(var(--sw) * 560 / 478)}
 .h2-track{display:flex;gap:2px;will-change:transform;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .h2-track.drag{cursor:grabbing}
 .h2-slide{position:relative;flex:0 0 var(--sw);height:var(--sh);display:block;overflow:hidden;background:#E9ECF1;color:#fff;-webkit-user-drag:none}
@@ -216,7 +216,7 @@ main{display:block}
 
 /* ---------- mobile ---------- */
 @media (max-width:900px){
-  .h2{--sw:calc((100vw - 2px) / 1.5)}
+  .h2{--sw:calc((100vw - 2px) / 1.5);margin-top:48px}
   .h2-txt{padding:0 10px 46px}
   .h2-txt strong{font-size:16px}
   .h2-txt span{font-size:11.5px}
