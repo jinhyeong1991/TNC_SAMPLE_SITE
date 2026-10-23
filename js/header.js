@@ -53,6 +53,8 @@
   var panels={}, items={}, openKey=null, timer=null, kwState={};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})}
   var SPARK='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7z"/></svg>';
+  /* red ring drawn around a product circle on hover (starts at 9 o'clock, sweeps over the top to the right) */
+  var RING='<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg>';
 
   /* AI keyword column. SAMPLE: keywords rotate on a timer. Real version = search logs + LLM on the server. */
   function kwHtml(k){
@@ -70,7 +72,7 @@
     el.innerHTML='<div class="mw mega-in"><div class="mega-main"><div class="mega-title"><h4>'+esc(m.t)+'</h4><a href="'+SHOP+m.href+'">전체 보기 →</a></div>'+
       '<div class="circles'+(m.sm?' sm':'')+'">'+
       m.items.map(function(p){return '<a class="ci" href="'+SHOP+p.h+'">'+(p.bd?'<span class="bd">'+p.bd+'</span>':'')+
-        '<div class="c"><img loading="lazy" alt="" src="'+p.img+'"></div><b>'+esc(p.n)+'</b>'+
+        '<div class="c"><img loading="lazy" alt="" src="'+p.img+'">'+RING+'</div><b>'+esc(p.n)+'</b>'+
         '<em>'+(p.p?'월 <strong>'+p.p+'원</strong>~':'<strong>상담 문의</strong>')+'</em></a>'}).join('')+
       '</div></div>'+
       '<aside class="mega-ai"><div class="ai-h"><span class="sp">'+SPARK+'</span>AI 추천 검색<span class="live"><i></i>실시간</span></div>'+
