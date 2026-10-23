@@ -319,7 +319,8 @@ main{display:block}
 
 /* ---------- footer (company info) ---------- */
 .ft2{margin-top:72px;background:#F7F8FA;border-top:1px solid var(--line);color:var(--ink2);padding:32px 0 34px;font-size:13px}
-.ft2-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:center}
+.ft2-grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.ft2-r{display:flex;align-items:center;gap:28px}
 .ft2-links{display:flex;list-style:none;margin-bottom:18px}
 .ft2-links li{padding:0 16px;border-left:1px solid #D5D8DE;line-height:1}
 .ft2-links li:first-child{padding-left:0;border-left:0}
@@ -331,19 +332,23 @@ main{display:block}
 .ft2-info dd{color:var(--ink);margin-right:26px}
 .ft2-copy{margin-top:14px;color:var(--ink3);font-size:12.5px}
 .ft2-name{margin-top:6px;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
-.ft2-cert{display:block;width:100%;height:auto;border-radius:8px}
-.ft2-call{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;color:var(--ink2)}
-.ft2-call span{font-size:16px}
-.ft2-call b{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.5px}
+.ft2-cert{display:block;order:2;width:460px;height:auto;border-radius:8px}
+.ft2-call{order:1;display:flex;flex-direction:column;align-items:flex-start;gap:2px;color:var(--ink2)}
+.ft2-call span{font-size:14px}
+.ft2-call b{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-.5px}
+.ft2-call .ft2-btn{margin-top:12px}
 .ft2-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border:1px solid #D5D8DE;border-radius:999px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;transition:.2s}
 .ft2-btn:hover{border-color:var(--ink)}
+@media (max-width:1200px){.ft2-cert{width:380px}}
 @media (max-width:900px){
   .ft2{margin-top:48px;padding:26px 0 30px}
   .ft2-grid{grid-template-columns:1fr;gap:20px}
   .ft2-links{flex-wrap:wrap;margin-bottom:14px;row-gap:8px}
   .ft2-info dd{margin-right:16px}
-  .ft2-r{max-width:380px}
-  .ft2-call{justify-content:flex-start;flex-wrap:wrap;gap:10px}
+  .ft2-r{flex-direction:column;align-items:flex-start;gap:16px}
+  .ft2-cert{width:100%;max-width:460px}
+  .ft2-call{flex-direction:row;align-items:center;flex-wrap:wrap;gap:10px}
+  .ft2-call .ft2-btn{margin-top:0}
   .ft2-call b{font-size:20px}
 }
 
