@@ -10,6 +10,8 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function won(n) { return Math.round(n).toLocaleString('ko-KR'); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  /* model code (js/data-models.js), shown at the right end of the line above the product name */
+  function mdl(g) { var m = window.TNC_model ? window.TNC_model(g) : ''; return m ? '<span class="md" title="' + esc(m) + '">' + esc(m) + '</span>' : ''; }
 
   var qs = new URLSearchParams(location.search), key = qs.get('c');
   if (!SK[key]) key = 'water';
@@ -109,7 +111,7 @@
     return '<a class="ac" style="animation-delay:' + Math.min(i, 11) * 40 + 'ms" data-g="' + it.g + '" href="' + (it.g === 'G050304' ? 'view.html?goods=' : SHOP + 'goods_view.php?goods=') + it.g + '">' +
       '<div class="im">' + (badge ? '<span class="rk top" style="background:var(--red)">' + badge + '</span>' : '') +
       '<img loading="lazy" alt="" src="' + IMG + it.i + '"><span class="dc" hidden>카드할인 시 0원</span></div>' +
-      '<p class="br">SK매직</p><p class="nm">' + esc(it.name) + '</p>' +
+      '<p class="br"><span class="bn">SK매직</span>' + mdl(it.g) + '</p><p class="nm">' + esc(it.name) + '</p>' +
       (r.none ? '<div class="ask">월 렌탈료 <b>상담 문의</b></div><span class="cdn">1670-4113</span>' :
         '<s class="st"><span data-r="stl">월 렌탈료</span> <span data-r="st">0</span>원</s>' +
         '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div>' +

@@ -9,6 +9,8 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function won(n) { return Math.round(n).toLocaleString('ko-KR'); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  /* model code (js/data-models.js), shown at the right end of the line above the product name */
+  function mdl(g) { var m = window.TNC_model ? window.TNC_model(g) : ''; return m ? '<span class="md" title="' + esc(m) + '">' + esc(m) + '</span>' : ''; }
 
   /* ---------- promo D-day (event end date) ---------- */
   (function () {
@@ -77,7 +79,7 @@
       return '<a class="ac" data-g="' + it.g + '" href="' + DET + it.g + '">' +
         '<div class="im">' + (rank ? '<span class="rk' + (rank <= 3 ? ' top' : '') + '">' + rank + '</span>' : '') +
         '<img loading="lazy" alt="" src="' + IMGB + it.i + '"><span class="dc" hidden>카드할인 시 0원</span></div>' +
-        '<p class="br">' + esc(it.b) + '</p><p class="nm">' + esc(it.n) + '</p>' +
+        '<p class="br"><span class="bn">' + esc(it.b) + '</span>' + mdl(it.g) + '</p><p class="nm">' + esc(it.n) + '</p>' +
         '<s class="st"><span data-r="stl">월 렌탈료</span> <span data-r="st">0</span>원</s>' +
         '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div>' +
         '<span class="cdn"></span><span class="pm" hidden></span></a>';
@@ -289,7 +291,7 @@
   function cardHtml(p, i) {
     return '<a class="pcard" style="animation-delay:' + (i * 45) + 'ms" href="' + (p.id === 'G050304' ? 'view.html?goods=' : SHOP + 'goods_view.php?goods=') + p.id + '" data-id="' + p.id + '">' +
       '<div class="im">' + (p.bd ? '<span class="bd">' + p.bd + '</span>' : '') + '<img loading="lazy" alt="" src="' + IMG + p.img + '"></div>' +
-      '<p class="nm"><em>[렌탈]</em>' + esc(p.name) + '</p>' +
+      '<p class="br"><span class="bn"></span>' + mdl(p.id) + '</p><p class="nm"><em>[렌탈]</em>' + esc(p.name) + '</p>' +
       '<div class="pbox"><s class="st">월 <span data-r="st">0</span>원</s>' +
       '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div></div>' +
       '<div class="tg"><span data-r="per"></span><span class="pm" data-r="pm" hidden></span>' + (p.kind ? '<span>' + p.kind + '</span>' : '') + '</div></a>';

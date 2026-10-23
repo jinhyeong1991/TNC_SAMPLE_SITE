@@ -155,8 +155,12 @@ main{display:block}
 .ac .rk{position:absolute;left:10px;top:10px;min-width:30px;height:30px;padding:0 8px;border-radius:9px;background:var(--ink);color:#fff;font-size:14px;font-weight:800;display:grid;place-items:center;z-index:1}
 .ac .rk.top{background:var(--red)}
 .ac .dc{position:absolute;right:10px;bottom:10px;background:#fff;color:var(--red);font-size:11.5px;font-weight:800;padding:4px 9px;border-radius:999px;box-shadow:none;z-index:1}
-.ac .br{margin-top:14px;font-size:12.5px;font-weight:700;color:var(--ink3)}
+.ac .br,.pcard .br{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:14px;font-size:12.5px;font-weight:700;color:var(--ink3);line-height:18px;min-height:18px}
 .ac .nm{margin-top:3px;font-size:15px;line-height:1.42;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:43px}
+/* model code at the right end of the brand line, right above the product name */
+.br .bn{flex:none}
+.br .md{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:12px;font-weight:500;color:var(--ink3);letter-spacing:0;text-align:right}
+.pcard .br + .nm,.lsw-grid .pcard p.br + p.nm{margin-top:2px}
 .ac .st{display:block;margin-top:8px;font-size:12.5px;color:#9AA0AB;height:17px;font-variant-numeric:tabular-nums}
 .ac .pl{display:flex;align-items:baseline;gap:6px;margin-top:2px;font-variant-numeric:tabular-nums}
 .ac .pct{color:var(--red);font-size:18px;font-weight:800}
@@ -195,6 +199,7 @@ main{display:block}
   .ac-rail{gap:10px}
   .ac-rail .ac{flex:0 0 44%}
   .ac .nm{font-size:13.5px;min-height:38px}
+  .br .md{font-size:11px}
   .ac .mp{font-size:16px}
   .ac .pct{font-size:15px}
   .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:210px;gap:10px}

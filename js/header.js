@@ -107,17 +107,30 @@
     allEl.querySelectorAll('[data-body]').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-body')===b.getAttribute('data-tab'))});
   })});
 
-  var allBtn=document.getElementById('allBtn'); items.all=allBtn; var sticky=false;
-  function showMega(k,stick){clearTimeout(timer);if(openKey===k){sticky=!!stick;return}hideMega(true);openKey=k;sticky=!!stick;panels[k].classList.add('open');dim.classList.add('on');items[k].classList.add('hot')}
-  function hideMega(now){
-    clearTimeout(timer);
-    var run=function(){if(openKey){panels[openKey].classList.remove('open');items[openKey].classList.remove('hot');openKey=null}sticky=false;dim.classList.remove('on')};
-    if(now){run();return}
-    timer=setTimeout(function(){if(!sticky)run()},120);
+  /* one dropdown shell (#megaRoot) slides down once; moving to another category keeps it open,
+     eases its height to the new panel and crossfades the contents (Samsung style) */
+  var allBtn=document.getElementById('allBtn'); items.all=allBtn; var sticky=false, swT=null;
+  function fit(){root.style.height=openKey?panels[openKey].offsetHeight+'px':'0px'}
+  function showMega(k,stick){
+    clearTimeout(timer);clearTimeout(swT);
+    if(openKey===k){sticky=!!stick;return}
+    if(openKey){panels[openKey].classList.remove('open');items[openKey].classList.remove('hot')}
+    openKey=k;sticky=!!stick;panels[k].classList.add('open');items[k].classList.add('hot');
+    root.classList.add('on');dim.classList.add('on');fit();
   }
+  function hideMega(now){
+    clearTimeout(timer);clearTimeout(swT);
+    var run=function(){if(openKey){panels[openKey].classList.remove('open');items[openKey].classList.remove('hot');openKey=null}sticky=false;fit();root.classList.remove('on');dim.classList.remove('on')};
+    if(now){run();return}
+    timer=setTimeout(function(){if(!sticky)run()},160);
+  }
+  /* small hover intent: sweeping the mouse across the row doesn't flash every panel on the way */
+  function hoverMega(k){clearTimeout(timer);clearTimeout(swT);swT=setTimeout(function(){showMega(k)},openKey?70:50)}
+  allEl.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',fit)});
+  window.addEventListener('resize',function(){if(openKey)fit()});
   document.querySelectorAll('[data-mega]').forEach(function(li){
     var k=li.getAttribute('data-mega'); items[k]=li;
-    li.addEventListener('mouseenter',function(){if(window.innerWidth>900)showMega(k)});
+    li.addEventListener('mouseenter',function(){if(window.innerWidth>900)hoverMega(k)});
     li.addEventListener('mouseleave',function(){hideMega()});
     li.addEventListener('focusin',function(){if(window.innerWidth>900)showMega(k)});
     panels[k].addEventListener('mouseenter',function(){clearTimeout(timer)});
@@ -137,11 +150,13 @@
   var sList=document.getElementById('sList'), sProds=document.getElementById('sProds'), sLT=document.getElementById('sLT'), sRT=document.getElementById('sRT');
   var POP=['얼음정수기','올클린 공기청정기','풀스텐 비데','수납형 침대 프레임','나무엑스 A1','반값 프로모션','제휴카드 혜택'];
   var PRODS=[];
-  Object.keys(MEGA).forEach(function(k){MEGA[k].items.forEach(function(p){PRODS.push({n:p.n,cat:MEGA[k].t,p:p.p,img:p.img,bd:p.bd,h:p.h})})});
+  /* model name (js/data-models.js) for items that link to a single product page */
+  function mdlOf(h){var g=/goods=(G\d+)/.exec(h||'');return g&&window.TNC_model?window.TNC_model(g[1]):''}
+  Object.keys(MEGA).forEach(function(k){MEGA[k].items.forEach(function(p){PRODS.push({n:p.n,cat:MEGA[k].t,p:p.p,img:p.img,bd:p.bd,h:p.h,m:mdlOf(p.h)})})});
   var RECO=[0,4,12,16].map(function(i){return PRODS[i]}).filter(Boolean);
   var KWALL=POP.slice(); Object.keys(MEGA).forEach(function(k){MEGA[k].kw.forEach(function(w){if(KWALL.indexOf(w)<0)KWALL.push(w)})});
   function hl(s,q){if(!q)return esc(s);var i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?esc(s):esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length))}
-  function card(p){return '<a class="sp" href="'+SHOP+p.h+'"><div class="im">'+(p.bd?'<span class="bd">'+p.bd+'</span>':'')+'<img loading="lazy" alt="" src="'+p.img+'"></div><b>'+esc(p.n)+'</b>'+
+  function card(p){return '<a class="sp" href="'+SHOP+p.h+'"><div class="im">'+(p.bd?'<span class="bd">'+p.bd+'</span>':'')+'<img loading="lazy" alt="" src="'+p.img+'"></div>'+(p.m?'<span class="md">'+esc(p.m)+'</span>':'')+'<b>'+esc(p.n)+'</b>'+
     (p.p?'<small>월 렌탈료</small><strong>'+p.p+'원~</strong>':'<small>사업자 렌탈</small><strong>상담 문의</strong>')+'</a>'}
   function renderSearch(q){
     q=(q||'').trim();
@@ -152,7 +167,7 @@
     }
     var low=q.toLowerCase();
     var kws=KWALL.filter(function(w){return w.toLowerCase().indexOf(low)>=0}).slice(0,7);
-    var res=PRODS.filter(function(p){return (p.n+' '+p.cat).toLowerCase().indexOf(low)>=0});
+    var res=PRODS.filter(function(p){return (p.n+' '+p.cat+' '+(p.m||'')).toLowerCase().indexOf(low)>=0||(p.m&&p.m.replace(/-/g,'').toLowerCase().indexOf(low.replace(/-/g,''))>=0)});
     sLT.textContent='연관 검색어';
     sList.innerHTML=kws.length?kws.map(function(w){return '<li><a href="#" data-sq="'+esc(w)+'">'+hl(w,q)+'</a></li>'}).join(''):'<li style="color:#8A909C;font-size:14px">연관 검색어가 없어요</li>';
     sRT.textContent='검색 결과 '+res.length+'개';

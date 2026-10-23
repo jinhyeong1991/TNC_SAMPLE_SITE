@@ -110,3 +110,5 @@
 @media (prefers-reduced-motion:reduce){
   .gb-box,.gb-dim{transition:none}
 }
+/* model code right above the product name on guide cards */
+.gb-mosaic .mt .tx .gb-nm .gb-md{display:block;margin-bottom:2px;font-size:11.5px;font-weight:600;letter-spacing:0}

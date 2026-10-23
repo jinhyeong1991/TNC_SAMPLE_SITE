@@ -65,8 +65,13 @@ svg{display:block}
 .tag{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:6px;background:var(--red-bg);color:var(--red);font-size:10.5px;font-weight:800;line-height:1.5;vertical-align:2px}
 /* mega menu (PC) */
 .mw{max-width:1280px;margin:0 auto;padding:0 24px}
-.mega{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);box-shadow:none;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:4;max-height:calc(100vh - 150px);overflow-y:auto}
-.mega.open{opacity:1;visibility:visible;transform:none}
+/* #megaRoot = one white shell that slides down (height 0 -> panel height) and eases between panel heights;
+   the panels inside are stacked and crossfade (old fades out fast, new drops in from above) */
+#megaRoot{position:absolute;left:0;right:0;top:100%;height:0;overflow:hidden;background:#fff;border-top:1px solid transparent;z-index:4;transition:height .45s cubic-bezier(.33,1,.68,1),border-color .2s}
+#megaRoot.on{border-top-color:var(--line)}
+.mega{position:absolute;left:0;right:0;top:0;background:#fff;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .18s ease,transform .3s ease,visibility 0s linear .3s;max-height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden}
+.mega.open{opacity:1;visibility:visible;transform:none;transition:opacity .35s ease .08s,transform .5s cubic-bezier(.22,.8,.24,1) .05s,visibility 0s}
+@media (prefers-reduced-motion:reduce){#megaRoot,.mega,.mega.open{transition:none}}
 .mega-in{display:grid;grid-template-columns:1fr 330px;min-height:360px}
 .mega-main{padding:34px 40px 38px 0}
 .mega-title{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
@@ -129,7 +134,7 @@ svg{display:block}
 .allbtn.hot{background:var(--red)}
 .dim{position:fixed;left:0;right:0;bottom:0;top:0;background:rgba(17,19,24,.38);opacity:0;visibility:hidden;transition:.2s;z-index:90}
 .dim.on{opacity:1;visibility:visible}
-@media (max-width:900px){.mega,.dim{display:none}}
+@media (max-width:900px){#megaRoot,.mega,.dim{display:none}}
 
 
 /* CTA emphasis: shimmer sweep + soft pulse ring + small nudge */
@@ -167,6 +172,8 @@ svg{display:block}
 .sp:hover .im img{transform:scale(1.07)}
 .sp .bd{position:absolute;left:10px;top:10px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
 .sp b{display:block;margin-top:14px;font-size:17px;font-weight:700;line-height:1.35;color:var(--ink)}
+.sp .md{display:block;margin-top:12px;font-size:12px;line-height:18px;color:var(--ink3);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp .md + b{margin-top:2px}
 .sp small{display:block;margin-top:8px;font-size:13px;color:var(--red);font-weight:600}
 .sp strong{display:block;margin-top:2px;font-size:19px;font-weight:800}
 .s-empty{grid-column:1/-1;padding:46px 0;text-align:center;color:var(--ink3);font-size:15px;line-height:1.7}
