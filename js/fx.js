@@ -32,7 +32,7 @@
       '<div class="fx-body"><p class="fx-t">렌탈 조건</p><p class="fx-s">의무사용기간</p><div class="fx-chips">' +
       PERIODS.map(function (n) { return '<button type="button" data-p="' + n + '"' + (n === S.period ? ' class="on"' : '') + '>' + n + '개월</button>'; }).join('') +
       '</div><p class="fx-s">가격 기준</p><div class="fx-seg"><button type="button" data-m="card"' + (S.mode === 'card' ? ' class="on"' : '') + '>제휴카드 적용</button><button type="button" data-m="rental"' + (S.mode === 'rental' ? ' class="on"' : '') + '>월 렌탈료</button></div>' +
-      '<p class="fx-n">선택하면 페이지의 모든 가격이 바로 바뀌어요.</p></div>' +
+      '<p class="fx-n">선택하면 페이지의 모든 가격이 바로 바뀌어요.<span class="fx-n-m"> 선택한 버튼을 한 번 더 누르면 닫혀요.</span></p></div>' +
       /* quick menu under the filter (sk.tncrental.co.kr style): phone + 간편상담, 제휴카드 banner, back to top.
          Wide screens show full blocks; narrower screens show three round buttons above the filter pill. */
       '<div class="fx-q">' +
@@ -90,16 +90,23 @@
       try { sessionStorage.setItem('tnc-fx', JSON.stringify(S)); } catch (e) { /* ignore */ }
       document.dispatchEvent(new CustomEvent('tnc-filter'));
     }
+    /* mobile sheet: tapping the option that is already selected (i.e. select, then tap again / double-tap) closes the sheet */
+    function reTapClose(b) { if (fx.classList.contains('msheet') && b.classList.contains('on')) { sheet(false); return true; } return false; }
     $('.fx-chips', fx).addEventListener('click', function (e) {
-      var b = e.target.closest('button'); if (!b) return;
+      var b = e.target.closest('button'); if (!b || reTapClose(b)) return;
       $$('.fx-chips button', fx).forEach(function (x) { x.classList.toggle('on', x === b); });
       S.period = +b.getAttribute('data-p'); fire();
     });
     $('.fx-seg', fx).addEventListener('click', function (e) {
-      var b = e.target.closest('button'); if (!b) return;
+      var b = e.target.closest('button'); if (!b || reTapClose(b)) return;
       $$('.fx-seg button', fx).forEach(function (x) { x.classList.toggle('on', x === b); });
       S.mode = b.getAttribute('data-m'); fire();
     });
+    /* ✕ in the sheet's corner (shown only in the mobile sheet by CSS) */
+    var fxX = document.createElement('button'); fxX.type = 'button'; fxX.className = 'fx-x'; fxX.setAttribute('aria-label', '렌탈 조건 닫기');
+    fxX.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+    $('.fx-body', fx).appendChild(fxX);
+    fxX.addEventListener('click', function () { sheet(false); });
     tg.addEventListener('click', function (e) { e.stopPropagation(); var o = fx.classList.toggle('open'); tg.setAttribute('aria-expanded', o ? 'true' : 'false'); });
     document.addEventListener('click', function (e) { if (fx.classList.contains('open') && !fx.contains(e.target)) { fx.classList.remove('open'); tg.setAttribute('aria-expanded', 'false'); } });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fx.classList.remove('open'); });

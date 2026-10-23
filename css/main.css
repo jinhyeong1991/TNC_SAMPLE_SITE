@@ -311,6 +311,7 @@ main{display:block}
 .fx-seg button{flex:1;height:34px;border-radius:999px;font-weight:700;font-size:12.5px;color:var(--ink2);white-space:nowrap;transition:.15s}
 .fx-seg button.on{background:var(--ink);color:#fff}
 .fx-n{margin-top:12px;font-size:11.5px;color:var(--ink3);line-height:1.5}
+.fx-x,.fx-n-m{display:none}
 /* quick menu (js/fx.js). Default = three round buttons stacked above the filter pill (the filter panel opens to their left) */
 .fx{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .fx-toggle{order:2}
@@ -381,8 +382,13 @@ main{display:block}
   .fx.msheet .fx-body,.fx.fx-quick.msheet .fx-body{display:block;position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));width:auto;border-radius:22px 22px 0 0;border:0;padding:22px 18px 18px;animation:mSheetUp .3s cubic-bezier(.22,.8,.24,1)}
   .fx.msheet .fx-t{font-size:17px}
   .fx.msheet .fx-chips{flex-wrap:nowrap}
-  .fx.msheet .fx-chips button{flex:1;min-width:0;padding:0;height:42px;font-size:13.5px;white-space:nowrap}
-  .fx.msheet .fx-seg button{height:40px;font-size:13.5px}
+  .fx.msheet .fx-chips{gap:8px}
+  .fx.msheet .fx-chips button{flex:1;min-width:0;padding:0;height:48px;border-radius:14px;font-size:15px;white-space:nowrap}
+  .fx.msheet .fx-seg{padding:5px;border-radius:16px}
+  .fx.msheet .fx-seg button{height:46px;border-radius:12px;font-size:14.5px}
+  .fx.msheet .fx-s{font-size:13px;margin:16px 0 9px}
+  .fx.msheet .fx-x{display:grid;position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:50%;place-items:center;color:var(--ink3)}
+  .fx.msheet .fx-n-m{display:inline}
   @keyframes mSheetUp{from{transform:translateY(100%)}to{transform:none}}
 }
 
