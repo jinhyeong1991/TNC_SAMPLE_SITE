@@ -1,0 +1,31 @@
+/* =========================================================
+   Main page quick icons (between the main banner and the video strip): 6 = 4 product groups + 2 benefits
+   Line icons (ink + one red accent) in round tiles; hover draws a thin red ring
+   from 12 o'clock counter-clockwise, same as the mega menu circles.
+   ========================================================= */
+.qi{max-width:960px;margin:0 auto;padding:36px 24px 0;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.qi-i{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.qi-c{position:relative;width:72px;height:72px;border-radius:50%;background:#F4F5F7;display:grid;place-items:center;transition:transform .3s cubic-bezier(.22,.8,.24,1),background-color .35s}
+.qi-ic{width:34px;height:34px;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.22,.8,.24,1)}
+.qi-ic .a{stroke:var(--red)}
+.qi-ic .a.f{fill:var(--red);stroke:none}
+.qi-i b{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.3px;transition:color .25s;white-space:nowrap}
+.qi-bd{position:absolute;top:-6px;left:50%;transform:translateX(8px);padding:2px 8px;border-radius:999px;background:var(--red);color:#fff;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.2px;white-space:nowrap;line-height:1.5;z-index:1}
+
+/* hover ring */
+.qi-c .ring{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1) rotate(-90deg);overflow:visible;pointer-events:none}
+.qi-c .ring circle{fill:none;stroke:var(--red);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:stroke-dashoffset .35s ease,opacity .2s ease .15s}
+.qi-i:hover .qi-c,.qi-i:focus-visible .qi-c{background:#FFF6F7;transform:translateY(-4px)}
+.qi-i:hover .qi-ic,.qi-i:focus-visible .qi-ic{transform:scale(1.08)}
+.qi-i:hover .ring circle,.qi-i:focus-visible .ring circle{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset .8s cubic-bezier(.65,0,.35,1),opacity .1s ease}
+.qi-i:hover b,.qi-i:focus-visible b{color:var(--red)}
+
+@media (max-width:900px){
+  .qi{grid-template-columns:repeat(3,1fr);gap:18px 8px;padding:24px 16px 0}
+  .qi-i{gap:8px}
+  .qi-c{width:66px;height:66px}
+  .qi-ic{width:31px;height:31px}
+  .qi-i b{font-size:13.5px;letter-spacing:-.3px}
+  .qi-bd{top:-7px;transform:translateX(2px);font-size:9.5px;padding:1px 6px}
+}
+@media (prefers-reduced-motion:reduce){.qi-c,.qi-ic,.qi-c .ring circle{transition:none}}

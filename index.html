@@ -22,12 +22,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/header.css?v=202610231344">
-<link rel="stylesheet" href="css/main.css?v=202610231344">
-<link rel="stylesheet" href="css/main-banner.css?v=202610231344">
-<link rel="stylesheet" href="css/video-banner.css?v=202610231344">
-<link rel="stylesheet" href="css/layout-switch.css?v=202610231344">
-<link rel="stylesheet" href="css/guide-blog.css?v=202610231344">
+<link rel="stylesheet" href="css/header.css?v=202610231418">
+<link rel="stylesheet" href="css/main.css?v=202610231418">
+<link rel="stylesheet" href="css/main-banner.css?v=202610231418">
+<link rel="stylesheet" href="css/quick-icons.css?v=202610231418">
+<link rel="stylesheet" href="css/video-banner.css?v=202610231418">
+<link rel="stylesheet" href="css/layout-switch.css?v=202610231418">
+<link rel="stylesheet" href="css/guide-blog.css?v=202610231418">
 </head>
 <body>
 
@@ -143,6 +144,16 @@
       <button class="mb-play" type="button" aria-label="일시정지"><svg class="i-pause" width="8" height="12" viewBox="0 0 8 12" fill="currentColor"><rect width="2" height="12"/><rect x="6" width="2" height="12"/></svg><svg class="i-play" width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><path d="M0 0v12l10-6z"/></svg></button>
     </div>
   </section>
+
+  <!-- 바로가기 아이콘 6개 (css/quick-icons.css): 제품군 4 + 혜택 2, 선 아이콘 + 빨간 포인트, 마우스를 올리면 빨간 원이 그려짐 -->
+  <nav class="qi" aria-label="바로가기">
+    <a class="qi-i" href="list.html?c=water"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><rect x="8.5" y="3.5" width="15" height="25" rx="2.5"/><path d="M8.5 14h15M16 14v2.4M12.5 25h7"/><path class="a" d="M16 18.6c1.1 1.4 1.8 2.4 1.8 3.3a1.8 1.8 0 0 1-3.6 0c0-.9.7-1.9 1.8-3.3z"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg><em class="qi-bd">BEST</em></span><b>정수기</b></a>
+    <a class="qi-i" href="list.html?c=air"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="5" width="14" height="23" rx="3"/><path d="M9 10.5h14"/><path d="M12.5 15h7M12.5 18.5h7M12.5 22h7"/><path class="a" d="M5 6.5c1.6-1.3 3.2-1.3 4.8 0M25.8 4.5c1.6-1.3 3.2-1.3 4.8 0M26.2 9c1.2-1 2.4-1 3.6 0"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg></span><b>공기청정기</b></a>
+    <a class="qi-i" href="list.html?c=bidet"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 15h18v1.5a9 9 0 0 1-9 9 9 9 0 0 1-9-9z"/><path d="M8.5 15V8.5A2.5 2.5 0 0 1 11 6h10a2.5 2.5 0 0 1 2.5 2.5V15"/><path d="M13 25.5 12 28.5h8l-1-3"/><path class="a" d="M23 19.5h3.5a1.5 1.5 0 0 0 0-3H23"/><circle class="a f" cx="26.5" cy="18" r=".9"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg></span><b>비데</b></a>
+    <a class="qi-i" href="list.html?c=mat"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 26V7.5M28 26v-6M4 20.5h24M4 15.5h7.5a2 2 0 0 1 2 2v3"/><path d="M13.5 20.5v-3.2a2.3 2.3 0 0 1 2.3-2.3H25a3 3 0 0 1 3 3v2.5"/><circle class="a" cx="8" cy="12.5" r="2.3"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg></span><b>매트리스</b></a>
+    <a class="qi-i" href="event.html"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="12" width="22" height="15" rx="2"/><path d="M4 9.5h24v3H4z"/><path class="a" d="M16 9.5V27M16 9.5c-1.6-3.6-6.4-5.4-6.4-2.2 0 1.6 2.6 2.2 6.4 2.2zM16 9.5c1.6-3.6 6.4-5.4 6.4-2.2 0 1.6-2.6 2.2-6.4 2.2z"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg><em class="qi-bd">HOT</em></span><b>이달의 혜택</b></a>
+    <a class="qi-i" href="card.html"><span class="qi-c"><svg class="qi-ic" viewBox="0 0 32 32" aria-hidden="true"><rect x="3.5" y="7" width="25" height="18" rx="3"/><path class="a" d="M3.5 12.5h25"/><path d="M8 20h6M20 20h4"/></svg><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg><em class="qi-bd">최대 2.8만</em></span><b>카드할인</b></a>
+  </nav>
 
   <!-- 영상 띠배너: 오버/탭하면 커지며 영상 + 라이브 리뷰 패널이 펼쳐짐 (css/video-banner.css, js/video-banner.js) -->
   <section class="vb" id="vbanner" data-video="V8wzkhI5WnU" aria-label="SK매직 MEGA ICE 얼음정수기 영상">
@@ -329,19 +340,19 @@
 <div class="toast" id="toast"></div>
 
 
-<script src="js/data.js?v=202610231344"></script>
-<script src="js/data-all.js?v=202610231344"></script>
-<script src="js/data-periods.js?v=202610231344"></script>
-<script src="js/data-models.js?v=202610231344"></script>
-<script src="js/hero-slides.js?v=202610231344"></script>
-<script src="js/fx.js?v=202610231344"></script>
-<script src="js/header.js?v=202610231344"></script>
-<script src="js/layout-switch.js?v=202610231344"></script>
-<script src="js/main.js?v=202610231344"></script>
-<script src="js/hero.js?v=202610231344"></script>
-<script src="js/main-banner-data.js?v=202610231344"></script>
-<script src="js/main-banner.js?v=202610231344"></script>
-<script src="js/video-banner.js?v=202610231344"></script>
-<script src="js/guide-blog.js?v=202610231344"></script>
+<script src="js/data.js?v=202610231418"></script>
+<script src="js/data-all.js?v=202610231418"></script>
+<script src="js/data-periods.js?v=202610231418"></script>
+<script src="js/data-models.js?v=202610231418"></script>
+<script src="js/hero-slides.js?v=202610231418"></script>
+<script src="js/fx.js?v=202610231418"></script>
+<script src="js/header.js?v=202610231418"></script>
+<script src="js/layout-switch.js?v=202610231418"></script>
+<script src="js/main.js?v=202610231418"></script>
+<script src="js/hero.js?v=202610231418"></script>
+<script src="js/main-banner-data.js?v=202610231418"></script>
+<script src="js/main-banner.js?v=202610231418"></script>
+<script src="js/video-banner.js?v=202610231418"></script>
+<script src="js/guide-blog.js?v=202610231418"></script>
 </body>
 </html>
