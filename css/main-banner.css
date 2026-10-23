@@ -19,12 +19,13 @@
 .mb-btn span::after{content:'';position:absolute;right:0;top:50%;width:6px;height:6px;margin-top:-4px;border:solid currentColor;border-width:1.5px 1.5px 0 0;transform:rotate(45deg)}
 .mb-slide.white{color:#fff}
 
-/* copy fades in on the active slide (sub -> title -> button) */
-.mb-fade{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+/* copy fades in on the active slide (sub -> each title line -> button) */
+.mb-ln{display:block}
+.mb-fade{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.8,.24,1)}
 .mb-slide.on .mb-fade{opacity:1;transform:none}
 .mb-slide.on .mb-sub{transition-delay:.3s}
-.mb-slide.on .mb-tit{transition-delay:.45s}
-.mb-slide.on .mb-btn{transition-delay:.6s}
+.mb-slide.on .mb-ln{transition-delay:var(--d,.45s)}
+.mb-slide.on .mb-btn{transition-delay:.8s}
 .mb-track.jump .mb-fade{transition:none !important}
 
 /* arrows: 40px inside the active slide edges */

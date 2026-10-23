@@ -13,7 +13,11 @@
   if (N < 2) root.classList.add('single');
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
-  function br(s) { return esc(s).replace(/&lt;br\s*\/?&gt;/gi, '<br>'); }       /* allow <br> only */
+  function lines(s) {                                        /* split the title on <br>: each line fades in one after another */
+    return esc(s).split(/&lt;br\s*\/?&gt;/i).map(function (t, i) {
+      return '<span class="mb-ln mb-fade" style="--d:' + (0.45 + i * 0.15).toFixed(2) + 's">' + t + '</span>';
+    }).join('');
+  }
   function plain(s) { return String(s).replace(/<br\s*\/?>/gi, ' '); }
   function slide(s, i) {
     var lazy = i < K + 2 ? '' : 'loading="lazy" ';
@@ -23,7 +27,7 @@
         '<img draggable="false" ' + lazy + 'alt="' + esc(s.alt || plain(s.title || '')) + '" src="' + esc(s.pc) + '"></picture>';
     var copy = (s.sub || s.title) ? '<div class="mb-copy">' +
       (s.sub ? '<p class="mb-sub mb-fade">' + esc(s.sub) + '</p>' : '') +
-      (s.title ? '<p class="mb-tit mb-fade">' + br(s.title) + '</p>' : '') +
+      (s.title ? '<p class="mb-tit">' + lines(s.title) + '</p>' : '') +
       '<p class="mb-btn mb-fade"><span>자세히 보기</span></p></div>' : '';
     return '<a class="mb-slide' + (s.theme === 'white' ? ' white' : '') + '" data-i="' + i + '" href="' + esc(s.href || '#') + '" draggable="false">' +
       '<span class="mb-media">' + media + '</span>' + copy + '</a>';
