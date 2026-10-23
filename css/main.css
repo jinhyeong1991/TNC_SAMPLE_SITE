@@ -311,8 +311,25 @@ main{display:block}
 .fx-seg button{flex:1;height:34px;border-radius:999px;font-weight:700;font-size:12.5px;color:var(--ink2);white-space:nowrap;transition:.15s}
 .fx-seg button.on{background:var(--ink);color:#fff}
 .fx-n{margin-top:12px;font-size:11.5px;color:var(--ink3);line-height:1.5}
+/* quick menu (js/fx.js). Default = three round buttons stacked above the filter pill (the filter panel opens to their left) */
+.fx{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fx-toggle{order:2}
+.fx .fx-body{right:56px;bottom:56px}
+.fx-q{order:1;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.fx-call{display:contents}
+.fx-tel,.fx-consult span,.fx-card .t,.fx-card b,.fx-card img{display:none}
+.fx-consult,.fx-card,.fx-top{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;transition:transform .2s,background-color .2s}
+.fx-consult svg,.fx-card svg{width:24px;height:24px}
+.fx-top svg{width:20px;height:20px}
+.fx-consult{background:var(--red);color:#fff}
+.fx-consult:hover{background:var(--red-d)}
+.fx-card{background:#fff;border:1px solid var(--line);color:var(--red)}
+.fx-card:hover{border-color:var(--red)}
+.fx-top{background:#9A9DA3;color:#fff}
+.fx-top:hover{background:var(--ink)}
+.fx-consult:active,.fx-card:active,.fx-top:active{transform:scale(.94)}
 @media (min-width:1680px){
-  .fx{top:50%;bottom:auto;right:calc((100vw - 1280px) / 2 - 176px);transform:translateY(calc(-50% + 10px))}
+  .fx{top:calc(50% + 60px);bottom:auto;right:calc((100vw - 1280px) / 2 - 176px);transform:translateY(calc(-50% + 10px));align-items:stretch;width:150px}
   .fx.on{transform:translateY(-50%)}
   .fx-toggle{display:none}
   .fx-body{display:block;position:static;width:150px;padding:16px}
@@ -320,7 +337,22 @@ main{display:block}
   .fx-chips button{width:100%}
   .fx-seg{flex-direction:column;border-radius:16px}
   .fx-seg button{width:100%;height:36px}
+  /* wide: full blocks under the filter, like the shop's quick menu */
+  .fx-q{align-items:stretch}
+  .fx-call{display:block;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;text-align:center}
+  .fx-tel{display:block;padding:12px 8px 10px;font-size:12.5px;font-weight:600;color:var(--ink2)}
+  .fx-tel b{display:block;font-size:17px;font-weight:800;color:var(--red);letter-spacing:-.3px}
+  .fx-consult{width:100%;height:auto;border-radius:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px 14px;font-size:13.5px;font-weight:700;line-height:1.35}
+  .fx-consult svg{width:32px;height:32px}
+  .fx-consult span{display:block}
+  .fx-card{width:auto;height:auto;border-radius:20px;display:block;padding:12px 10px;text-align:center;color:var(--ink2);font-size:12.5px;line-height:1.35}
+  .fx-card .fx-ic{display:none}
+  .fx-card .t,.fx-card b,.fx-card img{display:block}
+  .fx-card b{margin-top:2px;color:var(--red);font-size:13px;font-weight:800}
+  .fx-card img{width:100%;height:auto;margin-top:8px;border-radius:6px}
+  .fx-top{align-self:center}
 }
+@media (min-width:1680px) and (max-height:860px){.fx-card img{display:none}}
 
 /* ---------- footer (company info) ---------- */
 .ft2{margin-top:72px;background:#F7F8FA;border-top:1px solid var(--line);color:var(--ink2);padding:32px 0 34px;font-size:13px}

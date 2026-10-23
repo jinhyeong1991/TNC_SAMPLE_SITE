@@ -53,7 +53,7 @@
   var panels={}, items={}, openKey=null, timer=null, kwState={};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})}
   var SPARK='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7z"/></svg>';
-  /* red ring drawn around a product circle on hover (starts at 9 o'clock, sweeps over the top to the right) */
+  /* red ring drawn around a product circle on hover (starts at 12 o'clock, runs counter-clockwise 12 -> 9 -> 6 -> 3) */
   var RING='<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="100"/></svg>';
 
   /* AI keyword column. SAMPLE: keywords rotate on a timer. Real version = search logs + LLM on the server. */
@@ -217,9 +217,13 @@
 
   function openPop(){pop.classList.add('open');scrim.classList.add('on')}
   function closePop(){pop.classList.remove('open');scrim.classList.remove('on')}
-  document.querySelectorAll('[data-open-consult]').forEach(function(b){b.addEventListener('click',function(e){
-    e.stopPropagation(); closeDrawer(); pop.classList.contains('open')?closePop():openPop();
-  })});
+  /* delegated so buttons added later (e.g. the floating quick menu in js/fx.js) open it too;
+     registered before the outside-click closer below, so stopImmediatePropagation keeps it open */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('[data-open-consult]'); if(!b)return;
+    e.stopImmediatePropagation(); if(b.tagName==='A')e.preventDefault();
+    closeDrawer(); pop.classList.contains('open')?closePop():openPop();
+  });
   scrim.addEventListener('click',closePop);
   document.addEventListener('click',function(e){if(pop.classList.contains('open')&&!pop.contains(e.target))closePop()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeDrawer()}});

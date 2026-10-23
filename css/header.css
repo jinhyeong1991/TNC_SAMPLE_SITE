@@ -84,10 +84,10 @@ svg{display:block}
 .ci img{width:72%;height:72%;object-fit:contain;mix-blend-mode:multiply;transition:transform .3s}
 .ci:hover .c,.ci:focus-visible .c{background:#FFF6F7;transform:translateY(-4px)}
 .ci:hover img,.ci:focus-visible img{transform:scale(1.08)}
-/* hover ring: SK magic red line drawn like a loader from the left (9 o'clock) over the top to the right and all the way round;
+/* hover ring: thin SK magic red line drawn like a loader from 12 o'clock counter-clockwise (12 -> 9 -> 6 -> 3 -> 12);
    on mouse-out it rewinds quickly */
-.ci .ring{position:absolute;left:-1px;top:-1px;width:calc(100% + 2px);height:calc(100% + 2px);transform:rotate(180deg);overflow:visible;pointer-events:none}
-.ci .ring circle{fill:none;stroke:var(--red);stroke-width:2.5px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:stroke-dashoffset .35s ease,opacity .2s ease .15s}
+.ci .ring{position:absolute;left:-1px;top:-1px;width:calc(100% + 2px);height:calc(100% + 2px);transform:scaleX(-1) rotate(-90deg);overflow:visible;pointer-events:none}
+.ci .ring circle{fill:none;stroke:var(--red);stroke-width:1.5px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:stroke-dashoffset .35s ease,opacity .2s ease .15s}
 .ci:hover .ring circle,.ci:focus-visible .ring circle{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset .8s cubic-bezier(.65,0,.35,1),opacity .1s ease}
 .ci b{transition:color .25s}
 .ci:hover b,.ci:focus-visible b{color:var(--red)}

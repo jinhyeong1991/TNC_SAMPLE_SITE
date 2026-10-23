@@ -12,6 +12,32 @@
   /* model code (js/data-models.js), shown at the right end of the line above the product name */
   function mdl(g) { var m = window.TNC_model ? window.TNC_model(g) : ''; return m ? '<span class="md" title="' + esc(m) + '">' + esc(m) + '</span>' : ''; }
 
+  /* mobile: swiping the product area left/right moves to the next/previous category tab
+     (right -> left = next, e.g. 전체 -> 정수기). The new list slides in from the swipe side and the tab bar follows. */
+  var mobileQ = window.matchMedia('(max-width:900px)');
+  function swipeTabs(area, tabsEl, pick) {
+    if (!area || !tabsEl) return;
+    var sx = 0, sy = 0, track = false;
+    area.addEventListener('touchstart', function (e) {
+      track = mobileQ.matches && e.touches.length === 1;
+      if (track) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }
+    }, { passive: true });
+    area.addEventListener('touchend', function (e) {
+      if (!track) return; track = false;
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;          /* short or mostly vertical = page scroll */
+      var bs = $$('button', tabsEl), cur = bs.indexOf($('button.on', tabsEl)), dir = dx < 0 ? 1 : -1, n = cur + dir;
+      if (n < 0 || n >= bs.length) { bump(area, -dir); return; }                       /* first/last tab: small rubber-band */
+      pick(bs[n]);
+      if (!reduced && area.animate) area.animate([{ transform: 'translateX(' + dir * 48 + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 340, easing: 'cubic-bezier(.22,.8,.24,1)' });
+      var tr = tabsEl.getBoundingClientRect(), br = bs[n].getBoundingClientRect();
+      tabsEl.scrollTo({ left: tabsEl.scrollLeft + br.left - tr.left - (tr.width - br.width) / 2, behavior: reduced ? 'auto' : 'smooth' });
+    }, { passive: true });
+  }
+  function bump(el, dir) {
+    if (!reduced && el.animate) el.animate([{ transform: 'none' }, { transform: 'translateX(' + dir * 18 + 'px)' }, { transform: 'none' }], { duration: 260, easing: 'ease-out' });
+  }
+
   /* ---------- promo D-day (event end date) ---------- */
   (function () {
     var el = $('#dday'); if (!el) return;
@@ -141,6 +167,7 @@
         applyAll(false);
       }
       tabs($('#' + prefix + 'Tabs'), spec, function (s) { cur = s; draw(); });
+      swipeTabs(g, $('#' + prefix + 'Tabs'), function (b) { b.click(); });
       /* 단 수를 바꿨을 때 개수가 달라지면 다시 그린다 (같으면 카드 이동 애니메이션만) */
       g.addEventListener('lsw-change', function () {
         if (cur && fitCount(g, cur.fn().length) !== $$('.ac', g).length) setTimeout(draw, 520);
@@ -331,14 +358,18 @@
   /* tabs */
   var tabs = $('#ptabs');
   tabs.innerHTML = T.CATS.map(function (c) { return '<button type="button" data-c="' + c.k + '"' + (c.k === 'all' ? ' class="on"' : '') + '>' + c.t + '</button>'; }).join('');
-  tabs.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    if (b.getAttribute('data-c') !== 'all') { location.href = 'list.html?c=' + b.getAttribute('data-c'); return; }   /* category tab -> its list page */
+  function pickCat(b) {
     $$('button', tabs).forEach(function (x) { x.classList.toggle('on', x === b); });
     cat = b.getAttribute('data-c'); render();
     $$('[data-v]', grid).forEach(function (n) { n.setAttribute('data-v', 0); });   /* new cards count up from 0 */
     apply(true);
+  }
+  tabs.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.getAttribute('data-c') !== 'all') { location.href = 'list.html?c=' + b.getAttribute('data-c'); return; }   /* category tab -> its list page */
+    pickCat(b);
   });
+  swipeTabs(grid, tabs, pickCat);   /* mobile swipe switches the category right here instead of opening the list page */
 
   render();
   /* first time the list scrolls into view: count up from 0 */

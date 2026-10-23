@@ -31,8 +31,21 @@
       '<div class="fx-body"><p class="fx-t">렌탈 조건</p><p class="fx-s">의무사용기간</p><div class="fx-chips">' +
       PERIODS.map(function (n) { return '<button type="button" data-p="' + n + '"' + (n === S.period ? ' class="on"' : '') + '>' + n + '개월</button>'; }).join('') +
       '</div><p class="fx-s">가격 기준</p><div class="fx-seg"><button type="button" data-m="card"' + (S.mode === 'card' ? ' class="on"' : '') + '>제휴카드 적용</button><button type="button" data-m="rental"' + (S.mode === 'rental' ? ' class="on"' : '') + '>월 렌탈료</button></div>' +
-      '<p class="fx-n">선택하면 페이지의 모든 가격이 바로 바뀌어요.</p></div>';
+      '<p class="fx-n">선택하면 페이지의 모든 가격이 바로 바뀌어요.</p></div>' +
+      /* quick menu under the filter (sk.tncrental.co.kr style): phone + 간편상담, 제휴카드 banner, back to top.
+         Wide screens show full blocks; narrower screens show three round buttons above the filter pill. */
+      '<div class="fx-q">' +
+        '<div class="fx-call"><a class="fx-tel" href="tel:16704113">상담문의<b>1670-4113</b></a>' +
+          '<button class="fx-consult" type="button" data-open-consult aria-label="간편상담 바로가기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.6"/><rect x="17" y="13" width="4" height="6" rx="1.6"/><path d="M19 19c0 1.4-1.6 2.2-4 2.2h-2"/><circle cx="9" cy="10.6" r=".2" fill="currentColor"/><circle cx="12" cy="10.6" r=".2" fill="currentColor"/><circle cx="15" cy="10.6" r=".2" fill="currentColor"/></svg><span>간편상담<br>바로가기</span></button></div>' +
+        '<a class="fx-card" href="https://sk.tncrental.co.kr/shop/card.php" aria-label="제휴카드 혜택 보기"><svg class="fx-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6.5 15h4"/></svg>' +
+          '<span class="t">제휴카드<br>사용시 최대</span><b>최대 2만3천원 할인</b><img loading="lazy" alt="" src="https://devadmin.tncrental.co.kr//uploads/card/1007/card_190_dndmh.png"></a>' +
+        '<button class="fx-top" type="button" aria-label="맨 위로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>' +
+      '</div>';
     document.body.appendChild(fx);
+    $('.fx-top', fx).addEventListener('click', function () {
+      var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: r ? 'auto' : 'smooth' });
+    });
     var lbl = $('.fx-lbl', fx), tg = $('.fx-toggle', fx);
     function label() { lbl.textContent = S.period + '개월 · ' + (S.mode === 'card' ? '제휴카드' : '월 렌탈료'); }
     label();
