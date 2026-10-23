@@ -83,7 +83,7 @@
 
   /* all-category panel (LG style) */
   var allEl=document.createElement('div'); allEl.className='mega all';
-  function L(t,h){return '<a class="l" href="'+SHOP+h+'">'+t+'</a>'}
+  function L(t,h){return '<a class="l" href="'+(/\.html/.test(h)?h:SHOP+h)+'">'+t+'</a>'}   /* .html = page on this site */
   allEl.innerHTML='<div class="mw"><div class="all-tabs"><button class="on" data-tab="0">렌탈 상품</button><button data-tab="1">혜택·안내</button><i class="sep"></i><button data-tab="2">고객센터</button></div>'+
     '<div class="all-body on" data-body="0">'+
       '<div><div class="grp"><h5><a href="'+SHOP+'goods.php?cate1=CA0087&depth=1">정수기</a></h5>'+L('얼음정수기','goods.php?cate1=CA0087&cate2=CA0095&depth=2')+L('냉온정수기','goods.php?cate1=CA0087&cate2=CA0094&depth=2')+L('냉정수기','goods.php?cate1=CA0087&cate2=CA0096&depth=2')+L('일반정수기','goods.php?cate1=CA0087&cate2=CA0097&depth=2')+'</div>'+
@@ -93,13 +93,13 @@
       '<div><div class="grp"><h5><a href="'+SHOP+'goods.php?cate1=CA0357&depth=1">NAMUH</a></h5>'+L('무방문형','goods.php?cate1=CA0357&depth=1')+L('셀프관리','goods.php?cate1=CA0357&depth=1')+L('4개월 · 2개월 방문관리','goods.php?cate1=CA0357&depth=1')+'</div>'+
         '<div class="grp"><h5><a href="'+SHOP+'goods.php?cate1=CA0361&depth=1">사업자전용</a></h5>'+L('숙박업소/병원/종교시설','goods.php?cate1=CA0361&depth=1')+L('학교/학원','goods.php?cate1=CA0361&depth=1')+L('매장/식당','goods.php?cate1=CA0361&depth=1')+L('법인/관공서/사무실','goods.php?cate1=CA0361&depth=1')+'</div>'+
         '<div class="tags"><a href="#" data-kw>#가을가전특별전</a><a href="#" data-kw>#반값할인</a><a href="#" data-kw>#제휴카드혜택</a></div></div>'+
-      '<div class="tiles"><a class="tile" href="'+SHOP+'event.php"><img loading="lazy" alt="" src="'+BN('sk_318_IvGs2.png')+'"><span>10월 가을 가전 특별전</span></a>'+
-        '<a class="tile" href="'+SHOP+'card.php"><img loading="lazy" alt="" src="'+BN('sk_398_i1i4X.png')+'"><span>제휴카드 혜택</span></a>'+
-        '<a class="tile" href="'+SHOP+'event.php"><img loading="lazy" alt="" src="'+BN('sk_326_WLF35.png')+'"><span>반값 프로모션</span></a>'+
-        '<a class="tile" href="'+SHOP+'event.php"><img loading="lazy" alt="" src="'+BN('sk_233_d1P2b.png')+'"><span>이달의 이벤트</span></a></div></div>'+
-    '<div class="all-body" data-body="1"><div><div class="grp"><h5><a href="'+SHOP+'card.php">혜택</a></h5>'+L('제휴카드 할인','card.php')+L('반값 프로모션','event.php')+L('사은품 · 설치 혜택','event.php')+'</div></div>'+
-      '<div><div class="grp"><h5><a href="'+SHOP+'notice.php">안내</a></h5>'+L('공지사항','notice.php')+L('렌탈 이용 방법','notice.php')+L('설치 · 관리 안내','notice.php')+'</div></div><div></div>'+
-      '<div class="tiles"><a class="tile" href="'+SHOP+'card.php"><img alt="" src="'+BN('sk_398_i1i4X.png')+'"><span>제휴카드 혜택</span></a><a class="tile" href="'+SHOP+'event.php"><img alt="" src="'+BN('sk_318_IvGs2.png')+'"><span>진행중 이벤트</span></a></div></div>'+
+      '<div class="tiles"><a class="tile" href="event.html"><img loading="lazy" alt="" src="'+BN('sk_318_IvGs2.png')+'"><span>10월 가을 가전 특별전</span></a>'+
+        '<a class="tile" href="card.html"><img loading="lazy" alt="" src="'+BN('sk_398_i1i4X.png')+'"><span>제휴카드 혜택</span></a>'+
+        '<a class="tile" href="event.html"><img loading="lazy" alt="" src="'+BN('sk_326_WLF35.png')+'"><span>반값 프로모션</span></a>'+
+        '<a class="tile" href="event.html"><img loading="lazy" alt="" src="'+BN('sk_233_d1P2b.png')+'"><span>이달의 이벤트</span></a></div></div>'+
+    '<div class="all-body" data-body="1"><div><div class="grp"><h5><a href="card.html">혜택</a></h5>'+L('제휴카드 할인','card.html')+L('반값 프로모션','event.html')+L('사은품 · 설치 혜택','event.html')+'</div></div>'+
+      '<div><div class="grp"><h5><a href="notice.html">안내</a></h5>'+L('공지사항','notice.html')+L('렌탈 이용 방법','notice.html#n39')+L('설치 · 관리 안내','notice.html#n39')+'</div></div><div></div>'+
+      '<div class="tiles"><a class="tile" href="card.html"><img alt="" src="'+BN('sk_398_i1i4X.png')+'"><span>제휴카드 혜택</span></a><a class="tile" href="event.html"><img alt="" src="'+BN('sk_318_IvGs2.png')+'"><span>진행중 이벤트</span></a></div></div>'+
     '<div class="all-body" data-body="2"><div><div class="grp"><h5><a href="tel:16704113">전화 상담</a></h5>'+'<a class="l" href="tel:16704113">1670-4113</a></div></div>'+
       '<div><div class="grp"><h5><a href="#" data-open-consult>간편상담 신청</a></h5><a class="l" href="#" data-open-consult>이름 · 연락처 남기기</a></div></div>'+
       '<div><div class="grp"><h5><a href="#" data-ai>AI 상담</a></h5><a class="l" href="#" data-ai>제품 추천 · 견적 문의</a></div></div><div></div></div></div>';

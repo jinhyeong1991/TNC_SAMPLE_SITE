@@ -87,7 +87,7 @@ svg{display:block}
 /* hover ring: thin SK magic red line drawn like a loader from 12 o'clock counter-clockwise (12 -> 9 -> 6 -> 3 -> 12);
    on mouse-out it rewinds quickly */
 .ci .ring{position:absolute;left:-1px;top:-1px;width:calc(100% + 2px);height:calc(100% + 2px);transform:scaleX(-1) rotate(-90deg);overflow:visible;pointer-events:none}
-.ci .ring circle{fill:none;stroke:var(--red);stroke-width:1.5px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:stroke-dashoffset .35s ease,opacity .2s ease .15s}
+.ci .ring circle{fill:none;stroke:var(--red);stroke-width:1;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:stroke-dashoffset .35s ease,opacity .2s ease .15s}
 .ci:hover .ring circle,.ci:focus-visible .ring circle{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset .8s cubic-bezier(.65,0,.35,1),opacity .1s ease}
 .ci b{transition:color .25s}
 .ci:hover b,.ci:focus-visible b{color:var(--red)}

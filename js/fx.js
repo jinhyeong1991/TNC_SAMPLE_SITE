@@ -26,6 +26,7 @@
     var always = document.body.hasAttribute('data-fx-always');
     var fx = document.createElement('aside');
     fx.className = 'fx'; fx.id = 'fx'; fx.setAttribute('aria-label', '렌탈 조건');
+    if (document.body.hasAttribute('data-fx-quick')) fx.classList.add('fx-quick');   /* pages without prices: quick menu only */
     fx.innerHTML =
       '<button class="fx-toggle" type="button" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span class="fx-lbl"></span></button>' +
       '<div class="fx-body"><p class="fx-t">렌탈 조건</p><p class="fx-s">의무사용기간</p><div class="fx-chips">' +
@@ -37,7 +38,7 @@
       '<div class="fx-q">' +
         '<div class="fx-call"><a class="fx-tel" href="tel:16704113">상담문의<b>1670-4113</b></a>' +
           '<button class="fx-consult" type="button" data-open-consult aria-label="간편상담 바로가기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.6"/><rect x="17" y="13" width="4" height="6" rx="1.6"/><path d="M19 19c0 1.4-1.6 2.2-4 2.2h-2"/><circle cx="9" cy="10.6" r=".2" fill="currentColor"/><circle cx="12" cy="10.6" r=".2" fill="currentColor"/><circle cx="15" cy="10.6" r=".2" fill="currentColor"/></svg><span>간편상담<br>바로가기</span></button></div>' +
-        '<a class="fx-card" href="https://sk.tncrental.co.kr/shop/card.php" aria-label="제휴카드 혜택 보기"><svg class="fx-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6.5 15h4"/></svg>' +
+        '<a class="fx-card" href="card.html" aria-label="제휴카드 혜택 보기"><svg class="fx-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6.5 15h4"/></svg>' +
           '<span class="t">제휴카드<br>사용시 최대</span><b>최대 2만3천원 할인</b><img loading="lazy" alt="" src="https://devadmin.tncrental.co.kr//uploads/card/1007/card_190_dndmh.png"></a>' +
         '<button class="fx-top" type="button" aria-label="맨 위로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>' +
       '</div>';
