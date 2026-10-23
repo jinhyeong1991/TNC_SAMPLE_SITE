@@ -112,7 +112,7 @@
       '<div class="im">' + (badge ? '<span class="rk top" style="background:var(--red)">' + badge + '</span>' : '') +
       '<img loading="lazy" alt="" src="' + IMG + it.i + '"><span class="dc" hidden>카드할인 시 0원</span></div>' +
       '<p class="br"><span class="bn">SK매직</span>' + mdl(it.g) + '</p><p class="nm">' + esc(it.name) + '</p>' +
-      (r.none ? '<div class="ask">월 렌탈료 <b>상담 문의</b></div><span class="cdn">1670-4113</span>' :
+      (r.none ? '' :
         '<s class="st"><span data-r="stl">월 렌탈료</span> <span data-r="st">0</span>원</s>' +
         '<div class="pl"><b class="pct"><span data-r="pct">0</span>%</b><strong class="mp">월 <span data-r="mp">0</span><small>원</small></strong></div>' +
         '<span class="cdn"></span>') +
