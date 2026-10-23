@@ -359,6 +359,32 @@ main{display:block}
 @media (min-width:1680px) and (max-height:760px){.fx-card img{display:none}}
 /* pages without prices (body[data-fx-quick]): only the quick menu */
 .fx.fx-quick .fx-toggle,.fx.fx-quick .fx-body{display:none}
+/* ---------- mobile bottom bar (js/fx.js) + 렌탈료 bottom sheet ---------- */
+.mnav,.mnav-dim{display:none}
+@media (max-width:900px){
+  body.has-mnav{padding-bottom:calc(62px + env(safe-area-inset-bottom))}
+  .mnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:97;height:calc(62px + env(safe-area-inset-bottom));padding:0 4px env(safe-area-inset-bottom);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+  .mnav > a,.mnav > button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:var(--ink3);-webkit-tap-highlight-color:transparent}
+  .mnav svg{width:23px;height:23px}
+  .mnav > .on{color:var(--ink)}
+  .mnav > .on svg{stroke-width:2.2}
+  .mnav .rent i{display:contents}   /* 렌탈료 looks like the other items */
+  .mnav-dim{display:block;position:fixed;inset:0;z-index:95;background:rgba(17,19,24,.45);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+  .mnav-dim.on{opacity:1;visibility:visible}
+  /* the old floating pill + round buttons are replaced by the bar; only TOP stays, above the bar */
+  .fx{bottom:calc(74px + env(safe-area-inset-bottom));right:14px}
+  .fx .fx-toggle,.fx .fx-consult,.fx .fx-card{display:none}
+  .fx-top{width:42px;height:42px;background:rgba(17,19,24,.55)}
+  /* 렌탈료 sheet: the filter body slides up above the bar */
+  .fx.msheet{opacity:1;visibility:visible;transform:none;z-index:96}
+  .fx.msheet .fx-top{opacity:0;pointer-events:none}
+  .fx.msheet .fx-body,.fx.fx-quick.msheet .fx-body{display:block;position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));width:auto;border-radius:22px 22px 0 0;border:0;padding:22px 18px 18px;animation:mSheetUp .3s cubic-bezier(.22,.8,.24,1)}
+  .fx.msheet .fx-t{font-size:17px}
+  .fx.msheet .fx-chips{flex-wrap:nowrap}
+  .fx.msheet .fx-chips button{flex:1;min-width:0;padding:0;height:42px;font-size:13.5px;white-space:nowrap}
+  .fx.msheet .fx-seg button{height:40px;font-size:13.5px}
+  @keyframes mSheetUp{from{transform:translateY(100%)}to{transform:none}}
+}
 
 /* ---------- footer (company info) ---------- */
 .ft2{margin-top:72px;background:#F7F8FA;border-top:1px solid var(--line);color:var(--ink2);padding:32px 0 34px;font-size:13px}

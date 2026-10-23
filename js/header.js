@@ -147,33 +147,45 @@
   setInterval(function(){if(openKey&&openKey!=='all'){kwState[openKey]=(kwState[openKey]||0)+1;paintKw(openKey)}},6000);
   document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-kw]');if(a){e.preventDefault();hideMega(true);openSearch(a.textContent.replace(/^\d+|HOT|NEW/g,'').trim())}});
 
-  /* ---- search overlay (Samsung style): popular keywords + recommended products, live filtering ---- */
+  /* ---- search overlay (Kurly style, text only): 최근 검색어 · 추천 검색어 · 급상승 검색어; typing shows 연관 검색어 + product names ---- */
   var sEl=document.getElementById('srch'), sDim=document.getElementById('sDim'), sIn=document.getElementById('sInput');
-  var sList=document.getElementById('sList'), sProds=document.getElementById('sProds'), sLT=document.getElementById('sLT'), sRT=document.getElementById('sRT');
+  var sBody=sEl.querySelector('.srch-body');
+  sBody.innerHTML='<div class="s-col"><section class="s-sec" id="sRecentSec"><div class="s-h"><h6>최근 검색어</h6><button type="button" class="s-clear">전체 삭제</button></div><div class="s-chips" id="sRecent"></div></section>'+
+    '<section class="s-sec"><div class="s-h"><h6>추천 검색어</h6></div><div class="s-chips" id="sReco"></div></section></div>'+
+    '<div class="s-col"><section class="s-sec"><div class="s-h"><h6>급상승 검색어</h6></div><p class="s-note">최근 1시간 동안 검색 횟수가 급상승했어요</p><ol class="s-rank" id="sRank"></ol></section></div>';
+  var sTyp=document.createElement('div'); sTyp.className='srch-typing'; sTyp.hidden=true; sBody.parentNode.insertBefore(sTyp,sBody.nextSibling);
+  /* 추천 = our own curated keywords; 급상승 = category keywords (sample ranking) */
   var POP=['얼음정수기','올클린 공기청정기','풀스텐 비데','수납형 침대 프레임','나무엑스 A1','반값 프로모션','제휴카드 혜택'];
   var PRODS=[];
   /* model name (js/data-models.js) for items that link to a single product page */
   function mdlOf(h){var g=/goods=(G\d+)/.exec(h||'');return g&&window.TNC_model?window.TNC_model(g[1]):''}
-  Object.keys(MEGA).forEach(function(k){MEGA[k].items.forEach(function(p){PRODS.push({n:p.n,cat:MEGA[k].t,p:p.p,img:p.img,bd:p.bd,h:p.h,m:mdlOf(p.h)})})});
-  var RECO=[0,4,12,16].map(function(i){return PRODS[i]}).filter(Boolean);
+  Object.keys(MEGA).forEach(function(k){MEGA[k].items.forEach(function(p){PRODS.push({n:p.n,cat:MEGA[k].t,p:p.p,h:p.h,m:mdlOf(p.h)})})});
   var KWALL=POP.slice(); Object.keys(MEGA).forEach(function(k){MEGA[k].kw.forEach(function(w){if(KWALL.indexOf(w)<0)KWALL.push(w)})});
+  var RANK=KWALL.filter(function(w){return POP.indexOf(w)<0}).slice(0,10);
+  /* 최근 검색어: kept in this browser only (localStorage), newest first, max 10 */
+  var RKEY='tnc-recent';
+  function recent(){try{var a=JSON.parse(localStorage.getItem(RKEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
+  function saveRecent(a){try{localStorage.setItem(RKEY,JSON.stringify(a.slice(0,10)))}catch(e){/* storage blocked: keep going without history */}}
+  function addRecent(w){w=String(w||'').trim();if(!w)return;saveRecent([w].concat(recent().filter(function(x){return x!==w})))}
   function hl(s,q){if(!q)return esc(s);var i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?esc(s):esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length))}
-  function card(p){return '<a class="sp" href="'+SHOP+p.h+'"><div class="im">'+(p.bd?'<span class="bd">'+p.bd+'</span>':'')+'<img loading="lazy" alt="" src="'+p.img+'"></div>'+(p.m?'<span class="md">'+esc(p.m)+'</span>':'')+'<b>'+esc(p.n)+'</b>'+
-    (p.p?'<small>월 렌탈료</small><strong>'+p.p+'원~</strong>':'<small>사업자 렌탈</small><strong>상담 문의</strong>')+'</a>'}
+  function chip(w,x){return '<span class="s-chip"><a href="#" data-sq="'+esc(w)+'">'+esc(w)+'</a>'+(x?'<button type="button" data-rm="'+esc(w)+'" aria-label="'+esc(w)+' 삭제">×</button>':'')+'</span>'}
   function renderSearch(q){
     q=(q||'').trim();
+    sBody.hidden=!!q; sTyp.hidden=!q;
     if(!q){
-      sLT.innerHTML='인기 검색어 <span class="aitag">AI</span>'; sRT.textContent='추천';
-      sList.innerHTML=POP.map(function(w,i){return '<li><a href="#" data-sq="'+esc(w)+'"><span class="n">'+(i+1)+'</span>'+esc(w)+(i<2?'<span class="up">HOT</span>':'')+'</a></li>'}).join('');
-      sProds.innerHTML=RECO.map(card).join(''); return;
+      var r=recent();
+      document.getElementById('sRecentSec').hidden=!r.length;
+      document.getElementById('sRecent').innerHTML=r.map(function(w){return chip(w,true)}).join('');
+      document.getElementById('sReco').innerHTML=POP.map(function(w){return chip(w,false)}).join('');
+      document.getElementById('sRank').innerHTML=RANK.map(function(w,i){return '<li><a href="#" data-sq="'+esc(w)+'"><span class="n">'+(i+1)+'</span>'+esc(w)+'</a></li>'}).join('');
+      return;
     }
     var low=q.toLowerCase();
-    var kws=KWALL.filter(function(w){return w.toLowerCase().indexOf(low)>=0}).slice(0,7);
+    var kws=KWALL.filter(function(w){return w.toLowerCase().indexOf(low)>=0}).slice(0,8);
     var res=PRODS.filter(function(p){return (p.n+' '+p.cat+' '+(p.m||'')).toLowerCase().indexOf(low)>=0||(p.m&&p.m.replace(/-/g,'').toLowerCase().indexOf(low.replace(/-/g,''))>=0)});
-    sLT.textContent='연관 검색어';
-    sList.innerHTML=kws.length?kws.map(function(w){return '<li><a href="#" data-sq="'+esc(w)+'">'+hl(w,q)+'</a></li>'}).join(''):'<li style="color:#8A909C;font-size:14px">연관 검색어가 없어요</li>';
-    sRT.textContent='검색 결과 '+res.length+'개';
-    sProds.innerHTML=res.length?res.map(card).join(''):'<div class="s-empty">“'+esc(q)+'”와 일치하는 제품이 없어요.<br>AI에게 물어보면 비슷한 제품을 추천해 드려요.<br><button type="button" data-ai>AI에게 물어보기</button></div>';
+    sTyp.innerHTML=(kws.length?'<ul class="s-sug">'+kws.map(function(w){return '<li><a href="#" data-sq="'+esc(w)+'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'+hl(w,q)+'</a></li>'}).join('')+'</ul>':'')+
+      (res.length?'<div class="s-h"><h6>상품 '+res.length+'개</h6></div><ul class="s-res">'+res.map(function(p){return '<li><a href="'+SHOP+p.h+'" data-go="'+esc(q)+'"><b>'+hl(p.n,q)+'</b><span>'+esc(p.cat)+(p.m?' · '+esc(p.m):'')+' · '+(p.p?'월 '+p.p+'원~':'상담 문의')+'</span></a></li>'}).join('')+'</ul>':'')+
+      (!kws.length&&!res.length?'<div class="s-empty">“'+esc(q)+'”와 일치하는 결과가 없어요.<br>다른 검색어로 찾아보거나 상담사에게 물어보세요.<br><button type="button" data-open-consult>간편상담 신청</button></div>':'');
   }
   function openSearch(q){
     hideMega(true); closeDrawer();
@@ -185,11 +197,24 @@
   document.getElementById('hSearch').addEventListener('focus',function(){openSearch();this.blur()});
   document.getElementById('hSearch').addEventListener('click',function(){openSearch()});
   document.getElementById('mSearch').addEventListener('click',function(){openSearch()});
+  /* mobile search row under the header (pages with the bottom bar); collapses on scroll like the PC top strip */
+  if(document.body.classList.contains('has-mnav')){
+    var mrow=document.createElement('div'); mrow.className='msrch';
+    mrow.innerHTML='<button type="button" class="msrch-in"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>어떤 제품을 찾으세요?</span></button>';
+    var mainRow=hd.querySelector('.main'); mainRow.parentNode.insertBefore(mrow,mainRow.nextSibling);
+    mrow.querySelector('button').addEventListener('click',function(){openSearch()});
+  }
   document.getElementById('sClose').addEventListener('click',closeSearch);
   sDim.addEventListener('click',closeSearch);
   sIn.addEventListener('input',function(){renderSearch(sIn.value)});
-  sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(sIn.value.trim())toast('“'+sIn.value.trim()+'” 검색 결과 페이지로 이동합니다 (샘플)')}});
-  sEl.addEventListener('click',function(e){var a=e.target.closest('[data-sq]');if(a){e.preventDefault();sIn.value=a.getAttribute('data-sq');renderSearch(sIn.value);sIn.focus()}});
+  sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();var v=sIn.value.trim();if(v){addRecent(v);toast('“'+v+'” 검색 결과 페이지로 이동합니다 (샘플)')}}});
+  sEl.addEventListener('click',function(e){
+    var rm=e.target.closest('[data-rm]');
+    if(rm){e.preventDefault();var w=rm.getAttribute('data-rm');saveRecent(recent().filter(function(x){return x!==w}));renderSearch('');return}
+    if(e.target.closest('.s-clear')){saveRecent([]);renderSearch('');return}
+    var go=e.target.closest('[data-go]'); if(go){addRecent(go.getAttribute('data-go'));return}
+    var a=e.target.closest('[data-sq]');if(a){e.preventDefault();var v=a.getAttribute('data-sq');addRecent(v);sIn.value=v;renderSearch(v);sIn.focus()}
+  });
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSearch()});
 
   /* The header is position:fixed and a spacer holds its full (un-collapsed) height,
@@ -215,8 +240,10 @@
   }
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-  function openPop(){pop.classList.add('open');scrim.classList.add('on')}
-  function closePop(){pop.classList.remove('open');scrim.classList.remove('on')}
+  /* the consult sheet lives inside the fixed header (z-index 100) but the mobile scrim is z-index 150:
+     lift the header above the scrim while the sheet is open, otherwise the scrim covers the name/phone fields */
+  function openPop(){pop.classList.add('open');scrim.classList.add('on');hd.classList.add('pop-on')}
+  function closePop(){pop.classList.remove('open');scrim.classList.remove('on');hd.classList.remove('pop-on')}
   /* delegated so buttons added later (e.g. the floating quick menu in js/fx.js) open it too;
      registered before the outside-click closer below, so stopImmediatePropagation keeps it open */
   document.addEventListener('click',function(e){

@@ -233,6 +233,24 @@ svg{display:block}
   .cat .wrap{height:46px;padding:0 6px 0 10px}
   .cat-list a.t{height:46px;line-height:46px;padding:0 12px;font-size:14.5px}
   .cat-list a.t::after{left:12px;right:12px}
+  /* pages with the mobile bottom bar (body.has-mnav, js/fx.js) get the LG-style header: logo only on the left,
+     the PC contact set (전화 · 간편상담 · AI 상담) compact on the right, no category row; menu/consult move to the bar */
+  .has-mnav .cat,.has-mnav .m-only{display:none}
+  .has-mnav .main{height:56px}
+  .has-mnav .hd.scrolled .main{height:52px}
+  .has-mnav .logo{flex:none}
+  .has-mnav .logo img{height:24px}
+  .has-mnav .right{gap:5px;min-width:0}
+  .has-mnav .tel{display:flex;gap:4px;margin-right:1px;flex:none}
+  .has-mnav .tel .ic{width:22px;height:22px}
+  .has-mnav .tel .ic svg{width:12px;height:12px}
+  .has-mnav .tel small{display:none}
+  .has-mnav .tel strong{font-size:14px;letter-spacing:-.4px;white-space:nowrap}
+  .has-mnav .right .btn{display:inline-flex;flex:none;height:32px;padding:0 9px;font-size:12px;gap:3px}
+  .has-mnav .right .cta{animation:none}
+  .has-mnav .right .cta::after{display:none}
+  .has-mnav .btn-ai .spark{width:12px;height:12px}
+  .has-mnav .btn-ai .new{top:-7px;right:-6px;font-size:8.5px;padding:1px 4px}
   .sub{display:none}
   .mform{display:block;max-height:100px;overflow:hidden;padding:10px 14px 8px;background:var(--bg);border-top:1px solid var(--line);transition:max-height .25s,padding .25s,opacity .2s}
   .hd.scrolled .mform{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-color:transparent}
@@ -267,3 +285,57 @@ svg{display:block}
 .drawer-scrim{position:fixed;inset:0;background:rgba(17,19,24,.45);opacity:0;visibility:hidden;transition:.2s;z-index:190}
 .drawer-scrim.on{opacity:1;visibility:visible}
 @media (min-width:901px){.drawer,.drawer-scrim,.scrim{display:none}}
+
+/* narrow phones: drop the phone icon so the header contact set still fits */
+@media (max-width:374px){.has-mnav .tel .ic{display:none}}
+
+/* consult sheet open: header (which holds the sheet) goes above the scrim so the fields can be used */
+.hd.pop-on{z-index:160}
+
+/* ---------- search overlay, text only (Kurly style): 최근 · 추천 · 급상승 / typing: 연관 검색어 + 상품명 ---------- */
+.srch-body{grid-template-columns:1fr 1fr;gap:56px}
+.s-sec+.s-sec{margin-top:30px}
+.s-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.s-h h6{margin:0;font-size:16px;font-weight:800;color:var(--ink)}
+.s-clear{font-size:13px;color:var(--ink3)}
+.s-clear:hover{color:var(--ink)}
+.s-chips{display:flex;flex-wrap:wrap;gap:8px}
+.s-chip{display:inline-flex;align-items:center;height:38px;border-radius:999px;border:1px solid var(--line);background:#fff;transition:border-color .15s}
+.s-chip:hover{border-color:var(--ink)}
+.s-chip a{padding:0 16px;font-size:14px;font-weight:600;color:var(--ink2);line-height:36px}
+.s-chip button{margin:0 8px 0 -8px;width:22px;height:22px;border-radius:50%;font-size:16px;line-height:1;color:var(--ink3)}
+.s-chip button:hover{background:var(--bg);color:var(--ink)}
+.s-note{margin:-8px 0 12px;font-size:13px;color:var(--ink3)}
+.s-rank{list-style:none;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(5,auto);column-gap:24px}
+.s-rank li{min-width:0}
+.s-rank a{display:flex;align-items:center;gap:14px;padding:13px 2px;border-bottom:1px solid #F1F2F5;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-rank .n{flex:none}
+.s-rank a:hover{color:var(--red)}
+.s-rank .n{width:18px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
+.srch-typing{padding:20px 0 48px;max-width:760px}
+.s-sug{list-style:none;margin-bottom:26px}
+.s-sug a{display:flex;align-items:center;gap:12px;padding:12px 2px;font-size:16px;color:var(--ink)}
+.s-sug svg{color:var(--ink3);flex:none}
+.s-sug mark,.s-res mark{background:none;color:var(--red);font-weight:800}
+.s-res{list-style:none}
+.s-res a{display:block;padding:14px 2px;border-bottom:1px solid #F1F2F5}
+.s-res b{display:block;font-size:15px;font-weight:700;color:var(--ink);line-height:1.45}
+.s-res span{display:block;margin-top:3px;font-size:13px;color:var(--ink3)}
+.s-res a:hover b{color:var(--red)}
+.s-empty button[data-open-consult]{background:var(--red)}
+
+/* mobile search row under the header (pages with the bottom bar); collapses on scroll */
+.msrch{display:none}
+@media (max-width:900px){
+  .has-mnav .msrch{display:block;max-height:60px;overflow:hidden;padding:0 14px 10px;transition:max-height .25s,padding .25s,opacity .2s}
+  .has-mnav .hd.scrolled .msrch{max-height:0;padding-bottom:0;opacity:0}
+  .msrch-in{display:flex;align-items:center;gap:8px;width:100%;height:42px;padding:0 14px;border-radius:12px;background:var(--bg);color:var(--ink3);font-size:14px;text-align:left}
+  .msrch-in svg{color:var(--ink2);flex:none}
+  /* search as a full-screen page on mobile */
+  .srch{height:100vh;height:100dvh}
+  .srch-body{grid-template-columns:1fr;gap:30px}
+  .s-chip{height:34px}
+  .s-chip a{padding:0 13px;font-size:13.5px;line-height:32px}
+  .s-rank{column-gap:16px}
+  .s-rank a{padding:12px 2px;font-size:14px;gap:10px}
+}
