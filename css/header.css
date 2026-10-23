@@ -246,11 +246,10 @@ svg{display:block}
   .has-mnav .tel .ic svg{width:12px;height:12px}
   .has-mnav .tel small{display:none}
   .has-mnav .tel strong{font-size:14px;letter-spacing:-.4px;white-space:nowrap}
-  .has-mnav .right .btn{display:inline-flex;flex:none;height:32px;padding:0 9px;font-size:12px;gap:3px}
+  .has-mnav .right .btn{display:inline-flex;flex:none;height:34px;padding:0 13px;font-size:12.5px;gap:3px}
   .has-mnav .right .cta{animation:none}
   .has-mnav .right .cta::after{display:none}
-  .has-mnav .btn-ai .spark{width:12px;height:12px}
-  .has-mnav .btn-ai .new{top:-7px;right:-6px;font-size:8.5px;padding:1px 4px}
+  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar on mobile */
   .sub{display:none}
   .mform{display:block;max-height:100px;overflow:hidden;padding:10px 14px 8px;background:var(--bg);border-top:1px solid var(--line);transition:max-height .25s,padding .25s,opacity .2s}
   .hd.scrolled .mform{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-color:transparent}
@@ -286,8 +285,6 @@ svg{display:block}
 .drawer-scrim.on{opacity:1;visibility:visible}
 @media (min-width:901px){.drawer,.drawer-scrim,.scrim{display:none}}
 
-/* narrow phones: drop the phone icon so the header contact set still fits */
-@media (max-width:374px){.has-mnav .tel .ic{display:none}}
 
 /* consult sheet open: header (which holds the sheet) goes above the scrim so the fields can be used */
 .hd.pop-on{z-index:160}

@@ -222,11 +222,10 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .tel .ic svg,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .tel .ic svg{width:12px;height:12px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .tel small,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .tel small{display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .tel strong,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .tel strong{font-size:14px;letter-spacing:-.4px;white-space:nowrap}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn{display:inline-flex;flex:none;height:32px;padding:0 9px;font-size:12px;gap:3px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn{display:inline-flex;flex:none;height:34px;padding:0 13px;font-size:12.5px;gap:3px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta{animation:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta::after,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta::after{display:none}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .btn-ai .spark,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .btn-ai .spark{width:12px;height:12px}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .btn-ai .new,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .btn-ai .new{top:-7px;right:-6px;font-size:8.5px;padding:1px 4px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn-ai,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn-ai{display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .sub,.sub:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .mform,.mform:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:block;max-height:100px;overflow:hidden;padding:10px 14px 8px;background:var(--bg);border-top:1px solid var(--line);transition:max-height .25s,padding .25s,opacity .2s}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .hd.scrolled .mform,.hd.scrolled:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .mform{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-color:transparent}
@@ -261,10 +260,6 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .drawer-scrim.on,.drawer-scrim.on:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){opacity:1;visibility:visible}
 @media (min-width:901px){
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .drawer,.drawer:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim),:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .drawer-scrim,.drawer-scrim:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim),:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .scrim,.scrim:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}}
-
-/* narrow phones: drop the phone icon so the header contact set still fits */
-@media (max-width:374px){
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .tel .ic,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .tel .ic{display:none}}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .hd.pop-on,.hd.pop-on:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){z-index:160}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .srch-body,.srch-body:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){grid-template-columns:1fr 1fr;gap:56px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .s-sec+.s-sec,.s-sec:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim)+.s-sec{margin-top:30px}

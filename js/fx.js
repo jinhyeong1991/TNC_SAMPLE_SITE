@@ -48,14 +48,14 @@
       window.scrollTo({ top: 0, behavior: r ? 'auto' : 'smooth' });
     });
 
-    /* mobile bottom bar (LG style): 홈 · 메뉴 · 렌탈료(the filter above as a bottom sheet) · 제휴카드 · 빠른상담. Hidden on PC by CSS. */
+    /* mobile bottom bar (LG style): 홈 · 메뉴 · 렌탈료(the filter above as a bottom sheet) · 검색 · AI 상담. Hidden on PC by CSS. */
     var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     var ICON = {
       home: '<path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>',
       menu: '<path d="M4.5 7h15M4.5 12h15M4.5 17h15"/>',
       rent: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/>',
-      card: '<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18M7 15.5h4"/>',
-      talk: '<path d="M5 18v-5.5a7 7 0 0 1 14 0V18"/><rect x="3.5" y="12.5" width="4" height="6" rx="1.5"/><rect x="16.5" y="12.5" width="4" height="6" rx="1.5"/><path d="M18.5 18.5c0 1.4-1.6 2-4 2h-1.5"/>'
+      search: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>',
+      ai: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
     };
     function ic(k) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; }
     var nav = document.createElement('nav');
@@ -64,8 +64,8 @@
       '<a href="index.html" data-n="home"' + (page === 'index.html' ? ' class="on" aria-current="page"' : '') + '>' + ic('home') + '<span>홈</span></a>' +
       '<button type="button" data-n="menu">' + ic('menu') + '<span>메뉴</span></button>' +
       '<button type="button" data-n="rent" class="rent" aria-expanded="false">' + '<i>' + ic('rent') + '</i><span class="mnav-rl"></span></button>' +
-      '<a href="card.html" data-n="card"' + (/^card/.test(page) ? ' class="on" aria-current="page"' : '') + '>' + ic('card') + '<span>제휴카드</span></a>' +
-      '<button type="button" data-n="talk" data-open-consult>' + ic('talk') + '<span>빠른상담</span></button>';
+      '<button type="button" data-n="search">' + ic('search') + '<span>검색</span></button>' +
+      '<button type="button" data-n="ai">' + ic('ai') + '<span>AI 상담</span></button>';
     var mdim = document.createElement('div'); mdim.className = 'mnav-dim';
     document.body.appendChild(mdim); document.body.appendChild(nav); document.body.classList.add('has-mnav');
     var rentBtn = $('[data-n=rent]', nav), rl = $('.mnav-rl', nav);
@@ -79,7 +79,9 @@
     mdim.addEventListener('click', function () { sheet(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') sheet(false); });
     $('[data-n=menu]', nav).addEventListener('click', function () { sheet(false); var b = document.getElementById('openDrawer'); if (b) b.click(); });
-    $('[data-n=talk]', nav).addEventListener('click', function () { sheet(false); });
+    /* 검색 / AI 상담 reuse the header's own controls (bound by header.js before this bar exists) */
+    $('[data-n=search]', nav).addEventListener('click', function () { sheet(false); var s = document.getElementById('hSearch'); if (s) s.click(); });
+    $('[data-n=ai]', nav).addEventListener('click', function () { sheet(false); var a = document.querySelector('#hd .btn-ai'); if (a) a.click(); });
     var lbl = $('.fx-lbl', fx), tg = $('.fx-toggle', fx);
     function label() { lbl.textContent = S.period + '개월 · ' + (S.mode === 'card' ? '제휴카드' : '월 렌탈료'); }
     label();
