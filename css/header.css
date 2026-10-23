@@ -239,7 +239,7 @@ svg{display:block}
   .has-mnav .main{height:56px}
   .has-mnav .hd.scrolled .main{height:52px}
   .has-mnav .logo{flex:none}
-  .has-mnav .logo img{height:24px}
+  .has-mnav .logo img{height:30px}
   .has-mnav .right{gap:5px;min-width:0}
   .has-mnav .tel{display:flex;gap:4px;margin-right:1px;flex:none}
   .has-mnav .tel .ic{width:22px;height:22px}
