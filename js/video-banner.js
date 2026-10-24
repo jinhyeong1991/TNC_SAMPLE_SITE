@@ -20,7 +20,6 @@
   var track = document.createElement('div');
   track.className = 'vb-track';
   msgsBox.appendChild(track);
-  var viewersEl = root.querySelector('.vb-viewers');
   var canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -64,7 +63,7 @@
   var AV_COLORS = ['#EA002C', '#F47725', '#3D7BF7', '#14A38B', '#8A5CF6', '#E8A013', '#5B616E'];
 
   var player = null, playerReady = null, hoverTimer = 0, pinned = false;
-  var chatTimer = 0, chatIdx = 0, viewers = 120 + Math.floor(Math.random() * 40), viewersTimer = 0;
+  var chatTimer = 0, chatIdx = 0;
 
   /* ---------- 등장 애니메이션 ---------- */
   if (!reduce) {
@@ -76,7 +75,7 @@
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { io.disconnect(); reveal(); }
-      }, { threshold: 0.35 });
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
       io.observe(root);
     } else { reveal(); }
   }
@@ -160,13 +159,8 @@
     if (chatTimer) return;
     if (!track.children.length) { for (var i = 0; i < 4; i++) addMsg(); }
     (function loop() { chatTimer = setTimeout(function () { addMsg(); loop(); }, 1600 + Math.random() * 1400); })();
-    viewersTimer = setInterval(function () {
-      viewers = Math.max(90, viewers + Math.round(Math.random() * 8 - 3));
-      viewersEl.textContent = '시청 중 ' + viewers + '명';
-    }, 2500);
-    viewersEl.textContent = '시청 중 ' + viewers + '명';
   }
-  function stopChat() { clearTimeout(chatTimer); chatTimer = 0; clearInterval(viewersTimer); }
+  function stopChat() { clearTimeout(chatTimer); chatTimer = 0; }
 
   likeBtn.addEventListener('click', function () {
     for (var i = 0; i < 3; i++) {

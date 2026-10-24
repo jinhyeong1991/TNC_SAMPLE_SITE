@@ -49,7 +49,7 @@
   /* ---------- scroll reveal ---------- */
   var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: .12 }) : null;
+  }, { threshold: 0, rootMargin: '0px 0px 25% 0px' }) : null;
   $$('.reveal').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
 
   /* ---------- number animation (count up / down) ---------- */
@@ -312,7 +312,7 @@
 
   /* ---------- product list (SK compare): category tabs here, period + price basis come from the floating filter ---------- */
   var grid = $('#pg'); if (!grid) return;
-  var cat = 'all', started = false;
+  var cat = 'all';
 
   function visible() { return T.PRODUCTS.filter(function (p) { return cat === 'all' ? p.f : p.cat === cat; }); }
   function cardHtml(p, i) {
@@ -372,15 +372,4 @@
   swipeTabs(grid, tabs, pickCat);   /* mobile swipe switches the category right here instead of opening the list page */
 
   render();
-  /* first time the list scrolls into view: count up from 0 */
-  if (io && 'IntersectionObserver' in window) {
-    var once = new IntersectionObserver(function (es) {
-      if (es[0].isIntersecting && !started) {
-        started = true; once.disconnect();
-        $$('[data-v]', grid).forEach(function (n) { n.setAttribute('data-v', 0); });
-        apply(true);
-      }
-    }, { threshold: .25 });
-    once.observe(grid);
-  }
 })();

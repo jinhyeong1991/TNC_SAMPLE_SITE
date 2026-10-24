@@ -9,7 +9,8 @@ main{display:block}
 .sec-h h2{font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1.2}
 .sec-h .more{font-size:14px;color:var(--ink3);font-weight:600;white-space:nowrap}
 .sec-h .more:hover{color:var(--red)}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .35s ease,transform .35s ease}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
