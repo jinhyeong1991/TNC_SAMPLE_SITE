@@ -197,12 +197,12 @@
   document.getElementById('hSearch').addEventListener('focus',function(){openSearch();this.blur()});
   document.getElementById('hSearch').addEventListener('click',function(){openSearch()});
   document.getElementById('mSearch').addEventListener('click',function(){openSearch()});
-  /* mobile search row under the header (pages with the bottom bar); collapses on scroll like the PC top strip */
-  if(document.body.classList.contains('has-mnav')){
-    var mrow=document.createElement('div'); mrow.className='msrch';
-    mrow.innerHTML='<button type="button" class="msrch-in"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>어떤 제품을 찾으세요?</span></button>';
-    var mainRow=hd.querySelector('.main'); mainRow.parentNode.insertBefore(mrow,mainRow.nextSibling);
-    mrow.querySelector('button').addEventListener('click',function(){openSearch()});
+  /* mobile home: no category tab is underlined (the markup marks 정수기 for the PC home);
+     the search pill gets a short placeholder that fits beside the logo */
+  if(window.matchMedia('(max-width:900px)').matches){
+    if((location.pathname.split('/').pop()||'index.html').toLowerCase()==='index.html')
+      hd.querySelectorAll('.cat-list a.t.on').forEach(function(a){a.classList.remove('on')});
+    document.getElementById('hSearch').placeholder='제품 검색';
   }
   document.getElementById('sClose').addEventListener('click',closeSearch);
   sDim.addEventListener('click',closeSearch);
@@ -228,13 +228,16 @@
     void hd.offsetHeight; hd.classList.remove('measuring');
   }
   measure(); window.addEventListener('resize',measure); window.addEventListener('load',measure);
-  /* hysteresis: collapse past 80px, expand only when back under 10px */
-  var ticking=false;
+  /* hysteresis: collapse past 80px, expand only when back under 10px.
+     Mobile: once collapsed, row 1 (logo · phone · search) hides; a small scroll up (12px) brings it back (.hd-peek), scrolling down 12px hides it again */
+  var ticking=false, lastY=window.scrollY||0, travel=0;
   function onScroll(){
     if(ticking)return; ticking=true;
     requestAnimationFrame(function(){
-      var y=window.scrollY||0, on=hd.classList.contains('scrolled');
+      var y=window.scrollY||0, on=hd.classList.contains('scrolled'), dy=y-lastY; lastY=y;
       if(!on&&y>80)hd.classList.add('scrolled'); else if(on&&y<10)hd.classList.remove('scrolled');
+      travel=(dy<0)===(travel<0)?travel+dy:dy;           /* distance moved in the current direction */
+      if(travel<=-12)hd.classList.add('hd-peek'); else if(travel>=12||y<10)hd.classList.remove('hd-peek');
       ticking=false;
     });
   }
@@ -258,6 +261,14 @@
   function openDrawer(){drawer.classList.add('open');dScrim.classList.add('on')}
   function closeDrawer(){drawer.classList.remove('open');dScrim.classList.remove('on')}
   document.getElementById('openDrawer').addEventListener('click',openDrawer);
+  /* search box at the top of the drawer: closes the menu and opens the search page with the cursor in the field */
+  var dBody=drawer.querySelector('.body');
+  if(dBody){
+    var dS=document.createElement('button'); dS.type='button'; dS.className='msrch-in d-srch';
+    dS.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>어떤 제품을 찾으세요?</span>';
+    dBody.insertBefore(dS,dBody.firstChild);
+    dS.addEventListener('click',function(){closeDrawer();openSearch()});
+  }
   document.getElementById('closeDrawer').addEventListener('click',closeDrawer);
   dScrim.addEventListener('click',closeDrawer);
 

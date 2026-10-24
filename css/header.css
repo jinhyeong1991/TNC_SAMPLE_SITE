@@ -151,6 +151,7 @@ svg{display:block}
 .cta:hover{animation-play-state:paused}
 @keyframes ctaPulse{0%{box-shadow:0 0 0 0 rgba(225,0,42,.5)}70%,100%{box-shadow:0 0 0 12px rgba(225,0,42,0)}}
 @keyframes ctaShine{0%,55%{left:-60%}100%{left:130%}}
+@keyframes ctaGrain{to{background-position:17px 0,0 0}}
 @keyframes ctaNudge{0%,86%,100%{transform:none}90%{transform:translateY(-3px)}94%{transform:translateY(0)}97%{transform:translateY(-1.5px)}}
 @media (prefers-reduced-motion:reduce){.cta,.cta::after{animation:none}}
 /* full-width search overlay */
@@ -233,23 +234,32 @@ svg{display:block}
   .cat .wrap{height:46px;padding:0 6px 0 10px}
   .cat-list a.t{height:46px;line-height:46px;padding:0 12px;font-size:14.5px}
   .cat-list a.t::after{left:12px;right:12px}
-  /* pages with the mobile bottom bar (body.has-mnav, js/fx.js) get the LG-style header: logo only on the left,
-     the PC contact set (전화 · 간편상담 · AI 상담) compact on the right, no category row; menu/consult move to the bar */
-  .has-mnav .cat,.has-mnav .m-only{display:none}
-  .has-mnav .main{height:56px}
-  .has-mnav .hd.scrolled .main{height:52px}
-  .has-mnav .logo{flex:none}
-  .has-mnav .logo img{height:30px}
-  .has-mnav .right{gap:5px;min-width:0}
-  .has-mnav .tel{display:flex;gap:4px;margin-right:1px;flex:none}
-  .has-mnav .tel .ic{width:22px;height:22px}
-  .has-mnav .tel .ic svg{width:12px;height:12px}
-  .has-mnav .tel small{display:none}
-  .has-mnav .tel strong{font-size:14px;letter-spacing:-.4px;white-space:nowrap}
-  .has-mnav .right .btn{display:inline-flex;flex:none;height:34px;padding:0 13px;font-size:12.5px;gap:3px}
-  .has-mnav .right .cta{animation:none}
-  .has-mnav .right .cta::after{display:none}
-  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar on mobile */
+  /* pages with the mobile bottom bar (body.has-mnav, js/fx.js) get the 아정당-style header:
+     row 1 = logo · search pill · 간편상담, row 2 = swipeable category tabs.
+     Scrolling down hides row 1 so only the tabs stay pinned; a small scroll up (.hd-peek) brings it back.
+     Menu, phone/consult sheet and AI 상담 live in the bottom bar. */
+  .has-mnav .m-only,.has-mnav .tel{display:none}
+  .has-mnav .main{height:56px;gap:8px;overflow:hidden;transition:height .25s,opacity .2s}
+  .has-mnav .hd.scrolled .main{height:0;opacity:0}
+  .has-mnav .hd.scrolled.hd-peek .main{height:52px;opacity:1}
+  .has-mnav .cat{border-top:0}
+  .has-mnav .cat .wrap{height:44px;padding:0 4px}
+  .has-mnav .cat-list a.t{height:44px;line-height:44px;padding:0 11px;font-size:15px}
+  .has-mnav .cat-list a.t::after{left:11px;right:11px}
+  .has-mnav .logo{flex:none;margin-right:0}
+  .has-mnav .logo img{height:32px}
+  /* search pill right of the logo (the PC search form, compact) */
+  .has-mnav .search{display:block;flex:1;min-width:0;max-width:none}
+  .has-mnav .search input{height:38px;padding:0 38px 0 13px;font-size:13.5px;border-color:#E4E6EB;text-overflow:ellipsis}
+  .has-mnav .search input::placeholder{color:var(--ink3)}
+  .has-mnav .search button{right:4px;top:4px;width:30px;height:30px}
+  .has-mnav .search button svg{width:15px;height:15px}
+  .has-mnav .right{margin-left:0;flex:none;gap:0}
+  .has-mnav .right .btn{display:inline-flex;flex:none;height:34px;padding:0 12px;font-size:12.5px;gap:3px}
+  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar's consult sheet */
+  /* mobile 간편상담: red gradient with slow-moving diagonal grain + a light sweep every few seconds */
+  .has-mnav .right .cta{animation:ctaGrain 1.6s linear infinite;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.13) 0 6px,transparent 6px 12px),linear-gradient(100deg,#ff3a4f,#e1002a 55%,#c80025);background-size:17px 17px,100% 100%;box-shadow:0 6px 14px -6px rgba(225,0,42,.6)}
+  .has-mnav .right .cta::after{animation:ctaShine 3.2s ease-in-out infinite}
   .sub{display:none}
   .mform{display:block;max-height:100px;overflow:hidden;padding:10px 14px 8px;background:var(--bg);border-top:1px solid var(--line);transition:max-height .25s,padding .25s,opacity .2s}
   .hd.scrolled .mform{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-color:transparent}
@@ -321,11 +331,8 @@ svg{display:block}
 .s-res a:hover b{color:var(--red)}
 .s-empty button[data-open-consult]{background:var(--red)}
 
-/* mobile search row under the header (pages with the bottom bar); collapses on scroll */
-.msrch{display:none}
+/* mobile search box look (the one at the top of the menu drawer) */
 @media (max-width:900px){
-  .has-mnav .msrch{display:block;max-height:60px;overflow:hidden;padding:0 14px 10px;transition:max-height .25s,padding .25s,opacity .2s}
-  .has-mnav .hd.scrolled .msrch{max-height:0;padding-bottom:0;opacity:0}
   .msrch-in{display:flex;align-items:center;gap:8px;width:100%;height:42px;padding:0 14px;border-radius:12px;background:var(--bg);color:var(--ink3);font-size:14px;text-align:left}
   .msrch-in svg{color:var(--ink2);flex:none}
   /* search as a full-screen page on mobile */

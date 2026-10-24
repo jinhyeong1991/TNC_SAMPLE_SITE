@@ -362,7 +362,7 @@ main{display:block}
 /* pages without prices (body[data-fx-quick]): only the quick menu */
 .fx.fx-quick .fx-toggle,.fx.fx-quick .fx-body{display:none}
 /* ---------- mobile bottom bar (js/fx.js) + 렌탈료 bottom sheet ---------- */
-.mnav,.mnav-dim{display:none}
+.mnav,.mnav-dim,.mcs{display:none}   /* mobile-only: bottom bar, its dim and the 상담 sheet */
 @media (max-width:900px){
   body.has-mnav{padding-bottom:calc(62px + env(safe-area-inset-bottom))}
   .mnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:97;height:calc(62px + env(safe-area-inset-bottom));padding:0 4px env(safe-area-inset-bottom);background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
@@ -373,14 +373,22 @@ main{display:block}
   .mnav .rent i{display:contents}   /* 렌탈료 looks like the other items */
   .mnav-dim{display:block;position:fixed;inset:0;z-index:95;background:rgba(17,19,24,.45);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
   .mnav-dim.on{opacity:1;visibility:visible}
-  /* 상담: raised red center button */
-  .mnav .talk{position:relative;color:var(--red);font-weight:800}
-  .mnav .talk i{display:grid;place-items:center;width:54px;height:54px;margin:-26px 0 1px;border-radius:50%;background:var(--red);color:#fff;border:4px solid #fff;box-shadow:0 8px 20px -6px rgba(234,0,44,.55);transition:transform .15s}
-  .mnav .talk i svg{width:24px;height:24px;stroke-width:2}
+  /* 상담: raised center button — white disc with an SK orange→red ring, the official SK magic logo (js/fx.js BFLY)
+     with an occasional sheen, and a soft halo pulsing outward. */
+  .mnav .talk{position:relative;color:#e1002a;font-weight:800}
+  .mnav .talk i{position:relative;display:grid;place-items:center;width:58px;height:58px;margin:-29px 0 1px;border-radius:50%;background:#fff;box-shadow:0 10px 24px -10px rgba(225,0,42,.55),0 2px 6px rgba(17,19,24,.08);transition:transform .15s}
+  .mnav .talk i::before{content:"";position:absolute;inset:0;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#ee7601 10%,#e1002a 90%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .mnav .talk i::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:2px solid rgba(225,0,42,.45);opacity:0;animation:talkHalo 4s ease-out infinite;pointer-events:none}
   .mnav .talk:active i{transform:scale(.94)}
-  .mnav .talk.on i{background:var(--ink)}
+  .mnav .talk .bfly{position:relative;width:44px;height:23px}
+  .bfly img{display:block;width:100%;height:100%}
+  .bfly .bf-sheen{position:absolute;inset:0;-webkit-mask:url(../images/sk-magic.svg) center/contain no-repeat;mask:url(../images/sk-magic.svg) center/contain no-repeat;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.85) 50%,transparent 60%) no-repeat;background-size:260% 100%;animation:bfSheen 4s ease-in-out infinite}
+  .mnav .talk.on i::after{animation-duration:1.6s}
+  @keyframes talkHalo{0%,40%{transform:scale(1);opacity:0}45%{opacity:.7}85%,100%{transform:scale(1.35);opacity:0}}
+  @keyframes bfSheen{0%,55%{background-position:130% 0}85%,100%{background-position:-30% 0}}
+  @media (prefers-reduced-motion:reduce){.mnav .talk i::after,.bfly *{animation:none !important}}
   /* 상담 sheet */
-  .mcs{position:fixed;left:0;right:0;bottom:0;z-index:96;background:#fff;border-radius:22px 22px 0 0;padding:18px 16px calc(80px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .28s cubic-bezier(.22,.8,.24,1);box-shadow:0 -12px 40px -12px rgba(17,19,24,.25)}
+  .mcs{display:block;position:fixed;left:0;right:0;bottom:0;z-index:96;background:#fff;border-radius:22px 22px 0 0;padding:18px 16px calc(80px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .28s cubic-bezier(.22,.8,.24,1);box-shadow:0 -12px 40px -12px rgba(17,19,24,.25)}
   .mcs.on{transform:none}
   .mcs-h{display:flex;align-items:center;justify-content:space-between;margin:0 2px 14px}
   .mcs-h b{font-size:17px;font-weight:800;letter-spacing:-.3px}
