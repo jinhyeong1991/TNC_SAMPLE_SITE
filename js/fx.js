@@ -48,13 +48,16 @@
       window.scrollTo({ top: 0, behavior: r ? 'auto' : 'smooth' });
     });
 
-    /* mobile bottom bar (LG style): 홈 · 메뉴 · 렌탈료(the filter above as a bottom sheet) · 검색 · AI 상담. Hidden on PC by CSS. */
+    /* mobile bottom bar: 홈 · 검색 · 상담(raised center → 전화 / 간편상담 / AI 상담 sheet) · 렌탈료(the filter above as a bottom sheet) · 메뉴. Hidden on PC by CSS. */
     var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     var ICON = {
       home: '<path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>',
       menu: '<path d="M4.5 7h15M4.5 12h15M4.5 17h15"/>',
       rent: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/>',
       search: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>',
+      talk: '<path d="M5 18.5V6.8A1.8 1.8 0 0 1 6.8 5h10.4A1.8 1.8 0 0 1 19 6.8v7.4a1.8 1.8 0 0 1-1.8 1.8H8.6z"/><path d="M9 10.6h.01M12 10.6h.01M15 10.6h.01"/>',
+      phone: '<path d="M6.6 4h2.6l1.4 4-2 1.3a10 10 0 0 0 4.1 4.1l1.3-2 4 1.4v2.6A2 2 0 0 1 16 19.4 14.4 14.4 0 0 1 4.6 8 2 2 0 0 1 6.6 4z"/>',
+      form: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/>',
       ai: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
     };
     function ic(k) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; }
@@ -62,26 +65,42 @@
     nav.className = 'mnav'; nav.setAttribute('aria-label', '하단 메뉴');
     nav.innerHTML =
       '<a href="index.html" data-n="home"' + (page === 'index.html' ? ' class="on" aria-current="page"' : '') + '>' + ic('home') + '<span>홈</span></a>' +
-      '<button type="button" data-n="menu">' + ic('menu') + '<span>메뉴</span></button>' +
-      '<button type="button" data-n="rent" class="rent" aria-expanded="false">' + '<i>' + ic('rent') + '</i><span class="mnav-rl"></span></button>' +
       '<button type="button" data-n="search">' + ic('search') + '<span>검색</span></button>' +
-      '<button type="button" data-n="ai">' + ic('ai') + '<span>AI 상담</span></button>';
+      '<button type="button" data-n="talk" class="talk" aria-expanded="false" aria-controls="mcs"><i>' + ic('talk') + '</i><span>상담</span></button>' +
+      '<button type="button" data-n="rent" class="rent" aria-expanded="false">' + '<i>' + ic('rent') + '</i><span class="mnav-rl"></span></button>' +
+      '<button type="button" data-n="menu">' + ic('menu') + '<span>메뉴</span></button>';
     var mdim = document.createElement('div'); mdim.className = 'mnav-dim';
-    document.body.appendChild(mdim); document.body.appendChild(nav); document.body.classList.add('has-mnav');
+    /* 상담 sheet: phone first (biggest), then 간편상담 (header.js handles [data-open-consult] by delegation), then AI 상담 */
+    var mcs = document.createElement('div'); mcs.className = 'mcs'; mcs.id = 'mcs';
+    mcs.setAttribute('role', 'dialog'); mcs.setAttribute('aria-label', '상담 방법 선택');
+    mcs.innerHTML =
+      '<div class="mcs-h"><b>어떻게 상담해 드릴까요?</b><button type="button" class="mcs-x" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
+      '<a class="mcs-call" href="tel:16704113"><i>' + ic('phone') + '</i><span><b>1670-4113</b><small>지금 바로 전화 상담</small></span></a>' +
+      '<button type="button" class="mcs-row" data-open-consult><i>' + ic('form') + '</i><span><b>간편상담 신청</b><small>이름 · 연락처만 남기면 전화드려요</small></span></button>' +
+      '<button type="button" class="mcs-row" data-n="ai"><i>' + ic('ai') + '</i><span><b>AI 상담</b><small>제품 추천 · 견적을 바로 물어보세요</small></span></button>';
+    document.body.appendChild(mdim); document.body.appendChild(mcs); document.body.appendChild(nav); document.body.classList.add('has-mnav');
+    var talkBtn = $('[data-n=talk]', nav);
+    function talk(open) {
+      mcs.classList.toggle('on', open); talkBtn.classList.toggle('on', open); talkBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mdim.classList.toggle('on', open || fx.classList.contains('msheet'));
+    }
+    talkBtn.addEventListener('click', function (e) { e.stopPropagation(); sheet(false); talk(!mcs.classList.contains('on')); });
+    mcs.addEventListener('click', function (e) { if (e.target.closest('a,button')) talk(false); });
     var rentBtn = $('[data-n=rent]', nav), rl = $('.mnav-rl', nav);
     function rentLabel() { rl.textContent = '렌탈료'; rentBtn.setAttribute('aria-label', '렌탈료 조건 (현재 ' + S.period + '개월)'); }
     rentLabel(); document.addEventListener('tnc-filter', rentLabel);
     function sheet(open) {
+      if (open) talk(false);
       fx.classList.toggle('msheet', open); mdim.classList.toggle('on', open);
       rentBtn.classList.toggle('on', open); rentBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
     rentBtn.addEventListener('click', function (e) { e.stopPropagation(); sheet(!fx.classList.contains('msheet')); });
-    mdim.addEventListener('click', function () { sheet(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') sheet(false); });
+    mdim.addEventListener('click', function () { sheet(false); talk(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { sheet(false); talk(false); } });
     $('[data-n=menu]', nav).addEventListener('click', function () { sheet(false); var b = document.getElementById('openDrawer'); if (b) b.click(); });
     /* 검색 / AI 상담 reuse the header's own controls (bound by header.js before this bar exists) */
     $('[data-n=search]', nav).addEventListener('click', function () { sheet(false); var s = document.getElementById('hSearch'); if (s) s.click(); });
-    $('[data-n=ai]', nav).addEventListener('click', function () { sheet(false); var a = document.querySelector('#hd .btn-ai'); if (a) a.click(); });
+    $('[data-n=ai]', mcs).addEventListener('click', function () { var a = document.querySelector('#hd .btn-ai'); if (a) a.click(); });
     var lbl = $('.fx-lbl', fx), tg = $('.fx-toggle', fx);
     function label() { lbl.textContent = S.period + '개월 · ' + (S.mode === 'card' ? '제휴카드' : '월 렌탈료'); }
     label();
