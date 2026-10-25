@@ -169,7 +169,8 @@
   function addRecent(w){w=String(w||'').trim();if(!w)return;saveRecent([w].concat(recent().filter(function(x){return x!==w})))}
   function hl(s,q){if(!q)return esc(s);var i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?esc(s):esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length))}
   function chip(w,x){return '<span class="s-chip"><a href="#" data-sq="'+esc(w)+'">'+esc(w)+'</a>'+(x?'<button type="button" data-rm="'+esc(w)+'" aria-label="'+esc(w)+' 삭제">×</button>':'')+'</span>'}
-  function renderSearch(q){
+  /* done = submitted (검색 button / keyboard 검색 key): drop the 연관 검색어 and show the result heading */
+  function renderSearch(q,done){
     q=(q||'').trim();
     sBody.hidden=!!q; sTyp.hidden=!q;
     if(!q){
@@ -181,10 +182,10 @@
       return;
     }
     var low=q.toLowerCase();
-    var kws=KWALL.filter(function(w){return w.toLowerCase().indexOf(low)>=0}).slice(0,8);
+    var kws=done?[]:KWALL.filter(function(w){return w.toLowerCase().indexOf(low)>=0}).slice(0,8);
     var res=PRODS.filter(function(p){return (p.n+' '+p.cat+' '+(p.m||'')).toLowerCase().indexOf(low)>=0||(p.m&&p.m.replace(/-/g,'').toLowerCase().indexOf(low.replace(/-/g,''))>=0)});
     sTyp.innerHTML=(kws.length?'<ul class="s-sug">'+kws.map(function(w){return '<li><a href="#" data-sq="'+esc(w)+'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'+hl(w,q)+'</a></li>'}).join('')+'</ul>':'')+
-      (res.length?'<div class="s-h"><h6>상품 '+res.length+'개</h6></div><ul class="s-res">'+res.map(function(p){return '<li><a href="'+SHOP+p.h+'" data-go="'+esc(q)+'"><b>'+hl(p.n,q)+'</b><span>'+esc(p.cat)+(p.m?' · '+esc(p.m):'')+' · '+(p.p?'월 '+p.p+'원~':'상담 문의')+'</span></a></li>'}).join('')+'</ul>':'')+
+      (res.length?'<div class="s-h"><h6>'+(done?'“'+esc(q)+'” 검색 결과 ':'')+'상품 '+res.length+'개</h6></div><ul class="s-res">'+res.map(function(p){return '<li><a href="'+SHOP+p.h+'" data-go="'+esc(q)+'"><b>'+hl(p.n,q)+'</b><span>'+esc(p.cat)+(p.m?' · '+esc(p.m):'')+' · '+(p.p?'월 '+p.p+'원~':'상담 문의')+'</span></a></li>'}).join('')+'</ul>':'')+
       (!kws.length&&!res.length?'<div class="s-empty">“'+esc(q)+'”와 일치하는 결과가 없어요.<br>다른 검색어로 찾아보거나 상담사에게 물어보세요.<br><button type="button" data-open-consult>간편상담 신청</button></div>':'');
   }
   function openSearch(q){
@@ -215,7 +216,13 @@
   document.getElementById('sClose').addEventListener('click',closeSearch);
   sDim.addEventListener('click',closeSearch);
   sIn.addEventListener('input',function(){renderSearch(sIn.value)});
-  sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();var v=sIn.value.trim();if(v){addRecent(v);toast('“'+v+'” 검색 결과 페이지로 이동합니다 (샘플)')}}});
+  /* 검색 button right of the field (phones often have no visible Enter); the keyboard's 검색 key does the same.
+     Blurring closes the on-screen keyboard so the results are visible. */
+  function submitSearch(){var v=sIn.value.trim();if(!v){sIn.focus();return}addRecent(v);renderSearch(v,true);sIn.blur();sEl.scrollTop=0}
+  var sGo=document.createElement('button'); sGo.type='button'; sGo.className='s-go'; sGo.setAttribute('aria-label','검색');
+  sGo.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
+  sIn.parentNode.insertBefore(sGo,sIn.nextSibling); sGo.addEventListener('click',submitSearch);
+  sIn.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.isComposing){e.preventDefault();submitSearch()}});
   sEl.addEventListener('click',function(e){
     var rm=e.target.closest('[data-rm]');
     if(rm){e.preventDefault();var w=rm.getAttribute('data-rm');saveRecent(recent().filter(function(x){return x!==w}));renderSearch('');return}
