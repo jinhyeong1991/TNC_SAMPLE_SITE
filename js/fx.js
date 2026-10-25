@@ -48,13 +48,14 @@
       window.scrollTo({ top: 0, behavior: r ? 'auto' : 'smooth' });
     });
 
-    /* mobile bottom bar: 홈 · 메뉴(+검색 at the top of the drawer) · 상담(raised center → 전화 / 간편상담 / AI 상담 sheet) · 렌탈료(the filter above as a bottom sheet) · 제휴카드. Hidden on PC by CSS. */
+    /* mobile bottom bar: 홈 · 메뉴 · 상담(raised center → 전화 / 간편상담 / AI 상담 sheet) · 검색(header search overlay) · 렌탈료(the filter above as a bottom sheet).
+       제휴카드 lives in the drawer menu. Hidden on PC by CSS. */
     var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     var ICON = {
       home: '<path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>',
       menu: '<path d="M4.5 7h15M4.5 12h15M4.5 17h15"/>',
       rent: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/>',
-      card: '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6.5 15h4"/>',
+      search: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>',
       phone: '<path d="M6.6 4h2.6l1.4 4-2 1.3a10 10 0 0 0 4.1 4.1l1.3-2 4 1.4v2.6A2 2 0 0 1 16 19.4 14.4 14.4 0 0 1 4.6 8 2 2 0 0 1 6.6 4z"/>',
       form: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/>',
       ai: '<path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>'
@@ -66,10 +67,10 @@
     nav.className = 'mnav'; nav.setAttribute('aria-label', '하단 메뉴');
     nav.innerHTML =
       '<a href="index.html" data-n="home"' + (page === 'index.html' ? ' class="on" aria-current="page"' : '') + '>' + ic('home') + '<span>홈</span></a>' +
-      '<button type="button" data-n="menu" aria-label="메뉴 · 검색">' + ic('menu') + '<span>메뉴</span></button>' +
+      '<button type="button" data-n="menu" aria-label="메뉴">' + ic('menu') + '<span>메뉴</span></button>' +
       '<button type="button" data-n="talk" class="talk" aria-expanded="false" aria-controls="mcs"><i>' + BFLY + '</i><span>상담</span></button>' +
-      '<button type="button" data-n="rent" class="rent" aria-expanded="false">' + '<i>' + ic('rent') + '</i><span class="mnav-rl"></span></button>' +
-      '<a href="card.html" data-n="card"' + (page === 'card.html' || page === 'card_view.html' ? ' class="on" aria-current="page"' : '') + '>' + ic('card') + '<span>제휴카드</span></a>';
+      '<button type="button" data-n="search" aria-label="제품 검색">' + ic('search') + '<span>검색</span></button>' +
+      '<button type="button" data-n="rent" class="rent" aria-expanded="false">' + '<i>' + ic('rent') + '</i><span class="mnav-rl"></span></button>';
     var mdim = document.createElement('div'); mdim.className = 'mnav-dim';
     /* 상담 sheet: phone first (biggest), then 간편상담 (header.js handles [data-open-consult] by delegation), then AI 상담 */
     var mcs = document.createElement('div'); mcs.className = 'mcs'; mcs.id = 'mcs';
@@ -99,6 +100,7 @@
     mdim.addEventListener('click', function () { sheet(false); talk(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { sheet(false); talk(false); } });
     $('[data-n=menu]', nav).addEventListener('click', function () { sheet(false); var b = document.getElementById('openDrawer'); if (b) b.click(); });
+    $('[data-n=search]', nav).addEventListener('click', function () { sheet(false); talk(false); var b = document.getElementById('mSearch'); if (b) b.click(); });
     /* AI 상담 reuses the header's own control (bound by header.js before this bar exists); 검색 lives at the top of the menu drawer */
     $('[data-n=ai]', mcs).addEventListener('click', function () { var a = document.querySelector('#hd .btn-ai'); if (a) a.click(); });
     var lbl = $('.fx-lbl', fx), tg = $('.fx-toggle', fx);

@@ -218,6 +218,7 @@ svg{display:block}
 /* mobile-only elements hidden on PC */
 .m-only{display:none}
 .mform{display:none}
+.m-tel{display:none}
 
 /* ---------- Mobile ---------- */
 @media (max-width:900px){
@@ -248,15 +249,11 @@ svg{display:block}
   .has-mnav .cat-list a.t::after{left:11px;right:11px}
   .has-mnav .logo{flex:none;margin-right:0}
   .has-mnav .logo img{height:32px}
-  /* search pill right of the logo (the PC search form, compact) */
-  .has-mnav .search{display:block;flex:1;min-width:0;max-width:none}
-  .has-mnav .search input{height:38px;padding:0 38px 0 13px;font-size:13.5px;border-color:#E4E6EB;text-overflow:ellipsis}
-  .has-mnav .search input::placeholder{color:var(--ink3)}
-  .has-mnav .search button{right:4px;top:4px;width:30px;height:30px}
-  .has-mnav .search button svg{width:15px;height:15px}
-  .has-mnav .right{margin-left:0;flex:none;gap:0}
-  .has-mnav .right .btn{display:inline-flex;flex:none;height:34px;padding:0 12px;font-size:12.5px;gap:3px}
-  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar's consult sheet */
+  /* right of the logo: 간편상담 + 1670-4113 joined into one pill (.m-tel is added by js/header.js) */
+  .has-mnav .right{margin-left:auto;flex:none;gap:0;display:flex;align-items:center;border-radius:999px;box-shadow:0 6px 14px -6px rgba(225,0,42,.45)}
+  .has-mnav .right .btn{display:inline-flex;flex:none;height:36px;padding:0 12px 0 14px;font-size:13px;gap:3px;border-radius:999px 0 0 999px}
+  .has-mnav .m-tel{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 13px 0 10px;border-radius:0 999px 999px 0;border:1.5px solid var(--red);border-left:0;background:#fff;color:var(--red);white-space:nowrap}
+  .has-mnav .m-tel b{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--ink)}  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar's consult sheet */
   /* mobile 간편상담: red gradient with slow-moving diagonal grain + a light sweep every few seconds */
   .has-mnav .right .cta{animation:ctaGrain 1.6s linear infinite;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.13) 0 6px,transparent 6px 12px),linear-gradient(100deg,#ff3a4f,#e1002a 55%,#c80025);background-size:17px 17px,100% 100%;box-shadow:0 6px 14px -6px rgba(225,0,42,.6)}
   .has-mnav .right .cta::after{animation:ctaShine 3.2s ease-in-out infinite}

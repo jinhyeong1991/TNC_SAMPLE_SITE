@@ -197,6 +197,14 @@
   document.getElementById('hSearch').addEventListener('focus',function(){openSearch();this.blur()});
   document.getElementById('hSearch').addEventListener('click',function(){openSearch()});
   document.getElementById('mSearch').addEventListener('click',function(){openSearch()});
+  /* mobile row 1 = logo · [간편상담 | 1670-4113]; search lives in the bottom bar (js/fx.js)
+     (shown only under body.has-mnav, see css/header.css) */
+  var hRight=hd.querySelector('.main .right'), hCta=hRight&&hRight.querySelector('.cta');
+  if(hCta){
+    var mTel=document.createElement('a'); mTel.className='m-tel'; mTel.href='tel:16704113'; mTel.setAttribute('aria-label','전화 상담 1670-4113');
+    mTel.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg><b>1670-4113</b>';
+    hCta.parentNode.insertBefore(mTel,hCta.nextSibling);
+  }
   /* mobile home: no category tab is underlined (the markup marks 정수기 for the PC home);
      the search pill gets a short placeholder that fits beside the logo */
   if(window.matchMedia('(max-width:900px)').matches){

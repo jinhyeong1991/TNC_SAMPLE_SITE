@@ -196,6 +196,7 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .toast.on,.toast.on:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){opacity:1;transform:translate(-50%,0)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-only,.m-only:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .mform,.mform:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel,.m-tel:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
 
 /* ---------- Mobile ---------- */
 @media (max-width:900px){
@@ -222,13 +223,10 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .cat-list a.t::after,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .cat-list a.t::after{left:11px;right:11px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .logo,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .logo{flex:none;margin-right:0}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .logo img,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .logo img{height:32px}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .search,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .search{display:block;flex:1;min-width:0;max-width:none}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .search input,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .search input{height:38px;padding:0 38px 0 13px;font-size:13.5px;border-color:#E4E6EB;text-overflow:ellipsis}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .search input::placeholder,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .search input::placeholder{color:var(--ink3)}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .search button,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .search button{right:4px;top:4px;width:30px;height:30px}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .search button svg,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .search button svg{width:15px;height:15px}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right{margin-left:0;flex:none;gap:0}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn{display:inline-flex;flex:none;height:34px;padding:0 12px;font-size:12.5px;gap:3px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right{margin-left:auto;flex:none;gap:0;display:flex;align-items:center;border-radius:999px;box-shadow:0 6px 14px -6px rgba(225,0,42,.45)}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn{display:inline-flex;flex:none;height:36px;padding:0 12px 0 14px;font-size:13px;gap:3px;border-radius:999px 0 0 999px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 13px 0 10px;border-radius:0 999px 999px 0;border:1.5px solid var(--red);border-left:0;background:#fff;color:var(--red);white-space:nowrap}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel b,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel b{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--ink)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn-ai,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn-ai{display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta{animation:ctaGrain 1.6s linear infinite;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.13) 0 6px,transparent 6px 12px),linear-gradient(100deg,#ff3a4f,#e1002a 55%,#c80025);background-size:17px 17px,100% 100%;box-shadow:0 6px 14px -6px rgba(225,0,42,.6)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta::after,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta::after{animation:ctaShine 3.2s ease-in-out infinite}
