@@ -14,8 +14,30 @@
   function mdl(g) { var m = window.TNC_model ? window.TNC_model(g) : ''; return m ? '<span class="md" title="' + esc(m) + '">' + esc(m) + '</span>' : ''; }
 
   var qs = new URLSearchParams(location.search), key = qs.get('c');
-  if (!SK[key]) key = 'water';
-  var cat = SK[key];
+  /* search mode (list.html?q=직수 냉정수기, from the header search): same page, products from every category
+     whose name / category / sub-category / model contain every word of q; the chips become the matched categories */
+  var Q = (qs.get('q') || '').trim();
+  function norm(s) { return String(s || '').toLowerCase().replace(/[\s\-()]/g, ''); }
+  function searchCat(q) {
+    var words = q.split(/\s+/).map(norm).filter(Boolean), all = [], seen = {};
+    Object.keys(SK).forEach(function (k) {
+      SK[k].items.forEach(function (it) {
+        if (seen[it.g]) return;
+        var subT = (SK[k].subs || []).filter(function (s) { return (it.sub || []).indexOf(s.k) >= 0; }).map(function (s) { return s.t; }).join(' ');
+        var hay = norm(it.n + ' ' + SK[k].t + ' ' + subT + ' ' + (window.TNC_model ? window.TNC_model(it.g) : ''));
+        var hit = words.filter(function (w) { return hay.indexOf(w) >= 0; }).length;
+        if (hit) { seen[it.g] = 1; all.push({ it: Object.assign({}, it, { sub: [k] }), hit: hit }); }
+      });
+    });
+    /* every word must match; if nothing does, fall back to the closest products (most words matched) */
+    var full = all.filter(function (o) { return o.hit === words.length; });
+    var list = full.length ? full : all.sort(function (a, b) { return b.hit - a.hit; });
+    var used = {}; list.forEach(function (o) { used[o.it.sub[0]] = 1; });
+    return { t: '“' + q + '” 검색 결과', loose: !full.length, items: list.map(function (o) { return o.it; }),
+      subs: Object.keys(SK).filter(function (k) { return used[k]; }).map(function (k) { return { k: k, t: SK[k].t }; }) };
+  }
+  if (!Q && !SK[key]) key = 'water';
+  var cat = Q ? searchCat(Q) : SK[key];
   var DESC = {
     water: '얼음 · 냉온 · 직수까지, 의무사용기간별 월 렌탈료를 한눈에 비교해 보세요.',
     air: '평형과 관리 방식에 맞는 공기청정기를 골라 보세요.',
@@ -148,12 +170,14 @@
   }
 
   /* ---------- page chrome ---------- */
-  document.title = cat.t + ' 렌탈 | 티앤씨렌탈';
+  document.title = Q ? cat.t + ' | 티앤씨렌탈' : cat.t + ' 렌탈 | 티앤씨렌탈';
   $('#lpTitle').textContent = cat.t;
-  $('#lpCrumb').textContent = cat.t;
-  $('#lpDesc').textContent = DESC[key] || '';
+  $('#lpCrumb').textContent = Q ? '검색' : cat.t;
+  $('#lpDesc').textContent = !Q ? DESC[key] || '' : !cat.items.length ? '' :
+    cat.loose ? '정확히 일치하는 상품이 없어 비슷한 상품을 보여드려요.' : 'SK매직 전체 상품에서 찾았어요. 아래 필터로 더 좁혀 보세요.';
+  if (Q && !cat.items.length) $('#lpEmpty').innerHTML = '“' + esc(Q) + '”와 일치하는 상품이 없어요.<br>다른 검색어로 찾아보거나 상담사에게 물어보세요.';
   $$('.cat-list a.t').forEach(function (a) { a.classList.remove('on'); });
-  var navA = $('[data-mega="' + key + '"] a.t'); if (navA) navA.classList.add('on');
+  var navA = !Q && $('[data-mega="' + key + '"] a.t'); if (navA) navA.classList.add('on');
 
   /* sub-category chips */
   var subs = $('#lpSubs');
@@ -165,7 +189,7 @@
       var b = e.target.closest('button'); if (!b) return;
       $$('button', subs).forEach(function (x) { x.classList.toggle('on', x === b); });
       state.sub = b.getAttribute('data-s'); state.shown = 12; render(false);
-      history.replaceState(null, '', 'list.html?c=' + key + (state.sub !== 'all' ? '&sub=' + state.sub : ''));
+      history.replaceState(null, '', 'list.html?' + (Q ? 'q=' + encodeURIComponent(Q) : 'c=' + key) + (state.sub !== 'all' ? '&sub=' + state.sub : ''));
     });
   } else subs.hidden = true;
 
