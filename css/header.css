@@ -42,6 +42,10 @@ svg{display:block}
 .tel .ic{width:40px;height:40px;border-radius:50%;background:var(--red-bg);color:var(--red);display:grid;place-items:center}
 .tel small{display:block;font-size:11.5px;color:var(--ink3);line-height:1.1}
 .tel strong{display:block;font-size:21px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
+/* 1670-4113 phone icon (PC .tel and mobile .m-tel): a short ring wiggle, then rest — repeats every 2.8s */
+.tel .ic svg,.m-tel svg{transform-origin:50% 50%;animation:telRing 2.8s ease-in-out infinite}
+@keyframes telRing{0%,22%,100%{transform:none}3%{transform:rotate(-14deg)}6%{transform:rotate(12deg)}9%{transform:rotate(-10deg)}12%{transform:rotate(8deg)}15%{transform:rotate(-5deg)}18%{transform:rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.tel .ic svg,.m-tel svg{animation:none}}
 .btn{height:46px;padding:0 20px;border-radius:999px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s}
 .btn-red{background:var(--red);color:#fff;box-shadow:none}
 .btn-red:hover{background:var(--red-d);transform:translateY(-1px)}
