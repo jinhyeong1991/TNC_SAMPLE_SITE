@@ -225,7 +225,7 @@ svg{display:block}
 /* mobile-only elements hidden on PC */
 .m-only{display:none}
 .mform{display:none}
-.m-tel{display:none}
+.m-tel,.m-srch{display:none}
 
 /* ---------- Mobile ---------- */
 @media (max-width:900px){
@@ -260,7 +260,11 @@ svg{display:block}
   .has-mnav .right{margin-left:auto;flex:none;gap:0;display:flex;align-items:center;border-radius:999px;box-shadow:0 6px 14px -6px rgba(225,0,42,.45)}
   .has-mnav .right .btn{display:inline-flex;flex:none;height:36px;padding:0 12px 0 14px;font-size:13px;gap:3px;border-radius:999px 0 0 999px}
   .has-mnav .m-tel{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 13px 0 10px;border-radius:0 999px 999px 0;border:1.5px solid var(--red);border-left:0;background:#fff;color:var(--red);white-space:nowrap}
-  .has-mnav .m-tel b{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--ink)}  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar's consult sheet */
+  .has-mnav .m-tel b{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--ink)}
+  .has-mnav .right .btn-ai{display:none}   /* AI 상담 lives in the bottom bar's consult sheet */
+  /* round 검색 button right of the pill (.m-srch is added by js/header.js; the bottom bar has 제휴카드 instead) */
+  .has-mnav .m-srch{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#F2F3F5;color:var(--ink)}
+  .has-mnav .m-srch:active{transform:scale(.94)}
   /* mobile 간편상담: red gradient with slow-moving diagonal grain + a light sweep every few seconds */
   .has-mnav .right .cta{animation:ctaGrain 1.6s linear infinite;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.13) 0 6px,transparent 6px 12px),linear-gradient(100deg,#ff3a4f,#e1002a 55%,#c80025);background-size:17px 17px,100% 100%;box-shadow:0 6px 14px -6px rgba(225,0,42,.6)}
   .has-mnav .right .cta::after{animation:ctaShine 3.2s ease-in-out infinite}
@@ -346,4 +350,14 @@ svg{display:block}
   .s-chip a{padding:0 13px;font-size:13.5px;line-height:32px}
   .s-rank{column-gap:16px}
   .s-rank a{padding:12px 2px;font-size:14px;gap:10px}
+}
+
+/* narrow phones (≤420px): logo · [간편상담 | 1670-4113] · 검색 must fit on one row down to 360px */
+@media (max-width:420px){
+  .has-mnav .main{gap:6px}
+  .has-mnav .logo img{height:26px}
+  .has-mnav .right .btn{padding:0 9px 0 11px;font-size:12.5px}
+  .has-mnav .m-tel{padding:0 10px 0 7px;gap:3px}
+  .has-mnav .m-tel b{font-size:14px}
+  .has-mnav .m-srch{width:34px;height:34px}
 }

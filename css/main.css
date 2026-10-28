@@ -407,16 +407,10 @@ main{display:block}
   .mcs-row b{font-size:15.5px;font-weight:800}
   .mcs-call small{font-size:13px;opacity:.9}
   .mcs-row small{font-size:12.5px;color:var(--ink3)}
-  /* the old floating pill + round buttons are replaced by the bar; 제휴카드 + TOP stay, above the bar */
+  /* the old floating pill + round buttons are replaced by the bar; only TOP stays, above the bar */
   .fx{bottom:calc(74px + env(safe-area-inset-bottom));right:14px}
-  .fx .fx-toggle,.fx .fx-consult{display:none}
+  .fx .fx-toggle,.fx .fx-consult,.fx .fx-card{display:none}
   .fx-top{width:42px;height:42px;background:rgba(17,19,24,.55)}
-  /* 제휴카드: round card button above TOP, shown from the top of the page (TOP still waits for scrolling) */
-  .fx{opacity:1;visibility:visible;transform:none}
-  .fx:not(.on) .fx-top{display:none}
-  .fx .fx-card{width:46px;height:46px;border:0;background:var(--red);color:#fff;box-shadow:0 6px 16px -6px rgba(225,0,42,.6)}
-  .fx .fx-card svg{width:23px;height:23px}
-  .fx.msheet .fx-card{opacity:0;pointer-events:none}
   /* 렌탈료 sheet: the filter body slides up above the bar */
   .fx.msheet{opacity:1;visibility:visible;transform:none;z-index:96}
   .fx.msheet .fx-top{opacity:0;pointer-events:none}

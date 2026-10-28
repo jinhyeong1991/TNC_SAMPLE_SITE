@@ -203,7 +203,7 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .toast.on,.toast.on:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){opacity:1;transform:translate(-50%,0)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-only,.m-only:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .mform,.mform:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
-:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel,.m-tel:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel,.m-tel:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim),:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-srch,.m-srch:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
 
 /* ---------- Mobile ---------- */
 @media (max-width:900px){
@@ -235,6 +235,8 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 13px 0 10px;border-radius:0 999px 999px 0;border:1.5px solid var(--red);border-left:0;background:#fff;color:var(--red);white-space:nowrap}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel b,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel b{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--ink)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn-ai,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn-ai{display:none}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-srch,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-srch{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#F2F3F5;color:var(--ink)}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-srch:active,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-srch:active{transform:scale(.94)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta{animation:ctaGrain 1.6s linear infinite;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.13) 0 6px,transparent 6px 12px),linear-gradient(100deg,#ff3a4f,#e1002a 55%,#c80025);background-size:17px 17px,100% 100%;box-shadow:0 6px 14px -6px rgba(225,0,42,.6)}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .cta::after,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .cta::after{animation:ctaShine 3.2s ease-in-out infinite}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .sub,.sub:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){display:none}
@@ -313,4 +315,14 @@
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .s-chip a,.s-chip:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) a{padding:0 13px;font-size:13.5px;line-height:32px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .s-rank,.s-rank:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim){column-gap:16px}
 :is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .s-rank a,.s-rank:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) a{padding:12px 2px;font-size:14px;gap:10px}
+}
+
+/* narrow phones (≤420px): logo · [간편상담 | 1670-4113] · 검색 must fit on one row down to 360px */
+@media (max-width:420px){
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .main,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .main{gap:6px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .logo img,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .logo img{height:26px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .right .btn,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .right .btn{padding:0 9px 0 11px;font-size:12.5px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel{padding:0 10px 0 7px;gap:3px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-tel b,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-tel b{font-size:14px}
+:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .has-mnav .m-srch,.has-mnav:is(#hd,#hdSpace,#scrim,#dScrim,#drawer,#sDim,#srch,#toast,#hdDim) .m-srch{width:34px;height:34px}
 }
